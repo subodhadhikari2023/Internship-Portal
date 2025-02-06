@@ -1,0 +1,84 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="logo">
+      <img src="assets/images/logo.webp" alt="Logo" class="navbar-logo" />
+      <a routerLink="/" class="navbar-brand"
+        >Internship Portal for Government of Sikkim</a
+      >
+    </div>
+    <ul class="navbar-menu">
+      <li><a routerLink="" class="navbar-link">Home</a></li>
+      <li><a routerLink="/contact" class="navbar-link">View Departments</a></li>
+      <li><a routerLink="/login" class="navbar-link">Sign In</a></li>
+      <li><a routerLink="/register" class="navbar-link">Sign Up</a></li>
+    </ul>
+    <div class="navbar-toggle" id="mobile-menu" (click)="toggleMenu()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="image-slider">
+    <img
+      [src]="bannerImageUrls[currentImageIndex]"
+      alt="Sikkim Scenery"
+      class="hero-image"
+    />
+    <div class="hero-text">
+      <h2>{{ heroTexts[currentImageIndex] }}</h2>
+    </div>
+  </div>
+</div>
+
+<section class="cultural-highlights">
+  <h2>Sikkim's Cultural Richness</h2>
+  <div class="highlight-grid">
+    <div class="highlight">
+      <img src="assets/images/monastry.jpg" alt="Monastery" />
+      <h3>Sikkim's rich culture</h3>
+      <p>
+        Discover the serene beauty and spiritual significance of Sikkim's
+        Heritage.
+      </p>
+    </div>
+    <div class="highlight">
+      <img src="assets/images/festivals.webp" alt="Festival" />
+      <h3>Vibrant Festivals</h3>
+      <p>
+        Experience the colorful celebrations and rich traditions of Sikkim's
+        diverse festivals.
+      </p>
+    </div>
+    <div class="highlight">
+      <img src="assets/images/culture.webp" alt="Handicrafts" />
+      <h3>Handicrafts</h3>
+      <p>
+        Explore the intricate craftsmanship and unique artistry of Sikkim's
+        traditional handicrafts.
+      </p>
+    </div>
+    <div class="highlight">
+      <img src="assets/images/culture.webp" alt="Handicrafts" />
+      <h3>Handicrafts</h3>
+      <p>
+        Explore the intricate craftsmanship and unique artistry of Sikkim's
+        traditional handicrafts.
+      </p>
+    </div>
+    <div class="highlight">
+      <img src="assets/images/culture.webp" alt="Handicrafts" />
+      <h3>Handicrafts</h3>
+      <p>
+        Explore the intricate craftsmanship and unique artistry of Sikkim's
+        traditional handicrafts.
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2025 Government of Sikkim</p>
+</footer>

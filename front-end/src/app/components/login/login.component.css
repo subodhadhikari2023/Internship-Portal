@@ -1,0 +1,38 @@
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 12px;
+    background: white;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .login-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+  
+  
+  
+  .login-logo {
+    width: 100px;
+  }
+  
+  .form-control {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  .btn-primary {
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    .login-card {
+      width: 90%;
+      padding: 15px;
+    }
+  }
+  

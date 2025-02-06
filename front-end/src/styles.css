@@ -1,0 +1,23 @@
+/* styles.css */
+
+/* Reset body margins and paddings */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Ensure body takes full height */
+  width: 100%; /* Ensure body takes full width */
+}
+
+/* Ensure the html element takes full height */
+html {
+  height: 100%;
+}
+
+/* Make the app component fill the viewport */
+app-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Full height of the viewport */
+}
+
+
