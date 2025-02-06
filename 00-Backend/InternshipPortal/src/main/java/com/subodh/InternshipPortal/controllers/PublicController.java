@@ -1,18 +1,18 @@
 package com.subodh.InternshipPortal.controllers;
 
 
-
+import com.subodh.InternshipPortal.entities.LoginResponse;
 import com.subodh.InternshipPortal.entities.Users;
 import com.subodh.InternshipPortal.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-
+@CrossOrigin
 @RestController
-@RequestMapping("/")
+@Slf4j
+@RequestMapping("api/v1")
 public class PublicController {
 
 
@@ -27,18 +27,20 @@ public class PublicController {
         user.addRole("ROLE_STUDENT");
         return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
+
     @PostMapping("login")
-    public ResponseEntity<String> login(@RequestBody Users user) {
+    public ResponseEntity<?> login(@RequestBody Users user) {
         String verify = userService.verifyUserCredentials(user);
 
-        return new ResponseEntity<>(verify, HttpStatus.OK);
-    }
-    @GetMapping
-    public ResponseEntity<List<Users>> findAllUsers(){
-        return new ResponseEntity<>(userService.findAllUsers(),HttpStatus.OK);
+        log.info("Login endpoint hit for the user {}", user);
+        return new ResponseEntity<>(new LoginResponse(verify), HttpStatus.OK);
     }
 
 
+    @GetMapping("home")
+    public ResponseEntity<String> homePage() {
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 
     @GetMapping("message")

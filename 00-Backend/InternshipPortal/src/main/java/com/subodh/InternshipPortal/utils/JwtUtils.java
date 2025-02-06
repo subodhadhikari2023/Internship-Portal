@@ -14,9 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -27,7 +25,6 @@ public class JwtUtils {
 //    AuthenticationManager authenticationManager;
 
     public String generateToken(Authentication authentication) {
-//        Map<String, Object> claims = new HashMap<>();
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
         return Jwts.builder()
                 .claim("role", authorities)
@@ -76,7 +73,7 @@ public class JwtUtils {
     }
 
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken(final String token, final Authentication authentication, final UserDetails userDetails) {
-//        JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(getKey()).build();
+
         JwtParser jwtParser = Jwts.parser().verifyWith(getKey()).build();
 
         Jws<Claims> claimsJws = jwtParser.parseSignedClaims(token);
@@ -87,4 +84,8 @@ public class JwtUtils {
                         .collect(Collectors.toList());
         return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
+
+
+
+
 }
