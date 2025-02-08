@@ -33,7 +33,7 @@ public class SecurityConfiguration {
 //                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/v1/register","/api/v1/login")
+                                .requestMatchers("/api/v1/register","/api/v1/login","/api/v1/register/verify")
                                 .permitAll()
                                 .requestMatchers("/api/v1/students").hasRole("STUDENT")
                                 .requestMatchers("/api/v1/instructors").hasRole("INSTRUCTOR")

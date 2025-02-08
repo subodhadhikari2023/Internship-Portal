@@ -2,7 +2,7 @@ package com.subodh.InternshipPortal.filters;
 
 
 
-import com.subodh.InternshipPortal.services.UserDetailsServiceImplementation;
+import com.subodh.InternshipPortal.services.Implementation.UserDetailsServiceImplementation;
 import com.subodh.InternshipPortal.utils.JwtUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

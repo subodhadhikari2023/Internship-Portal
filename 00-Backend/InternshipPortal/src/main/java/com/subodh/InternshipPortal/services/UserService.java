@@ -1,8 +1,5 @@
 package com.subodh.InternshipPortal.services;
-
-
 import com.subodh.InternshipPortal.entities.Users;
-
 import java.util.List;
 
 /**
@@ -11,9 +8,29 @@ import java.util.List;
 public interface UserService {
 
 
+    /**
+     * Save user users.
+     *
+     * @param user the user
+     * @return the users
+     */
     Users saveUser(Users user);
 
+    /**
+     * Verify user credentials string.
+     *
+     * @param user the user
+     * @return the string
+     */
     String verifyUserCredentials(Users user);
 
+    /**
+     * Find all users list.
+     *
+     * @return the list
+     */
     List<Users> findAllUsers();
+
+    boolean verifyOtp(Users user, Long otp);
+
 }

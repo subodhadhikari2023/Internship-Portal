@@ -1,9 +1,10 @@
-package com.subodh.InternshipPortal.services;
+package com.subodh.InternshipPortal.services.Implementation;
 
 
 import com.subodh.InternshipPortal.entities.Users;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 
+import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.utils.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,6 +53,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public List<Users> findAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public boolean verifyOtp(Users user, Long otp) {
+        return true;
     }
 
 }
