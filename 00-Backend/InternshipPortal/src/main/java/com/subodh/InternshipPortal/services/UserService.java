@@ -31,6 +31,20 @@ public interface UserService {
      */
     List<Users> findAllUsers();
 
+    /**
+     * Verify otp boolean.
+     *
+     * @param user the user
+     * @param otp  the otp
+     * @return the boolean
+     */
     boolean verifyOtp(Users user, Long otp);
 
+    /**
+     * Email exists boolean.
+     *
+     * @param userEmail the user email
+     * @return the boolean
+     */
+    boolean emailExists(String userEmail);
 }

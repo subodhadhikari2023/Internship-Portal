@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
+/**
+ * The type Roles.
+ */
 @Entity
 @Getter
 @Setter

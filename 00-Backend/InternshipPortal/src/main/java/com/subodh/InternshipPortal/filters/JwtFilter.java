@@ -20,6 +20,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+/**
+ * The type Jwt filter.
+ */
 @Component
 @Slf4j
 public class JwtFilter extends OncePerRequestFilter {
@@ -28,6 +31,12 @@ public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtils jwtUtils;
 
 
+    /**
+     * Instantiates a new Jwt filter.
+     *
+     * @param jwtUtils the jwt utils
+     * @param context  the context
+     */
     @Autowired
     public JwtFilter(JwtUtils jwtUtils, ApplicationContext context) {
 

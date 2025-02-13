@@ -41,12 +41,13 @@ public class UserServiceImplementation implements UserService {
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword()));
         return userRepository.save(user);
     }
+
     @Override
     public String verifyUserCredentials(Users user) {
         Authentication authenticate = auth.authenticate(new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPassword()));
         boolean authenticated = authenticate.isAuthenticated();
         if (authenticated)
-           return jwtUtils.generateToken(authenticate);
+            return jwtUtils.generateToken(authenticate);
         return "Not Authenticated";
     }
 
@@ -58,6 +59,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public boolean verifyOtp(Users user, Long otp) {
         return true;
+    }
+
+    @Override
+    public boolean emailExists(String userEmail) {
+        return userRepository.findByUserEmail(userEmail) != null;
     }
 
 }
