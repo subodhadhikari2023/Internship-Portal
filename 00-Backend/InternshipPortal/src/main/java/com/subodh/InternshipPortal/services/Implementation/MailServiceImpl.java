@@ -4,6 +4,7 @@ import com.subodh.InternshipPortal.services.MailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +19,7 @@ public class MailServiceImpl implements MailService {
 
     }
 
+    @Async("taskExecutor")
     @Override
     public void sendMail(String toEmail, String subject, String body) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
