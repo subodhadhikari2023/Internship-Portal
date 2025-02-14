@@ -7,9 +7,17 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * The type User principal.
+ */
 public class UserPrincipal implements UserDetails {
     private Users user;
 
+    /**
+     * Instantiates a new User principal.
+     *
+     * @param user the user
+     */
     public UserPrincipal(Users user) {
         this.user = user;
 

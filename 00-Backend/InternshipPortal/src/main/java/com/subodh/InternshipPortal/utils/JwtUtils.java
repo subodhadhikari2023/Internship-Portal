@@ -18,12 +18,21 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The type Jwt utils.
+ */
 @Service
 public class JwtUtils {
     @Value("${app.jwt.secret}")
     private String SECRET_KEY;
 //    AuthenticationManager authenticationManager;
 
+    /**
+     * Generate token string.
+     *
+     * @param authentication the authentication
+     * @return the string
+     */
     public String generateToken(Authentication authentication) {
         String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(","));
         return Jwts.builder()
@@ -42,6 +51,12 @@ public class JwtUtils {
         return Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
     }
 
+    /**
+     * Extract user name string.
+     *
+     * @param token the token
+     * @return the string
+     */
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -59,6 +74,13 @@ public class JwtUtils {
                 .getPayload();
     }
 
+    /**
+     * Validate token boolean.
+     *
+     * @param token       the token
+     * @param userDetails the user details
+     * @return the boolean
+     */
     public boolean validateToken(String token, UserDetails userDetails) {
         final String userName = extractUserName(token);
         return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
@@ -72,6 +94,14 @@ public class JwtUtils {
         return extractClaim(token, Claims::getExpiration);
     }
 
+    /**
+     * Username password authentication token username password authentication token.
+     *
+     * @param token          the token
+     * @param authentication the authentication
+     * @param userDetails    the user details
+     * @return the username password authentication token
+     */
     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken(final String token, final Authentication authentication, final UserDetails userDetails) {
 
         JwtParser jwtParser = Jwts.parser().verifyWith(getKey()).build();

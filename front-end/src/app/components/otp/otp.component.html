@@ -1,0 +1,36 @@
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card otp-card shadow-lg">
+      <div class="card-body p-4">
+        <h2 class="text-center mb-3 fw-bold">Verify OTP</h2>
+        <p class="text-center">Please enter the OTP sent to your email.</p>
+  
+        <form [formGroup]="otpForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label for="otp" class="form-label fw-semibold">OTP</label>
+            <input
+              id="otp"
+              type="text"
+              class="form-control"
+              formControlName="otp"
+              placeholder="Enter your OTP"
+              maxlength="6"
+              required
+            />
+            <div class="text-danger small" *ngIf="otpForm.get('otp')?.touched && otpForm.get('otp')?.errors?.['required']">
+              <span>OTP is required</span>
+            </div>
+            <div class="text-danger small" *ngIf="otpForm.get('otp')?.touched && otpForm.get('otp')?.errors?.['pattern']">
+              <span>OTP must be a 6-digit number</span>
+            </div>
+          </div>
+  
+          <button type="submit" class="btn btn-primary w-100 shadow-sm">Verify OTP</button>
+          
+          <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+            <p>{{ errorMessage }}</p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  

@@ -1,4 +1,5 @@
 package com.subodh.InternshipPortal.services;
+import com.subodh.InternshipPortal.entities.RegistrationEntity;
 import com.subodh.InternshipPortal.entities.Users;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface UserService {
      * @param user the user
      * @return the users
      */
-    Users saveUser(Users user);
+    Users saveUser(RegistrationEntity user);
 
     /**
      * Verify user credentials string.
@@ -31,6 +32,20 @@ public interface UserService {
      */
     List<Users> findAllUsers();
 
+    /**
+     * Verify otp boolean.
+     *
+     * @param user the user
+     * @param otp  the otp
+     * @return the boolean
+     */
     boolean verifyOtp(Users user, Long otp);
 
+    /**
+     * Email exists boolean.
+     *
+     * @param userEmail the user email
+     * @return the boolean
+     */
+    boolean emailExists(String userEmail);
 }
