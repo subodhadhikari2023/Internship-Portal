@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services;
 
 import com.subodh.InternshipPortal.entities.OneTimePassword;
+import com.subodh.InternshipPortal.entities.RegistrationEntity;
 import com.subodh.InternshipPortal.entities.Users;
 
 /**
@@ -13,7 +14,7 @@ public interface OTPService {
      * @param user the user
      * @return OneTimePassword one time password
      */
-    OneTimePassword generateOTP(Users user);
+    OneTimePassword generateOTP(RegistrationEntity user);
 
     /**
      * Verify otp boolean.

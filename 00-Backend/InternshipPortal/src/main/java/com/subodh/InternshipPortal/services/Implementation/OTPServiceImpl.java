@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.entities.OneTimePassword;
+import com.subodh.InternshipPortal.entities.RegistrationEntity;
 import com.subodh.InternshipPortal.entities.Users;
 import com.subodh.InternshipPortal.repositories.OTPRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
@@ -27,7 +28,7 @@ public class OTPServiceImpl implements OTPService {
 
     @Override
     @Transactional
-    public OneTimePassword generateOTP(Users user) {
+    public OneTimePassword generateOTP(RegistrationEntity user) {
         otpRepository.deleteAllByUserEmail(user.getUserEmail());
         String otp = String.format("%06d", random.nextInt(1000000)); // Ensures 6-digit OTP
 

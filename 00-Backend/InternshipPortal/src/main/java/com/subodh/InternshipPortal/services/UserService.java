@@ -1,4 +1,5 @@
 package com.subodh.InternshipPortal.services;
+import com.subodh.InternshipPortal.entities.RegistrationEntity;
 import com.subodh.InternshipPortal.entities.Users;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface UserService {
      * @param user the user
      * @return the users
      */
-    Users saveUser(Users user);
+    Users saveUser(RegistrationEntity user);
 
     /**
      * Verify user credentials string.

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 /**
  * The interface Users repository.
  */
+@CrossOrigin
 public interface UsersRepository extends JpaRepository<Users, Long> {
 
     /**
