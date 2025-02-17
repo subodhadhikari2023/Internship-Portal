@@ -111,8 +111,8 @@ public class PublicController {
      *
      * @return the response entity
      */
-    @GetMapping("home")
-    public ResponseEntity<String> homePage() {
+    @GetMapping("health-check")
+    public ResponseEntity<String> healthCheck() {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -123,8 +123,8 @@ public class PublicController {
      * @return the string
      */
     @GetMapping("message")
-    public String messageAfterJwtValidation() {
-        return "Jwt token validated";
+    public ResponseEntity<?> messageAfterJwtValidation() {
+        return new ResponseEntity<>(new LoginResponse("Valid request"),HttpStatus.OK);
     }
 
     /**
@@ -133,8 +133,9 @@ public class PublicController {
      * @return the string
      */
     @GetMapping("students")
-    public String students() {
-        return "Hello Students!";
+    public ResponseEntity<?> students() {
+        log.info("Endpoint for students");
+        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the students"),HttpStatus.OK);
     }
 
     /**
@@ -143,8 +144,9 @@ public class PublicController {
      * @return the string
      */
     @GetMapping("instructors")
-    public String instructors() {
-        return "Hello Instructors";
+    public ResponseEntity<?> instructors() {
+        log.info("Endpoint for instructors");
+        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the instructors"),HttpStatus.OK);
     }
 
     /**
@@ -153,7 +155,8 @@ public class PublicController {
      * @return the string
      */
     @GetMapping("admin")
-    public String admin() {
-        return "Hello admin";
+    public ResponseEntity<?> admin() {
+        log.info("Endpoint for admin");
+        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the admin"),HttpStatus.OK);
     }
 }
