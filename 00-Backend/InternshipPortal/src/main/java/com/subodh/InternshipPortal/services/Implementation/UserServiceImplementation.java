@@ -57,12 +57,12 @@ public class UserServiceImplementation implements UserService {
 
     @Override
 
-    public String verifyUserCredentials(Users user) {
+    public String verifyUserCredentials(Users user) throws Exception {
         Authentication authenticate = auth.authenticate(new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPassword()));
         boolean authenticated = authenticate.isAuthenticated();
         if (authenticated)
             return jwtUtils.generateToken(authenticate);
-        return "Not Authenticated";
+        throw new RuntimeException("Invalid user credentials");
     }
 
     @Override

@@ -23,7 +23,7 @@ public interface UserService {
      * @param user the user
      * @return the string
      */
-    String verifyUserCredentials(Users user);
+    String verifyUserCredentials(Users user) throws Exception;
 
     /**
      * Find all users list.
