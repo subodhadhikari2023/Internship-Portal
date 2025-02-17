@@ -15,4 +15,7 @@ export class IntegrationService {
   doLogin(request: LoginRequest): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(API_URL, request);
   }
+  accessMessage(){
+    return this.http.get<LoginResponse>("http://localhost:8080/internship-portal/api/v1/students");
+  }
 }
