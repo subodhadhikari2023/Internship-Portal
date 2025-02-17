@@ -1,1 +1,10 @@
-<p>students-home works!</p>
+<!-- students-home.component.html -->
+<div style="position: relative;">
+    <button (click)="accessMessage()">Hekki</button>
+</div>
+
+<!-- Display the token if it is not empty -->
+<div *ngIf="message">
+  <h3>Received Token:</h3>
+  <p>{{ message }}</p>
+</div>

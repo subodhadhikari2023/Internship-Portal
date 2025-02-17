@@ -14,19 +14,20 @@ export class LoginComponent {
   userForm: FormGroup;
   loginRequest: LoginRequest = new LoginRequest();
 
-  constructor(private fb: FormBuilder, private integrationService: IntegrationService,private router:Router) {
+  constructor(private fb: FormBuilder, private integrationService: IntegrationService, private router: Router) {
     this.userForm = this.fb.group({
       userEmail: ['', Validators.required],
       userPassword: ['', [Validators.required, Validators.minLength(3)]],
     });
   }
-  
-   
+
+
   doLogin() {
     if (this.userForm.invalid) {
       alert("Please fill in the required fields correctly.");
       return;
     }
+    localStorage.removeItem('token');
 
     this.loginRequest.userEmail = this.userForm.value.userEmail;
     this.loginRequest.userPassword = this.userForm.value.userPassword;
