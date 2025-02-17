@@ -48,7 +48,7 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
-//                .cors(Customizer.withDefaults())
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         request -> request
                                 .requestMatchers("/api/v1/register","/api/v1/login","/api/v1/register/verify")
