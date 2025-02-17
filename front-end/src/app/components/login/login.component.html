@@ -8,7 +8,10 @@
         <h2 class="text-center mb-3 fw-bold">Login</h2>
   
         <form [formGroup]="userForm" (ngSubmit)="doLogin()">
+          <p *ngIf="errorMessage" class="error-message text-center text-danger">{{ errorMessage }}</p>
+
           <div class="mb-3">
+            
             <label for="userEmail" class="form-label fw-semibold">Email</label>
             <input
               id="userEmail"
@@ -54,6 +57,7 @@
               
             </p>
           </div>
+          
         </form>
       </div>
     </div>
