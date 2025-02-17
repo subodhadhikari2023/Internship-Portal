@@ -12,6 +12,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { OtpComponent } from './components/otp/otp.component';
 import { VerifyComponent } from './components/verify/verify.component';
 import { CustomInterceptor } from './interceptors/custom.interceptor';
+import { InstructorsHomeComponent } from './components/instructors-home/instructors-home.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { CustomInterceptor } from './interceptors/custom.interceptor';
     LandingComponent,
     RegistrationComponent,
     OtpComponent,
-    VerifyComponent
+    VerifyComponent,
+    InstructorsHomeComponent
   ],
   imports: [
     BrowserModule,

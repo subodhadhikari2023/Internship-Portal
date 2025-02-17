@@ -99,10 +99,17 @@ public class PublicController {
      */
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody Users user) {
-        String verify = userService.verifyUserCredentials(user);
 
-        log.info("Login endpoint hit for the user {}", user);
-        return new ResponseEntity<>(new LoginResponse(verify), HttpStatus.OK);
+        String verify = null;
+        try {
+            verify = userService.verifyUserCredentials(user);
+            log.info("Login endpoint hit for the user {}", user);
+            return new ResponseEntity<>(new LoginResponse(verify), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+
     }
 
 
