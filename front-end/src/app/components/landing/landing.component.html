@@ -1,38 +1,29 @@
-<nav class="navbar">
-  <div class="navbar-container">
-    <div class="logo">
-      <img src="assets/images/logo.webp" alt="Logo" class="navbar-logo" />
-      <a routerLink="/" class="navbar-brand"
-        >Internship Portal for Government of Sikkim</a
-      >
-    </div>
-    <ul class="navbar-menu">
-      <li><a routerLink="" class="navbar-link">Home</a></li>
-      <li><a routerLink="/contact" class="navbar-link">View Departments</a></li>
-      <li><a routerLink="/login" class="navbar-link">Sign In</a></li>
-      <li><a routerLink="/register" class="navbar-link">Sign Up</a></li>
-    </ul>
-    <div class="navbar-toggle" id="mobile-menu" (click)="toggleMenu()">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
+<header class="d-flex justify-content-center align-items-center py-2 header">
+  <div class="container text-center">
+    <p class="mb-0 fw-bold fs-2 mt-3">Internship Portal - Government of Sikkim</p>
+  </div>
+</header>
+
+<nav class="navbar navbar-expand-lg  navbar-light">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse mt-1 mb-2 ms-3" id="navbarNav"> 
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" routerLink="/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/departments">View Departments</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/login">Sign In</a></li>
+        <li class="nav-item"><a class="nav-link" routerLink="/register">Sign Up</a></li>
+      </ul>
     </div>
   </div>
 </nav>
+<hr>
 
-<div class="hero">
-  <div class="image-slider">
-    <img
-      [src]="bannerImageUrls[currentImageIndex]"
-      alt="Sikkim Scenery"
-      class="hero-image"
-    />
-    <div class="hero-text">
-      <h2>{{ heroTexts[currentImageIndex] }}</h2>
-    </div>
-  </div>
+<div class="hero position-relative">
+  <img [src]="bannerImageUrls[currentImageIndex]" alt="Sikkim Scenery" class="hero-image img-fluid w-100">
 </div>
-
 <section class="cultural-highlights">
   <h2>Sikkim's Cultural Richness</h2>
   <div class="highlight-grid">
@@ -79,6 +70,6 @@
   </div>
 </section>
 
-<footer>
-  <p>&copy; 2025 Government of Sikkim</p>
+<footer class="bg-dark text-white text-center py-3">
+  <p class="mb-0">&copy; 2025 Government of Sikkim</p>
 </footer>
