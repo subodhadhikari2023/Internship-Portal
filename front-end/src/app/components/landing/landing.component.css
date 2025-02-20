@@ -79,9 +79,18 @@ footer {
   background-color: #333;
   color: white;
 }
+.img-responsive{
+  height: 90px;
+  width: auto;
+}
 
 @media (max-width: 768px) {
   .highlight-grid {
     grid-template-columns: 1fr;
+  }
+
+  .img-responsive{
+    height: 60px;
+    width: auto;
   }
 }

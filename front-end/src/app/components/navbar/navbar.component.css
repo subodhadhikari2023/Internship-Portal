@@ -1,4 +1,43 @@
-.header {
+.header,
+.btn-primary {
   background-color: rgb(42, 175, 50);
   color: rgb(255, 255, 255);
+}
+.nav-item:hover {
+  background-color: rgba(232, 220, 175, 0.764);
+}
+.dropdown {
+  position: relative;
+}
+
+#profileDropdown img {
+  width: 10vw;
+  max-width: 50px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.profile-img {
+  width: 10vw;
+  max-width: 50px;
+  height: auto;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+#profileDropdown::after {
+  display: none;
+}
+form {
+  position: relative;
+}
+
+input.form-control {
+  pointer-events: auto;
+}
+app-navbar {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1050;
 }
