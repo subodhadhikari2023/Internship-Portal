@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -6,17 +6,23 @@ import { Router } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
+  
+  menuOpen = false;
+  dropdowns: { [key: string]: boolean } = { internships: false, applications: false, profile: false };
 
-  constructor(private router:Router) { }
+  constructor(private router: Router) { }
 
-  ngOnInit(): void {
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
   }
 
-
-  logOut(){
+  toggleDropdown(menu: string) {
+    this.dropdowns[menu] = !this.dropdowns[menu]; 
+  }
+ 
+  logOut() {
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/')
+    this.router.navigateByUrl('/home');
   }
-
 }
