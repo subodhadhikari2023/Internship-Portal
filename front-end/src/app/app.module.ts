@@ -14,6 +14,7 @@ import { VerifyComponent } from './components/verify/verify.component';
 import { CustomInterceptor } from './interceptors/custom.interceptor';
 import { InstructorsHomeComponent } from './components/instructors-home/instructors-home.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     OtpComponent,
     VerifyComponent,
     InstructorsHomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
