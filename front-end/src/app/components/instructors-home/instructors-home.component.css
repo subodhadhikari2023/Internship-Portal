@@ -1,0 +1,8 @@
+footer{
+    margin-top: 3vh;
+    height: fit-content;
+    overflow: hidden;
+    width: 100%;
+    background-color: #999999;
+z-index: 1;  
+}
