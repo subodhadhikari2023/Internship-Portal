@@ -1,6 +1,9 @@
 package com.subodh.InternshipPortal.controllers;
 
 
+import com.subodh.InternshipPortal.dto.LoginResponse;
+import com.subodh.InternshipPortal.dto.RegistrationEntity;
+import com.subodh.InternshipPortal.dto.RegistrationResponse;
 import com.subodh.InternshipPortal.entities.*;
 import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;

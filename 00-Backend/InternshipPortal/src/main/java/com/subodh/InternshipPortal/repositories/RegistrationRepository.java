@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.repositories;
 
-import com.subodh.InternshipPortal.entities.RegistrationEntity;
+import com.subodh.InternshipPortal.dto.RegistrationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
