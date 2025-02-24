@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.entities;
 
+import com.subodh.InternshipPortal.enums.InternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -46,6 +47,9 @@ public class Internship {
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
     private Set<Users> students;
+    
+    @Enumerated(EnumType.STRING)
+    private InternshipStatus status;
 
 
 }
