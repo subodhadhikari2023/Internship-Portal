@@ -1,8 +1,7 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.entities.OneTimePassword;
-import com.subodh.InternshipPortal.entities.RegistrationEntity;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.dto.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.OTPRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.OTPService;

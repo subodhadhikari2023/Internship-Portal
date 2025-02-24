@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.services;
 
-import com.subodh.InternshipPortal.entities.RegistrationEntity;
+import com.subodh.InternshipPortal.dto.RegistrationEntity;
 
 import java.util.List;
 

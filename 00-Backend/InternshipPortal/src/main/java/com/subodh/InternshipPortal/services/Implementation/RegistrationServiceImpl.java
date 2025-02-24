@@ -1,9 +1,8 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
-import com.subodh.InternshipPortal.entities.RegistrationEntity;
+import com.subodh.InternshipPortal.dto.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.RegistrationRepository;
 import com.subodh.InternshipPortal.services.RegistrationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
