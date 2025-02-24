@@ -145,16 +145,6 @@ public class PublicController {
         return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the students"),HttpStatus.OK);
     }
 
-    /**
-     * Instructors string.
-     *
-     * @return the string
-     */
-    @GetMapping("instructors")
-    public ResponseEntity<?> instructors() {
-        log.info("Endpoint for instructors");
-        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the instructors"),HttpStatus.OK);
-    }
 
     /**
      * Admin string.
