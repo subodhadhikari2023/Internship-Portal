@@ -37,17 +37,9 @@ public class Internship {
      * The Created by.
      */
     @ManyToOne
-    @JoinColumn(name = "instructors_id")
+    @JoinColumn(name = "instructors_id",referencedColumnName = "user_id")
     Users createdBy;
 
-    @ManyToMany
-    @JoinTable(
-            name = "internship_students",
-            joinColumns = @JoinColumn(name = "internship_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private Set<Users> students;
-    
     @Enumerated(EnumType.STRING)
     private InternshipStatus status;
 
