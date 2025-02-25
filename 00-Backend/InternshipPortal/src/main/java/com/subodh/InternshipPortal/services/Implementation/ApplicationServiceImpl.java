@@ -23,9 +23,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         try {
             return applicationRepository.save(application);
         } catch (DataIntegrityViolationException e) {
-            throw new ApplicationCreationFailedException("Internship creation failed due to duplicate or invalid data.");
+            throw new ApplicationCreationFailedException("Application creation failed due to duplicate or invalid data.");
         } catch (IllegalArgumentException e) {
-            throw new ApplicationCreationFailedException("Invalid internship data provided.");
+            throw new ApplicationCreationFailedException("Invalid Internship Data Provided or Application already exists.");
         } catch (Exception e) {
             throw new ApplicationCreationFailedException("Unexpected error while creating internship: " + e.getMessage());
         }

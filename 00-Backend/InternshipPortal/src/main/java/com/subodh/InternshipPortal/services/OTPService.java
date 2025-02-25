@@ -1,7 +1,7 @@
 package com.subodh.InternshipPortal.services;
 
 import com.subodh.InternshipPortal.entities.OneTimePassword;
-import com.subodh.InternshipPortal.dto.RegistrationEntity;
+import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 
 /**
  * The interface Otp service.

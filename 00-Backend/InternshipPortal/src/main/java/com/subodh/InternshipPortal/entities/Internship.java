@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,6 +33,8 @@ public class Internship {
      * The End date.
      */
     LocalDate endDate;
+    @Lob
+    private String description;
 
     /**
      * The Created by.
@@ -42,6 +45,10 @@ public class Internship {
 
     @Enumerated(EnumType.STRING)
     private InternshipStatus status;
+
+    @ElementCollection
+    @CollectionTable(name = "application_skills",joinColumns = @JoinColumn(name = "application_id"))
+    private List<String> requiredSkills;
 
 
 }

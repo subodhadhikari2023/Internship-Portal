@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
-import com.subodh.InternshipPortal.dto.RegistrationEntity;
+import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.RegistrationRepository;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import org.springframework.stereotype.Service;

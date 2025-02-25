@@ -1,4 +1,4 @@
-package com.subodh.InternshipPortal.dto;
+package com.subodh.InternshipPortal.wrapper;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
