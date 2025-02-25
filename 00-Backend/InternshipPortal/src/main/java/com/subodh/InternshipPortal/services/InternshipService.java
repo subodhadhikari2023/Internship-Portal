@@ -6,4 +6,5 @@ public interface InternshipService {
 
     Internship saveInternship(Internship internship);
 
+    boolean findByInternshipId(Long internshipId);
 }

@@ -28,4 +28,9 @@ public class InternshipServiceImpl implements InternshipService {
             throw new InternshipCreationFailedException("Unexpected error while creating internship: " + e.getMessage());
         }
     }
+
+    @Override
+    public boolean findByInternshipId(Long internshipId) {
+         return internshipRepository.findById(internshipId).isPresent();
+    }
 }
