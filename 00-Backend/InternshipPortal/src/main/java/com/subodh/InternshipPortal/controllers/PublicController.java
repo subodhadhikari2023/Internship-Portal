@@ -1,9 +1,9 @@
 package com.subodh.InternshipPortal.controllers;
 
 
-import com.subodh.InternshipPortal.dto.LoginResponse;
-import com.subodh.InternshipPortal.dto.RegistrationEntity;
-import com.subodh.InternshipPortal.dto.RegistrationResponse;
+import com.subodh.InternshipPortal.wrapper.LoginResponse;
+import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
+import com.subodh.InternshipPortal.wrapper.RegistrationResponse;
 import com.subodh.InternshipPortal.entities.*;
 import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
@@ -137,16 +137,6 @@ public class PublicController {
         return new ResponseEntity<>(new LoginResponse("Valid request"),HttpStatus.OK);
     }
 
-    /**
-     * Students string.
-     *
-     * @return the string
-     */
-    @GetMapping("students")
-    public ResponseEntity<?> students() {
-        log.info("Endpoint for students");
-        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the students"),HttpStatus.OK);
-    }
 
 
     /**
