@@ -7,9 +7,14 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor
 public class Response<T> {
+
     public Response(String message, HttpStatus status) {
         this.message = message;
         this.status = status;
+    }
+
+    public Response(T entity) {
+        this.entity = entity;
     }
 
     T entity;
