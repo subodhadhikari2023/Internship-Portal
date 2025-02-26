@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,6 +22,7 @@ public class Application {
 
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "internship_id", referencedColumnName = "internship_id")
     private Internship internship;
 

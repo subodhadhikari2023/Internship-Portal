@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.subodh.InternshipPortal.enums.InternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -41,18 +42,19 @@ public class Internship {
      * The Created by.
      */
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "instructors_id",referencedColumnName = "user_id")
+    @JoinColumn(name = "instructors_id", referencedColumnName = "user_id")
     Users createdBy;
 
     @Enumerated(EnumType.STRING)
     private InternshipStatus status;
 
     @ElementCollection
-    @CollectionTable(name = "internship_skills",joinColumns = @JoinColumn(name = "internship_id"))
+    @CollectionTable(name = "internship_skills", joinColumns = @JoinColumn(name = "internship_id"))
     @Column(name = "skills")
     private Set<String> requiredSkills;
 
     @OneToMany(mappedBy = "internship")
+    @JsonManagedReference
     List<Application> applications;
 
 }

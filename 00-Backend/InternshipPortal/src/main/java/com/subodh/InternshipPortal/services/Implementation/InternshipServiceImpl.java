@@ -51,8 +51,7 @@ public class InternshipServiceImpl implements InternshipService {
     @Override
     public List<InternshipWrapper> findAll() {
         List<Internship> internshipList = internshipRepository.findAll();
-
-        return internshipList.isEmpty() ? null : internshipRepository.findAll().stream()
+        return internshipList.isEmpty() ? Collections.emptyList() : internshipRepository.findAll().stream()
                 .map(InternshipWrapper::new)
                 .toList();
 

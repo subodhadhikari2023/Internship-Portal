@@ -9,10 +9,15 @@ import com.subodh.InternshipPortal.repositories.ApplicationRepository;
 import com.subodh.InternshipPortal.repositories.InternshipRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.ApplicationService;
+import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
+import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
@@ -20,12 +25,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     ApplicationRepository applicationRepository;
     private final UsersRepository usersRepository;
     private final InternshipRepository internshipRepository;
+    private final InternshipService internshipService;
 
     @Autowired
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository) {
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService) {
         this.applicationRepository = applicationRepository;
         this.usersRepository = usersRepository;
         this.internshipRepository = internshipRepository;
+        this.internshipService = internshipService;
     }
 
     @Override
@@ -36,7 +43,7 @@ public class ApplicationServiceImpl implements ApplicationService {
                 throw new ApplicationCreationFailedException("Student has already applied for this internship.");
             }
 
-            Users student = usersRepository.findByUserEmail(application.getStudent().getUserEmail());
+            Users student = usersRepository.findByUserId(application.getStudent().getUserId());
             Internship internship = internshipRepository.findByInternshipId(application.getInternship().getInternshipId());
             application.setStatus(StudentApplicationStatus.SUBMITTED);
             application.setStudent(student);
@@ -52,6 +59,17 @@ public class ApplicationServiceImpl implements ApplicationService {
             throw new ApplicationCreationFailedException("Unexpected error while creating application: " + e.getMessage());
         }
     }
+
+    @Override
+    public List<ApplicationWrapper> findAllofUser() {
+        List<InternshipWrapper> internships = internshipService.findAllByInstructor();
+        List<Long> internshipIds = internships.stream().map(InternshipWrapper::getId).toList();
+
+        List<Application> applications = applicationRepository.findByInternshipIds(internshipIds);
+
+        return applications.stream().map(ApplicationWrapper::new).toList();
+    }
+
 
 
 }
