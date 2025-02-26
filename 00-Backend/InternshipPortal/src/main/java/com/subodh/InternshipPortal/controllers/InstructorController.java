@@ -1,11 +1,11 @@
 package com.subodh.InternshipPortal.controllers;
 
+import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import com.subodh.InternshipPortal.wrapper.Response;
 import com.subodh.InternshipPortal.entities.Internship;
-import com.subodh.InternshipPortal.wrapper.LoginResponse;
 import com.subodh.InternshipPortal.services.InternshipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -69,6 +69,12 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(applicationWrapperList), HttpStatus.OK);
 
     }
+    @PostMapping("review-applications")
+    public ResponseEntity<?> reviewApplications(@RequestBody StudentApplicationStatus status, @RequestParam Long applicationId) {
+        return  new ResponseEntity<>(new Response<>(applicationService.reviewApplications(status,applicationId),"Application status updated",HttpStatus.ACCEPTED),HttpStatus.OK);
+
+    }
+
 
 
 }
