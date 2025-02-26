@@ -1,8 +1,8 @@
 package com.subodh.InternshipPortal.entities;
 
+import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import jakarta.persistence.*;
 import lombok.Data;
-
 
 
 @Entity
@@ -14,13 +14,19 @@ public class Application {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long applicationId;
 
-    private String applicationTitle;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "user_id")
+    private Users student;
 
 
-
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "internship_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "internship_id", referencedColumnName = "internship_id")
     private Internship internship;
+
+
+    @Enumerated(EnumType.STRING)
+    StudentApplicationStatus status;
 
 
 }

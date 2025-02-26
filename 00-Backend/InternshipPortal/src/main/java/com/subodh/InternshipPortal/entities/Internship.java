@@ -20,7 +20,8 @@ public class Internship {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long internshipId;
+    @Column(name = "internship_id")
+    private Long internshipId;
     /**
      * The Internship name.
      */
@@ -39,7 +40,7 @@ public class Internship {
     /**
      * The Created by.
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "instructors_id",referencedColumnName = "user_id")
     Users createdBy;
 
@@ -47,8 +48,11 @@ public class Internship {
     private InternshipStatus status;
 
     @ElementCollection
-    @CollectionTable(name = "application_skills",joinColumns = @JoinColumn(name = "application_id"))
-    private List<String> requiredSkills;
+    @CollectionTable(name = "internship_skills",joinColumns = @JoinColumn(name = "internship_id"))
+    @Column(name = "skills")
+    private Set<String> requiredSkills;
 
+    @OneToMany(mappedBy = "internship")
+    List<Application> applications;
 
 }
