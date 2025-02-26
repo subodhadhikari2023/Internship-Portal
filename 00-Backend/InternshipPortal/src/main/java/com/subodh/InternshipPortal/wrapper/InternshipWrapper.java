@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class InternshipWrapper {
+    private Long id;
     private String title;
     private String description;
     private LocalDate startDate;
@@ -25,6 +26,7 @@ public class InternshipWrapper {
         this.endDate = internship.getEndDate();
         this.contactPerson = internship.getCreatedBy().getUserEmail();
         this.status = internship.getStatus();
+        this.id = internship.getInternshipId();
     }
 
 
