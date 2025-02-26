@@ -12,13 +12,15 @@ import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
+@Slf4j
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
     final
@@ -70,6 +72,14 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applications.stream().map(ApplicationWrapper::new).toList();
     }
 
+    @Override
+    public ApplicationWrapper reviewApplications(StudentApplicationStatus status, Long applicationId) {
+        Optional<Application> application = applicationRepository.findById(applicationId);
+
+        application.get().setStatus(status);
+
+        return new ApplicationWrapper(application.get());
+    }
 
 
 }
