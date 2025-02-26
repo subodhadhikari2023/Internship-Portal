@@ -9,10 +9,15 @@ import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -42,10 +47,6 @@ public class InternshipServiceImpl implements InternshipService {
         }
     }
 
-    @Override
-    public boolean findByInternshipId(Long internshipId) {
-        return internshipRepository.findById(internshipId).isPresent();
-    }
 
     @Override
     public List<InternshipWrapper> findAll() {
@@ -54,6 +55,21 @@ public class InternshipServiceImpl implements InternshipService {
         return internshipList.isEmpty() ? null : internshipRepository.findAll().stream()
                 .map(InternshipWrapper::new)
                 .toList();
+
+    }
+
+    @Override
+    public List<InternshipWrapper> findAllByInstructor() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails users) {
+            String email = users.getUsername();
+            Users instructor = usersRepository.findByUserEmail(email);
+
+            List<Internship> internshipList = internshipRepository.findAllByCreatedBy(instructor);
+            return internshipList.stream().map(InternshipWrapper::new).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+
 
     }
 }
