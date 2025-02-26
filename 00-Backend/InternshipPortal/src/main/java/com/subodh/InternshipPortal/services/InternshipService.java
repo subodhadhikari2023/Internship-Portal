@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InternshipService {
 
-    Internship saveInternship(Internship internship);
+    InternshipWrapper saveInternship(Internship internship);
 
     boolean findByInternshipId(Long internshipId);
 

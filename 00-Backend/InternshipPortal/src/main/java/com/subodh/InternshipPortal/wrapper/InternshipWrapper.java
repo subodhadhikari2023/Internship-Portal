@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.wrapper;
 
 import com.subodh.InternshipPortal.entities.Internship;
+import com.subodh.InternshipPortal.enums.InternshipStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -13,8 +14,8 @@ public class InternshipWrapper {
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-
     String contactPerson;
+    InternshipStatus status;
 
     public InternshipWrapper(Internship internship) {
         this.title = internship.getInternshipName();
@@ -22,5 +23,6 @@ public class InternshipWrapper {
         this.startDate = internship.getStartDate();
         this.endDate = internship.getEndDate();
         this.contactPerson = internship.getCreatedBy().getUserEmail();
+        this.status = internship.getStatus();
     }
 }
