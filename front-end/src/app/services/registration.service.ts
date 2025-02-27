@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RegistrationRequest } from '../models/registration-request';
+import { RegistrationRequest } from '../modals/registration-request';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

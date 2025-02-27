@@ -1,5 +1,7 @@
-<body class="d-flex flex-column min-vh-100">
-    <nav><app-navbar></app-navbar></nav>
+<body class=" d-flex flex-column min-vh-100">
+    <nav><app-navbar>
+         
+    </app-navbar></nav>
     <hr>
     <main class="flex-fill">
         <div class="container ">
@@ -11,7 +13,7 @@
                             <h5 class="card-title ">Internships Created</h5>
                             <!-- <p class="card-text">Department of Information Technology</p> -->
                             <p class="card-text"><strong>8</strong></p>
-                            <a routerLink="/internships" class="btn btn-primary">View More</a>
+                            <a class="btn btn-primary">View More</a>
                         </div>
                     </div>
                 </div>
@@ -121,8 +123,10 @@
             </div>
         </div>
 
+        
     </main>
-    <footer >
+    <footer>
         <app-footer></app-footer>
     </footer>
+    <router-outlet></router-outlet>
 </body>

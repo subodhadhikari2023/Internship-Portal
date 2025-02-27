@@ -19,5 +19,6 @@ app-root {
   flex-direction: column;
   height: 100%; /* Full height of the viewport */
 }
-
-
+*{
+  font-family: Roboto,'sans-serief';
+}

@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { LoginRequest } from 'src/app/models/login-request';
-import { LoginResponse } from 'src/app/models/login-response';
+import { LoginRequest } from 'src/app/modals/login-request';
+import { LoginResponse } from 'src/app/modals/login-response';
 import { AuthService } from 'src/app/services/auth.service';
 import { IntegrationService } from 'src/app/services/integration.service';
 
