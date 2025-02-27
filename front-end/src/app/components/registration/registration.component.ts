@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { RegistrationRequest } from 'src/app/models/registration-request';
+import { RegistrationRequest } from 'src/app/modals/registration-request';
 import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({

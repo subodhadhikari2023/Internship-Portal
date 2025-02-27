@@ -1,53 +1,58 @@
-<div class="sticky-top">
-    <nav class="navbar">
-        <header class="header">
+<main>
+    <div class="sticky-top" >
+        <nav class="navbar" >
+            <header class="header">
+                <div class="container-fluid">
+                    <p class="title">Internship Portal - Government of Sikkim</p>
+                </div>
+            </header>
+    
             <div class="container-fluid">
-                <p class="title">Internship Portal - Government of Sikkim</p>
-            </div>
-        </header>
-
-        <div class="container-fluid">
-            <a class="navbar-brand" routerLink="instructors-home">
-                <img src="../../../assets/images/logo.webp" alt="Home" class="logo">
-            </a>
-            <button class="menu-toggle" (click)="toggleMenu()">☰</button>
-            <div class="navbar-links" [class.active]="menuOpen">
-                <ul class="nav-links">
-                    <li class="nav-item"><a class="nav-link" routerLink="/instructors">Home</a></li>
-                    <li class="nav-item dropdown" (click)="toggleDropdown('internships')">
-                        <a class="nav-link">Internships</a>
-                        <ul class="dropdown-menu" [class.show]="dropdowns['internships']">
-                            <li><a>Create Internship</a></li>
-                            <li><a>View Internships</a></li>
-                            <li><a>Edit Internship</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown" (click)="toggleDropdown('applications')">
-                        <a class="nav-link">Applications</a>
-                        <ul class="dropdown-menu" [class.show]="dropdowns['applications']">
-                            <li><a>Create Application</a></li>
-                            <li><a>View Applications</a></li>
-                            <li><a>Edit Application</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <div class="profile-dropdown">
-                    <button class="profile-btn" (click)="toggleDropdown('profile')">
-                        <img src="../../../assets/images/logo.webp" alt="Profile" class="profile-img">
-                    </button>
-                    <ul class="dropdown-menu" [class.show]="dropdowns['profile']">
-                        <li><a class="dropdown-item" routerLink="/profile">View Profile</a></li>
-                        <li><a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a></li>
-                        <li><button class="dropdown-item" (click)="logOut()">Logout</button></li>
+                <a class="navbar-brand" routerLink="instructors-home">
+                    <img src="../../../assets/images/logo.webp" alt="Home" class="logo">
+                </a>
+                <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+                <div class="navbar-links" [class.active]="menuOpen">
+                    <ul class="nav-links">
+                        <li class="nav-item"><a class="nav-link" routerLink="/instructors">Home</a></li>
+                        <li class="nav-item dropdown" (click)="toggleDropdown('internships')">
+                            <a class="nav-link">Internships</a>
+                            <ul class="dropdown-menu" [class.show]="dropdowns['internships']">
+                                <li><a routerLink="/instructor/create-internship" routerLinkActive="active">Create
+                                        Internship</a></li>
+                                <li><a>View Internships</a></li>
+                                <li><a>Edit Internship</a></li>
+                            </ul>
+                            
+                        </li>
+                        <li class="nav-item dropdown" (click)="toggleDropdown('applications')">
+                            <a class="nav-link">Applications</a>
+                            <ul class="dropdown-menu" [class.show]="dropdowns['applications']">
+                                <li><a>Create Application</a></li>
+                                <li><a>View Applications</a></li>
+                                <li><a>Edit Application</a></li>
+                            </ul>
+                        </li>
                     </ul>
+                    <div class="profile-dropdown">
+                        <button class="profile-btn" (click)="toggleDropdown('profile')">
+                            <img src="../../../assets/images/logo.webp" alt="Profile" class="profile-img">
+                        </button>
+                        <ul class="dropdown-menu" [class.show]="dropdowns['profile']">
+                            <li><a class="dropdown-item" routerLink="/profile">View Profile</a></li>
+                            <li><a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a></li>
+                            <li><button class="dropdown-item" (click)="logOut()">Logout</button></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-</div>
-<div class="container-fluid mt-3">
-    <form class="search-form" style="z-index: 1;">
-        <input class="search-input" type="search" placeholder="Search Internships or Applications" style="z-index: 1;">
-        <button class="search-btn" type="submit" style="z-index: 1;">Search</button>
-    </form>
-</div>
+        </nav>
+    </div>
+    <div class="container-fluid mt-3">
+        <form class="search-form" style="z-index: 1;">
+            <input class="search-input" type="search" placeholder="Search Internships or Applications" style="z-index: 1;">
+            <button class="search-btn" type="submit" style="z-index: 1;">Search</button>
+        </form>
+    </div>
+    
+</main>

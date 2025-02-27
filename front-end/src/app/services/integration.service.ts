@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LoginRequest } from '../models/login-request';
+import { LoginRequest } from '../modals/login-request';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../models/login-response';
+import { LoginResponse } from '../modals/login-response';
 const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
 @Injectable({
   providedIn: 'root'

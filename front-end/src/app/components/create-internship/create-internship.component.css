@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.customBorder {
+  border: 2px solid rgb(0, 238, 0);
+}
+.redBorder {
+  border: 2px solid red;
+}
+.container {
+  margin: auto;
+  width: 80vw;
+}
+.flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.instructions {
+  background-color: rgb(196, 176, 150);
+  color: red;
+
+  padding: 30px;
+  position: sticky;
+  height: fit-content;
+  top: 25vh;
+
+  font-size: clamp(0.75rem, 2vw, 1.5rem);
+}
+.instructions ul {
+  margin: 2vh;
+}
+.instructions ul li {
+  text-decoration: dotted;
+}
+
+.instructions,
+.form {
+  width: calc(49% - 1px);
+}
+.form form h2 {
+  text-align: center;
+  margin-top: 2vh;
+}
+.form form{
+  display: block; 
+  text-align: left;
+  column-gap: 5vh;
+}
+
+.form form input {
+  margin: 2vh;
+  
+}
+.form form .input {
+  margin: 1vh;
+  /* border: 3px solid red; */
+  
+}
+#description {
+  resize: vertical;
+  width: 100%;
+  
+}
+.input input{
+  border: 2px solid green;
+}

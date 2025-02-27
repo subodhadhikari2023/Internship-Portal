@@ -1,0 +1,69 @@
+<body>
+    <header>
+        <app-navbar></app-navbar>
+    </header>
+    <main>
+        <section>
+            <div class="container flex shadow">
+
+                <div class="instructions shadow">
+                    <h2>Instructions for creating an Internship</h2>
+                    <hr>
+                    <ul>
+                        <li>Fill in the required details like title, category, and duration.</li>
+                        <li>Specify location (Remote or On-Site).</li>
+                        <li>Add skills required and eligibility criteria.</li>
+                        <li>Provide stipend details (if applicable).</li>
+                        <li>Set the application deadline.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                        <li>Click "Submit" to post the internship.</li>
+                    </ul>
+                </div>
+
+                <div class="form ">
+                    <form action="" class="flex">
+                        <h2>Create Internship</h2>
+                        <hr>
+                        <div class="input">
+                            <label for="internshipName">Internship Name</label>
+                            <input type="text" name="" id="internshipName">
+                        </div>
+
+                        <div class="input">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" name="" id="startDate">
+                        </div>
+                        <div class="input">
+                            <label for="endDate">End Date</label>
+                            <input type="date" name="" id="endDate">
+                        </div>
+                        <div class="input">
+                            <label for="status">Status</label>
+                            <select name="" class="input" id="status">
+                                <option value="ACTIVE">Active</option>
+                                <option value="INACTIVE">InActive</option>
+                            </select>
+                        </div>
+                        <div class="input"><label for="requiredSkills">Required Skills</label>
+                            <input type="text" id="requiredSkills" formControlName="requiredSkills" placeholder="Java, Spring Boot, SQL" />
+                        </div>
+                        <div class="input"><label for="description">Description</label>
+                            <textarea name="" id="description"></textarea>
+                        </div>
+                        
+                    </form>
+                </div>
+
+
+            </div>
+        </section>
+
+    </main>
+
+</body>
