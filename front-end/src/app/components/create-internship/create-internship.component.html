@@ -27,11 +27,36 @@
                 </div>
 
                 <div class="form ">
-                    <form action="">
+                    <form action="" class="flex">
                         <h2>Create Internship</h2>
                         <hr>
-                        <label for="internshipName">Internship Name</label>
-                        <input type="text" name="" id="internshipName">
+                        <div class="input">
+                            <label for="internshipName">Internship Name</label>
+                            <input type="text" name="" id="internshipName">
+                        </div>
+
+                        <div class="input">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" name="" id="startDate">
+                        </div>
+                        <div class="input">
+                            <label for="endDate">End Date</label>
+                            <input type="date" name="" id="endDate">
+                        </div>
+                        <div class="input">
+                            <label for="status">Status</label>
+                            <select name="" class="input" id="status">
+                                <option value="ACTIVE">Active</option>
+                                <option value="INACTIVE">InActive</option>
+                            </select>
+                        </div>
+                        <div class="input"><label for="requiredSkills">Required Skills</label>
+                            <input type="text" id="requiredSkills" formControlName="requiredSkills" placeholder="Java, Spring Boot, SQL" />
+                        </div>
+                        <div class="input"><label for="description">Description</label>
+                            <textarea name="" id="description"></textarea>
+                        </div>
+                        
                     </form>
                 </div>
 

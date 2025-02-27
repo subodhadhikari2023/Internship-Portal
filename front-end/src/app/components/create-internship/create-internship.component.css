@@ -49,7 +49,26 @@
   text-align: center;
   margin-top: 2vh;
 }
+.form form{
+  display: block; 
+  text-align: left;
+  column-gap: 5vh;
+}
 
 .form form input {
   margin: 2vh;
+  
+}
+.form form .input {
+  margin: 1vh;
+  /* border: 3px solid red; */
+  
+}
+#description {
+  resize: vertical;
+  width: 100%;
+  
+}
+.input input{
+  border: 2px solid green;
 }
