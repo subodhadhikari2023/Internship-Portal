@@ -16,6 +16,6 @@ export class IntegrationService {
     return this.http.post<LoginResponse>(`${BASE_URL}login`, request);
   }
   accessMessage() {
-    return this.http.get<LoginResponse>(`${BASE_URL}students`);
+    return this.http.get<LoginResponse>(`${BASE_URL}students/hello`);
   }
 }

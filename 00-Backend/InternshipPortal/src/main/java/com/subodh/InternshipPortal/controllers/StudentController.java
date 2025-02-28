@@ -15,6 +15,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CrossOrigin
 @RequestMapping("api/v1/students")
 public class StudentController {
 
@@ -36,6 +37,10 @@ public class StudentController {
         ApplicationWrapper saved = applicationService.save(application);
         return new ResponseEntity<>(new Response<>(saved,"Application Submitted", HttpStatus.CREATED),HttpStatus.CREATED);
 
+    }
+    @GetMapping("hello")
+    public ResponseEntity<?> hello() {
+        return new ResponseEntity<>(new Response<>("Hello World"), HttpStatus.OK);
     }
 
 
