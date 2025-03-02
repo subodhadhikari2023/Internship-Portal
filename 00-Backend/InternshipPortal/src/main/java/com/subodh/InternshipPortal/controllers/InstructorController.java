@@ -10,6 +10,8 @@ import com.subodh.InternshipPortal.services.InternshipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("api/v1/instructors")
+@CrossOrigin
 public class InstructorController {
 
     private final InternshipService internshipService;
@@ -44,8 +47,8 @@ public class InstructorController {
      * @return the created internship wrapped in the InternshipWrapper
      */
     @PostMapping("internship")
-    public ResponseEntity<?> createInternship(@RequestBody Internship internship) {
-        InternshipWrapper savedInternship = internshipService.saveInternship(internship);
+    public ResponseEntity<?> createInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
+        InternshipWrapper savedInternship = internshipService.saveInternship(internship,userDetails.getUsername());
         return new ResponseEntity<>(new Response<>(savedInternship, "Internship Created Successfully", HttpStatus.CREATED), HttpStatus.CREATED);
     }
 

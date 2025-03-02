@@ -13,10 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -31,11 +28,13 @@ public class InternshipServiceImpl implements InternshipService {
     }
 
     @Override
-    public InternshipWrapper saveInternship(Internship internship) {
+    public InternshipWrapper saveInternship(Internship internship, String username) {
         try {
-            Internship saved = internshipRepository.save(internship);
-            Users user = usersRepository.findByUserId(internship.getCreatedBy().getUserId());
+            Users user = usersRepository.findByUserEmail(username);
             internship.setCreatedBy(user);
+            Set<String> requiredSkills = internship.getRequiredSkills().stream().map(String::trim).filter(skill -> !skill.isEmpty()).collect(Collectors.toSet());
+            internship.setRequiredSkills(requiredSkills);
+            Internship saved = internshipRepository.save(internship);
             return new InternshipWrapper(saved);
 
         } catch (DataIntegrityViolationException e) {
