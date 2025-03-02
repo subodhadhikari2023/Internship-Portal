@@ -2,5 +2,7 @@
     .instructions, .form {
         width: 100%; 
         position: static;
+        margin: 2vh;
+        padding: 2%;
     }
 }

@@ -4,7 +4,7 @@
     </header>
     <main>
         <section>
-            <div class="container flex shadow">
+            <div class="container flex shadow ">
 
                 <div class="instructions shadow">
                     <h2>Instructions for creating an Internship</h2>
@@ -26,42 +26,53 @@
                     </ul>
                 </div>
 
-                <div class="form ">
-                    <form action="" class="flex">
-                        <h2>Create Internship</h2>
-                        <hr>
-                        <div class="input">
-                            <label for="internshipName">Internship Name</label>
-                            <input type="text" name="" id="internshipName">
-                        </div>
 
-                        <div class="input">
-                            <label for="startDate">Start Date</label>
-                            <input type="date" name="" id="startDate">
-                        </div>
-                        <div class="input">
-                            <label for="endDate">End Date</label>
-                            <input type="date" name="" id="endDate">
-                        </div>
-                        <div class="input">
-                            <label for="status">Status</label>
-                            <select name="" class="input" id="status">
-                                <option value="ACTIVE">Active</option>
-                                <option value="INACTIVE">InActive</option>
-                            </select>
-                        </div>
-                        <div class="input"><label for="requiredSkills">Required Skills</label>
-                            <input type="text" id="requiredSkills" formControlName="requiredSkills" placeholder="Java, Spring Boot, SQL" />
-                        </div>
-                        <div class="input"><label for="description">Description</label>
-                            <textarea name="" id="description"></textarea>
-                        </div>
-                        
-                    </form>
-                </div>
+                <form action="" class="flex form">
+                    <h2 class="flex-child">Create Internship</h2>
+                    <hr>
 
+                    <div class="flex-child">
+                        <label for="internshipName">Internship Name</label>
+                        <input type="text" name="" id="internshipName">
+                    </div>
 
+                    <div class="flex-child">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" name="" id="startDate">
+                    </div>
+                    <div class="flex-child">
+                        <label for="endDate">End Date</label>
+                        <input type="date" name="" id="endDate">
+                    </div>
+                    <div class="flex-child">
+                        <label for="status">Status</label>
+                        <select name="" id="status">
+                            <option value="ACTIVE">Active</option>
+                            <option value="INACTIVE">InActive</option>
+                        </select>
+                    </div>
+                    <div class="flex-child"><label for="requiredSkills">Required Skills</label>
+                        <input type="text" id="requiredSkills" formControlName="requiredSkills"
+                            placeholder="Java, Spring Boot, SQL" />
+                    </div>
+                    <div class="flex-child"><label for="location">Work Mode</label>
+                        <select name=""  id="location">
+                            <option value="remote">Remote</option>
+                            <option value="on-site">On-Site</option>
+                        </select>
+                    </div>
+                    <div class="flex-child"><label for="description">Description</label>
+                        <textarea name="" id="description"></textarea>
+                    </div>
+                   <div class="flex-child">
+                    <button type="button" value="Submit" class="button">Submit</button>
+                   </div>
+
+                </form>
             </div>
+
+
+
         </section>
 
     </main>
