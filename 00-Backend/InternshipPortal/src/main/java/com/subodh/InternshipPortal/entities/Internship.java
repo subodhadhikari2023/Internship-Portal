@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.subodh.InternshipPortal.enums.InternshipStatus;
+import com.subodh.InternshipPortal.enums.WorkMode;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -35,6 +36,10 @@ public class Internship {
      * The End date.
      */
     LocalDate endDate;
+
+    private String educationalQualifications;
+
+
     @Lob
     private String description;
 
@@ -47,6 +52,9 @@ public class Internship {
 
     @Enumerated(EnumType.STRING)
     private InternshipStatus status;
+
+    @Enumerated(EnumType.STRING)
+    private WorkMode workMode;
 
     @ElementCollection
     @CollectionTable(name = "internship_skills", joinColumns = @JoinColumn(name = "internship_id"))
