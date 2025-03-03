@@ -14,13 +14,13 @@
                 <button class="menu-toggle" (click)="toggleMenu()">☰</button>
                 <div class="navbar-links" [class.active]="menuOpen">
                     <ul class="nav-links">
-                        <li class="nav-item"><a class="nav-link" routerLink="/instructors">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" routerLink="/instructor">Home</a></li>
                         <li class="nav-item dropdown" (click)="toggleDropdown('internships')">
                             <a class="nav-link">Internships</a>
                             <ul class="dropdown-menu" [class.show]="dropdowns['internships']">
                                 <li><a routerLink="/instructor/create-internship" routerLinkActive="active">Create
                                         Internship</a></li>
-                                <li><a>View Internships</a></li>
+                                <li><a routerLink="/instructor/view-internships">View Internships</a></li>
                                 <li><a>Edit Internship</a></li>
                             </ul>
                             

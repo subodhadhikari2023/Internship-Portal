@@ -9,6 +9,7 @@ import { RegistrationComponent } from './components/registration/registration.co
 import { AuthGuard } from './guards/auth.guard';
 import { InstructorsHomeComponent } from './components/instructors-home/instructors-home.component';
 import { CreateInternshipComponent } from './components/create-internship/create-internship.component';
+import { ViewInternshipsComponent } from './components/view-internships/view-internships.component';
 
 
 
@@ -19,9 +20,10 @@ const routes: Routes = [
   { path: 'home', component: StudentsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'instructor', component: InstructorsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/create-internship', component: CreateInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' },pathMatch:'full' },
+  {path:'instructor/view-internships',component:ViewInternshipsComponent,canActivate:[AuthGuard],data:{role: 'ROLE_INSTRUCTOR' }},
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
-  { path: 'verify', component: VerifyComponent }
+  { path: 'verify', component: VerifyComponent },
 ];
 
 
