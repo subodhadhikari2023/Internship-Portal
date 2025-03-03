@@ -1,8 +1,10 @@
-@media (max-width: 768px) { 
-    .instructions, .form {
-        width: 100%; 
-        position: static;
-        margin: 2vh;
-        padding: 2%;
-    }
+@media (max-width: 768px) {
+  .instructions,
+  .form {
+    width: 100%;
+    position: static;
+    margin: 2vh;
+    padding: 2%;
+  }
+  
 }

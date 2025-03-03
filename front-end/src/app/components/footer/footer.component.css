@@ -53,3 +53,16 @@
 .social-icons a:hover {
     color: #00bcd4;
 }
+footer {
+    margin-top: 3vh;
+    height: fit-content;
+    width: 100%;
+    background-color: #999999;
+    /* z-index: 1050; */
+    overflow: visible;  /* Change this */
+    user-select: text;  /* Add this */
+}
+*{
+    z-index: 1;
+}
+
