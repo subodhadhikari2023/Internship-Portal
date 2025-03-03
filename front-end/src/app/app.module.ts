@@ -16,6 +16,9 @@ import { InstructorsHomeComponent } from './components/instructors-home/instruct
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CreateInternshipComponent } from './components/create-internship/create-internship.component';
+import { PopupComponent } from './components/popup/popup.component';
+
+
 
 
 @NgModule({
@@ -30,18 +33,21 @@ import { CreateInternshipComponent } from './components/create-internship/create
     InstructorsHomeComponent,
     NavbarComponent,
     FooterComponent,
-    CreateInternshipComponent
+    CreateInternshipComponent,
+    PopupComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     HttpClientModule
+
+
   ],
   providers: [{
-    provide:HTTP_INTERCEPTORS,useClass:CustomInterceptor,
-    multi:true
+    provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor,
+    multi: true
   }],
   bootstrap: [AppComponent]
 })

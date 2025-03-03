@@ -1,0 +1,5 @@
+<div *ngIf="isPopupOpen$ | async" class="popup-content" [ngStyle]="{'background-color': color$ | async}">
+  <p [ngStyle]="{'color': fontColor$ | async}">{{ message$ | async }}</p>
+  <button (click)="notifier.closePopup()">X</button>
+  
+  </div>

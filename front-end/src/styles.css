@@ -1,24 +1,41 @@
-/* styles.css */
-
-/* Reset body margins and paddings */
 body {
   margin: 0;
   padding: 0;
-  height: 100%; /* Ensure body takes full height */
-  width: 100%; /* Ensure body takes full width */
+  height: 100%;
+  width: 100%;
 }
 
-/* Ensure the html element takes full height */
 html {
   height: 100%;
 }
 
-/* Make the app component fill the viewport */
 app-root {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Full height of the viewport */
+  height: 100%;
 }
-*{
-  font-family: Roboto,'sans-serief';
+* {
+  font-family: Roboto, "sans-serief";
 }
+
+:root {
+  --primary-color: #029407;       /* Main Brand Green */
+  --secondary-color: #027D94;     /* Teal-like Blue-Green */
+  --accent-color: #409402;        /* Yellow-Green Accent */
+  --dark-accent: #016B05;         /* Darker Green for Depth */
+  --light-accent: #38B24A;        /* Softer Green for Highlights */
+
+  --complementary-color: #940229; /* Deep Red for Contrast */
+  --triadic-color-1: #940702;     /* Warm Deep Red */
+  --triadic-color-2: #070294;     /* Strong Royal Blue */
+
+  --font-color: #222222;          /* Dark Gray for Readability */
+  --font-light: #555555;          /* Softer Gray for Subtext */
+  --heading-color: #e0e0e0;       /* Black for High Contrast Headings */
+
+  --background-color: #ffffff;    /* White Background */
+  --card-background: #f9f9f9;     /* Light Gray Background for Cards */
+  --border-color: #dcdcdc;        /* Light Gray Borders */
+  --hover-background: #f1f1f1;    /* Slightly Darker Background for Hover Effects */
+}
+

@@ -3,6 +3,7 @@
         <app-navbar></app-navbar>
     </header>
     <main>
+
         <section>
             <div class="container flex shadow ">
 
@@ -10,71 +11,102 @@
                     <h2>Instructions for creating an Internship</h2>
                     <hr>
                     <ul>
-                        <li>Fill in the required details like title, category, and duration.</li>
-                        <li>Specify location (Remote or On-Site).</li>
-                        <li>Add skills required and eligibility criteria.</li>
-                        <li>Provide stipend details (if applicable).</li>
-                        <li>Set the application deadline.</li>
+                        <li>Enter the internship name (e.g., Rust Developer Intern).</li>
+                        <li>Select the start and end dates for the internship.</li>
+                        <li>Specify the required educational qualifications (e.g., Bachelor's in Computer Science).</li>
+                        <li>Set the status of the internship (Active or Inactive).</li>
+                        <li>Add the required skills (e.g., Java, Spring Boot, SQL).</li>
+                        <li>Add the skills as comma separated values as described above.</li>
+                        <li>Choose the work mode (Remote or On-Site).</li>
+                        <li>Provide a detailed description, including roles and responsibilities.</li>
+                        <li>Review all the details to ensure accuracy.</li>
                         <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
-                        <li>Click "Submit" to post the internship.</li>
+
+
                     </ul>
                 </div>
 
 
-                <form action="" class="flex form">
+                <form [formGroup]="userForm" (ngSubmit)="createInternship()" class="flex form">
                     <h2 class="flex-child">Create Internship</h2>
                     <hr>
 
                     <div class="flex-child">
                         <label for="internshipName">Internship Name</label>
-                        <input type="text" name="" id="internshipName">
+                        <input type="text" name="" id="internshipName" formControlName="internshipName"
+                            placeholder="Rust Developer Intern">
+                        <div class="text-danger small"
+                            *ngIf="userForm.get('internshipName')?.touched && userForm.get('internshipName')?.errors?.['required']">
+                            <span>Internship Name is required</span>
+                        </div>
                     </div>
 
                     <div class="flex-child">
                         <label for="startDate">Start Date</label>
-                        <input type="date" name="" id="startDate">
+                        <input type="date" name="" id="startDate" formControlName="startDate">
+                        <div class="text-danger small"
+                            *ngIf="userForm.get('startDate')?.touched && userForm.get('startDate')?.errors?.['required']">
+                            <span>Please select a start date for the Internship</span>
+                        </div>
                     </div>
                     <div class="flex-child">
                         <label for="endDate">End Date</label>
-                        <input type="date" name="" id="endDate">
+                        <input type="date" name="" id="endDate" formControlName="endDate">
+                        <div class="text-danger small"
+                            *ngIf="userForm.get('endDate')?.touched && userForm.get('endDate')?.errors?.['required']">
+                            <span>Please select a end date for the Internship</span>
+                        </div>
+                    </div>
+                    <div class="flex-child">
+                        <label for="endDate">Educational Qualifications </label>
+                        <input type="text" name="" id="endDate" formControlName="educationalQualifications"
+                            placeholder="Masters in Computer Applications">
+                        <div class="text-danger small"
+                            *ngIf="userForm.get('educationalQualifications')?.touched && userForm.get('educationalQualifications')?.errors?.['required']">
+                            <span>Please enter the required qualifications for the Internship</span>
+                        </div>
                     </div>
                     <div class="flex-child">
                         <label for="status">Status</label>
-                        <select name="" id="status">
-                            <option value="ACTIVE">Active</option>
+                        <select id="status" formControlName="status">
+                            <option value="ACTIVE" selected>Active</option>
                             <option value="INACTIVE">InActive</option>
+
                         </select>
+                        <div class="text-danger small"
+                            *ngIf="userForm.get('status')?.touched && userForm.get('status')?.errors?.['required']">
+                            <span>Please provide the status of the Internship</span>
+                        </div>
                     </div>
                     <div class="flex-child"><label for="requiredSkills">Required Skills</label>
                         <input type="text" id="requiredSkills" formControlName="requiredSkills"
                             placeholder="Java, Spring Boot, SQL" />
                     </div>
                     <div class="flex-child"><label for="location">Work Mode</label>
-                        <select name=""  id="location">
-                            <option value="remote">Remote</option>
-                            <option value="on-site">On-Site</option>
+                        <select name="" id="location" formControlName="workMode">
+                            <option selected value="REMOTE">Remote</option>
+                            <option value="ON_SITE">On-Site</option>
                         </select>
                     </div>
                     <div class="flex-child"><label for="description">Description</label>
-                        <textarea name="" id="description"></textarea>
+                        <textarea name="" id="description" formControlName="description"
+                            placeholder="Please provide the description of the Internship, for example roles and responsibilities of the intern."></textarea>
                     </div>
-                   <div class="flex-child">
-                    <button type="button" value="Submit" class="button">Submit</button>
-                   </div>
+                    <div class="flex-child">
+                        <button type="submit" class="button">Submit</button>
+                        <p style="width: fit-content;margin: auto; color:rgb(255, 255, 255) !important; font-size: 1.4rem; font-weight: 500;"
+                            *ngIf="errorMessage" class="mt-3 error-message text-center text-danger">{{ errorMessage }}
+                        </p>
+
+                    </div>
 
                 </form>
             </div>
-
-
-
         </section>
-
+        <section class="popup">
+            <app-popup></app-popup>
+        </section>
     </main>
 
 </body>
+<app-footer></app-footer>
