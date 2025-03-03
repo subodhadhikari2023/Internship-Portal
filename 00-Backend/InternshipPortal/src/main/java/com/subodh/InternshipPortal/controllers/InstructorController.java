@@ -60,6 +60,7 @@ public class InstructorController {
     @GetMapping("internship")
     public ResponseEntity<?> getAllInternship() {
         List<InternshipWrapper> internships = internshipService.findAllByInstructor();
+        log.info("All internships found");
         if (internships.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

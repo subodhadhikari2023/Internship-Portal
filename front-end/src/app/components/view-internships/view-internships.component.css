@@ -1,0 +1,131 @@
+/* Ensure full-page layout with sticky footer */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+*{
+    z-index: 1;
+}
+
+/* Internship cards container */
+.internships-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 40px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* Individual internship card */
+.internship-card {
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: left;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.internship-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Apply button */
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Status label styling */
+.active {
+  color: green;
+  font-weight: bold;
+}
+
+/* Filter dropdown */
+.filter-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.filter-container label {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.filter-container select {
+  padding: 8px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+body{
+    min-height: 100vh;
+    max-height: fit-content;
+    margin-bottom: 5vh;
+}
+@media (max-width: 768px) {
+    .instructions,
+    .form {
+      width: 100%;
+      position: static;
+      margin: 2vh;
+      padding: 2%;
+    }
+  
+    .flex {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .instructions,
+    .form {
+      width: 90%;
+    }
+  
+    /* Adjust internship cards to be single-column */
+    .internships-container {
+      grid-template-columns: 1fr; /* One column on smaller screens */
+      padding: 20px;
+    }
+  
+    /* Ensure buttons are properly sized */
+    button {
+      width: 100%;
+      font-size: 16px;
+      padding: 12px;
+    }
+  
+    .filter-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .filter-container label {
+      margin-bottom: 5px;
+    }
+  
+    .filter-container select {
+      width: 100%;
+    }
+  }
+  

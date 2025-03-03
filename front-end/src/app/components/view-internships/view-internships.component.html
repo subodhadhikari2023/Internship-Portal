@@ -1,0 +1,32 @@
+<body class="view-internship-page">
+    <app-navbar style="z-index: 2;" ></app-navbar>
+  
+    <section class="filter-section">
+      <div class="filter-container">
+        <label for="statusFilter">Filter by Status:</label>
+        <select id="statusFilter" (change)="filterInternships($event)">
+          <option value="ALL">All</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Closed</option>
+        </select>
+      </div>
+    </section>
+  
+    <main class="internships-container">
+      <article class="internship-card" *ngFor="let internship of filteredInternships">
+        <h3><strong>Role:</strong> {{ internship.title }}</h3>
+        <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
+        <p><strong>End Date:</strong> {{ internship.endDate }}</p>
+        <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
+        <p><strong>Description:</strong> {{ internship.description }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span [class.active]="internship.status === 'ACTIVE'">
+            {{ internship.status }}
+          </span>
+        </p>
+      </article>
+    </main>  
+    
+</body>
+
