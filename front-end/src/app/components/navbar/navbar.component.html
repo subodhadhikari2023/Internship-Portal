@@ -1,12 +1,12 @@
 <main>
-    <div class="sticky-top" >
-        <nav class="navbar" >
+    <div class="sticky-top">
+        <nav class="navbar">
             <header class="header">
                 <div class="container-fluid">
                     <p class="title">Internship Portal - Government of Sikkim</p>
                 </div>
             </header>
-    
+
             <div class="container-fluid">
                 <a class="navbar-brand" routerLink="instructors-home">
                     <img src="../../../assets/images/logo.webp" alt="Home" class="logo">
@@ -21,9 +21,9 @@
                                 <li><a routerLink="/instructor/create-internship" routerLinkActive="active">Create
                                         Internship</a></li>
                                 <li><a routerLink="/instructor/view-internships">View Internships</a></li>
-                                <li><a>Edit Internship</a></li>
+                                <li><a routerLink="/instructor/manage-internships">Edit Internship</a></li>
                             </ul>
-                            
+
                         </li>
                         <li class="nav-item dropdown" (click)="toggleDropdown('applications')">
                             <a class="nav-link">Applications</a>
@@ -50,9 +50,10 @@
     </div>
     <div class="container-fluid mt-3">
         <form class="search-form" style="z-index: 1;">
-            <input class="search-input" type="search" placeholder="Search Internships or Applications" style="z-index: 1;">
+            <input class="search-input" type="search" placeholder="Search Internships or Applications"
+                style="z-index: 1;">
             <button class="search-btn" type="submit" style="z-index: 1;">Search</button>
         </form>
     </div>
-    
+
 </main>

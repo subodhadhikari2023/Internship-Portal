@@ -18,6 +18,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CreateInternshipComponent } from './components/create-internship/create-internship.component';
 import { PopupComponent } from './components/popup/popup.component';
 import { ViewInternshipsComponent } from './components/view-internships/view-internships.component';
+import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 
 
 
@@ -36,7 +37,8 @@ import { ViewInternshipsComponent } from './components/view-internships/view-int
     FooterComponent,
     CreateInternshipComponent,
     PopupComponent,
-    ViewInternshipsComponent
+    ViewInternshipsComponent,
+    EditInternshipComponent
   ],
   imports: [
     BrowserModule,

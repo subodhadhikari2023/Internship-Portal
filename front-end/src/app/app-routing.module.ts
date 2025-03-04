@@ -10,6 +10,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { InstructorsHomeComponent } from './components/instructors-home/instructors-home.component';
 import { CreateInternshipComponent } from './components/create-internship/create-internship.component';
 import { ViewInternshipsComponent } from './components/view-internships/view-internships.component';
+import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 
 
 
@@ -19,8 +20,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: StudentsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'instructor', component: InstructorsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
-  { path: 'instructor/create-internship', component: CreateInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' },pathMatch:'full' },
-  {path:'instructor/view-internships',component:ViewInternshipsComponent,canActivate:[AuthGuard],data:{role: 'ROLE_INSTRUCTOR' }},
+  { path: 'instructor/create-internship', component: CreateInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' }, pathMatch: 'full' },
+  { path: 'instructor/view-internships', component: ViewInternshipsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+  { path: 'instructor/manage-internships', component: EditInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
   { path: 'verify', component: VerifyComponent },

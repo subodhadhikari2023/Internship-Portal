@@ -1,0 +1,37 @@
+<body class="manage-internship-page">
+    <app-navbar ></app-navbar>
+
+    <main class="internships-table-container" >
+        <table>
+            <thead>
+                <tr>
+                    <th>Role</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Created By</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let internship of internships">
+                    <td>{{ internship.title }}</td>
+                    <td>{{ internship.startDate }}</td>
+                    <td>{{ internship.endDate }}</td>
+                    <td>{{ internship.contactPerson }}</td>
+                    <td>{{ internship.description }}</td>
+                    <td>
+                        <span [class.active]="internship.status === 'ACTIVE'">
+                            {{ internship.status }}
+                        </span>
+                    </td>
+                    <td>
+                        <button>Edit</button>
+                        <button>Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+</body>
