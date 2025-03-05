@@ -11,4 +11,6 @@ public interface InternshipService {
 
     List<InternshipWrapper> findAll();
     List<InternshipWrapper> findAllByInstructor();
+
+    Internship findInternshipByInternshipId(Long internshipId);
 }

@@ -2,31 +2,39 @@ package com.subodh.InternshipPortal.wrapper;
 
 import com.subodh.InternshipPortal.entities.Internship;
 import com.subodh.InternshipPortal.enums.InternshipStatus;
+import com.subodh.InternshipPortal.enums.WorkMode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 public class InternshipWrapper {
-    private Long id;
-    private String title;
+    private Long internshipId;
+    private String internshipName;
     private String description;
     private LocalDate startDate;
     private LocalDate endDate;
-    String contactPerson;
-    InternshipStatus status;
+    private String contactPerson;
+    private InternshipStatus status;
+    private Set<String> requiredSkills;
+    private String educationalQualification;
+    private WorkMode workMode;
+
 
     public InternshipWrapper(Internship internship) {
-        this.title = internship.getInternshipName();
+        this.internshipName = internship.getInternshipName();
         this.description = internship.getDescription();
         this.startDate = internship.getStartDate();
         this.endDate = internship.getEndDate();
         this.contactPerson = internship.getCreatedBy().getUserEmail();
         this.status = internship.getStatus();
-        this.id = internship.getInternshipId();
+        this.internshipId = internship.getInternshipId();
+        this.requiredSkills = internship.getRequiredSkills();
+        this.educationalQualification=internship.getEducationalQualifications();
+        this.workMode=internship.getWorkMode();
     }
 
 

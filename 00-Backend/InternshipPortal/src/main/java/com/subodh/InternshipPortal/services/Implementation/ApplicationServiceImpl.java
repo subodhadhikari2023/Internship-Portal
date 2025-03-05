@@ -65,7 +65,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public List<ApplicationWrapper> findAllofUser() {
         List<InternshipWrapper> internships = internshipService.findAllByInstructor();
-        List<Long> internshipIds = internships.stream().map(InternshipWrapper::getId).toList();
+        List<Long> internshipIds = internships.stream().map(InternshipWrapper::getInternshipId).toList();
 
         List<Application> applications = applicationRepository.findByInternshipIds(internshipIds);
 

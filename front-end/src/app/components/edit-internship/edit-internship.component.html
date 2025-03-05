@@ -1,37 +1,68 @@
-<body class="manage-internship-page">
-    <app-navbar ></app-navbar>
-
-    <main class="internships-table-container" >
-        <table>
-            <thead>
-                <tr>
-                    <th>Role</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
-                    <th>Created By</th>
-                    <th>Description</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let internship of internships">
-                    <td>{{ internship.title }}</td>
-                    <td>{{ internship.startDate }}</td>
-                    <td>{{ internship.endDate }}</td>
-                    <td>{{ internship.contactPerson }}</td>
-                    <td>{{ internship.description }}</td>
-                    <td>
-                        <span [class.active]="internship.status === 'ACTIVE'">
-                            {{ internship.status }}
-                        </span>
-                    </td>
-                    <td>
-                        <button>Edit</button>
-                        <button>Delete</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </main>
+<nav><app-navbar style="z-index: 20;"></app-navbar></nav>
+<body class="container">
+    
+    <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Description</th>
+            <th>Educational Qualifications</th>
+            <th>Work Mode</th>
+            <th>Status</th>
+            <th>Skills</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let internship of internships">
+            <!-- Editable Fields -->
+            <td>
+              <input *ngIf="internship.isEditing" [(ngModel)]="internship.internshipName" />
+              <span *ngIf="!internship.isEditing">{{ internship.internshipName }}</span>
+            </td>
+            <td>
+              <input *ngIf="internship.isEditing" type="date" [(ngModel)]="internship.startDate" />
+              <span *ngIf="!internship.isEditing">{{ internship.startDate }}</span>
+            </td>
+            <td>
+              <input *ngIf="internship.isEditing" type="date" [(ngModel)]="internship.endDate" />
+              <span *ngIf="!internship.isEditing">{{ internship.endDate }}</span>
+            </td>
+        
+            <td>
+              <input *ngIf="internship.isEditing" [(ngModel)]="internship.description" />
+              <span *ngIf="!internship.isEditing">{{ internship.description }}</span>
+            </td>
+            <td>
+              <input *ngIf="internship.isEditing" [(ngModel)]="internship.educationalQualification" />
+              <span *ngIf="!internship.isEditing">{{ internship.educationalQualification }}</span>
+            </td>
+            <td>
+              <select *ngIf="internship.isEditing" [(ngModel)]="internship.workMode">
+                <option value="REMOTE">Remote</option>
+                <option value="ON_SITE">On-Site</option>
+              </select>
+              <span *ngIf="!internship.isEditing">{{ internship.workMode }}</span>
+            </td>
+            <td>
+              <select *ngIf="internship.isEditing" [(ngModel)]="internship.status">
+                <option value="ACTIVE">Active</option>
+                <option value="INACTIVE">Closed</option>
+              </select>
+              <span *ngIf="!internship.isEditing">{{ internship.status }}</span>
+            </td>
+            <td>
+              <input *ngIf="internship.isEditing" type="text" [(ngModel)]="internship.requiredSkills" />
+              <span *ngIf="!internship.isEditing">{{ internship.requiredSkills }}</span>
+            </td>
+            <td>
+              <button *ngIf="!internship.isEditing" (click)="editInternship(internship)">Edit</button>
+              <button *ngIf="internship.isEditing" (click)="updateInternship(internship)">Save</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+     
 </body>

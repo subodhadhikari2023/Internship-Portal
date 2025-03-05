@@ -31,6 +31,7 @@ public class InternshipServiceImpl implements InternshipService {
     @Override
     public InternshipWrapper saveInternship(Internship internship, String username) {
         try {
+
             Users user = usersRepository.findByUserEmail(username);
             internship.setCreatedBy(user);
             Set<String> requiredSkills = internship.getRequiredSkills().stream().map(String::trim).filter(skill -> !skill.isEmpty()).collect(Collectors.toSet());
@@ -43,7 +44,7 @@ public class InternshipServiceImpl implements InternshipService {
         } catch (IllegalArgumentException e) {
             throw new InternshipCreationFailedException("Invalid internship data provided.");
         } catch (Exception e) {
-            throw new InternshipCreationFailedException("Unexpected error while creating internship: " + e.getMessage());
+            throw new InternshipCreationFailedException("Unexpected error while saving internship: " + e.getMessage());
         }
     }
 
@@ -65,11 +66,16 @@ public class InternshipServiceImpl implements InternshipService {
             Users instructor = usersRepository.findByUserEmail(email);
 
             List<Internship> internshipList = internshipRepository.findAllByCreatedBy(instructor);
-            return internshipList.stream().map(InternshipWrapper::new).collect(Collectors.toList());
+            return internshipList.isEmpty() ? Collections.emptyList() : internshipList.stream().map(InternshipWrapper::new).collect(Collectors.toList());
         }
         return Collections.emptyList();
 
 
+    }
+
+    @Override
+    public Internship findInternshipByInternshipId(Long internshipId) {
+        return internshipRepository.findById(internshipId).orElse(null);
     }
 }
 
