@@ -22,4 +22,8 @@ export class InternshipService {
       map(response => response.entity || []) // Extract the entity array
     );
   }
+
+  updateInternship(internship: any) {
+    return this.http.put<any>(`${BASE_URL}instructors/internship`, internship);
+  }
 }

@@ -14,11 +14,13 @@
   
     <main class="internships-container">
       <article class="internship-card" *ngFor="let internship of filteredInternships">
-        <h3><strong>Role:</strong> {{ internship.title }}</h3>
+        <h3><strong>Role:</strong> {{ internship.internshipName }}</h3>
         <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
         <p><strong>End Date:</strong> {{ internship.endDate }}</p>
         <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
         <p><strong>Description:</strong> {{ internship.description }}</p>
+        <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
+        <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
         <p>
           <strong>Status:</strong>
           <span [class.active]="internship.status === 'ACTIVE'">

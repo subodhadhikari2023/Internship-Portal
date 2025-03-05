@@ -1,70 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   padding: 0;
   margin: 0;
-  box-sizing: border-box;
-  height: 100vh;
-}
-
-.manage-internship-page {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+  font-family: Roboto, sans-serif;
   background-color: #f5f5f5;
+  min-height: fit-content;
+  height: 100vh;
+  position: relative;
 }
 
-.filter-section {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px;
-  background: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 10px;
+.container {
+  margin: auto;
+  width: 80vw;
+  max-width: 1200px;
 }
 
-.filter-container {
-  display: flex;
-  align-items: center;
-}
-
-.filter-container label {
-  margin-right: 10px;
-  font-weight: bold;
-}
-
-.filter-container select {
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
+/* Table container */
 .internships-table-container {
-  width: 90%;
-  margin: 0 auto;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow-x: auto;
+  margin: 20px 0;
 }
 
+.table-responsive {
+  width: 100%;
+}
+
+/* Table styling */
 table {
   width: 100%;
   border-collapse: collapse;
+  background: #fff;
+  table-layout: fixed; /* Ensures the table does not overflow */
 }
 
-th,
-td {
+th, td {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: left;
+  word-wrap: break-word; /* Allows long words to wrap */
+  white-space: normal; /* Ensures text wraps instead of overflowing */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Optional: Adds "..." if content is too long */
 }
 
 th {
-  background-color: #007bff;
+  background-color: #094b00;
   color: white;
   font-weight: bold;
 }
 
+/* Status colors */
 td span.active {
   color: green;
   font-weight: bold;
@@ -75,9 +62,20 @@ td span.inactive {
   font-weight: bold;
 }
 
+/* Input fields and select dropdown */
+td input,
+td select {
+  width: 100%;
+  padding: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Buttons inside table */
 td button {
   padding: 5px 10px;
-  margin: 0 5px;
+  margin: 2px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -97,9 +95,76 @@ td button:last-child {
 td button:hover {
   opacity: 0.8;
 }
-* {
-  z-index: 5 !important;
+
+/* General buttons */
+button {
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background: #007bff;
+  color: white;
+  border-radius: 5px;
 }
-.internships-table-container {
-  position: relative;
+
+button:hover {
+  background: #0056b3;
+}
+
+/* Responsive Table */
+@media screen and (max-width: 768px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead {
+    display: none;
+  }
+
+  tbody tr {
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  td:last-child {
+    border-bottom: none;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #007bff;
+  }
+  body{
+    min-height: fit-content;
+    height: 100vh;
+
+  }
+}
+
+@media screen and (max-width: 480px) {
+  button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 }

@@ -18,11 +18,45 @@ export class EditInternshipComponent implements OnInit {
     this.internshipService.getInternships().subscribe({
       next: (response) => {
         this.internships = response;
-      
+
       },
       error: (err) => {
         console.log(err);
       }
     })
+  }
+
+  updateInternship(internship: any) {
+    internship.isEditing = false;
+
+    // Ensure internshipId is included in the request payload
+    const updatedInternship = {
+      internshipId: internship.internshipId, // Ensure ID is present
+      internshipName: internship.internshipName,
+      startDate: internship.startDate,
+      endDate: internship.endDate,
+      description: internship.description,
+      educationalQualification: internship.educationalQualification,
+      workMode: internship.workMode,
+      status: internship.status,
+      requiredSkills: internship.requiredSkills
+    };
+    // console.log(updatedInternship);
+
+    this.internshipService.updateInternship(updatedInternship).subscribe({
+      next: (response) => {
+        console.log("Updated Internship:", response);
+      },
+      error: (err) => {
+        console.error("Error updating internship:", err);
+      }
+    });
+  }
+
+
+
+
+  editInternship(internship: any) {
+    internship.isEditing = true;
   }
 }

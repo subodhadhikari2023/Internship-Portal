@@ -31,7 +31,7 @@ export class CreateInternshipComponent {
 
 
   createInternship() {
-   
+
     this.internshipRequest = { ...this.userForm.value };
 
     if (typeof (this.userForm.value.requiredSkills) == 'string') {
@@ -44,15 +44,15 @@ export class CreateInternshipComponent {
 
     const duration = (endDate.getTime() - startDate.getTime()) / (1000 * 3600 * 24);
     if (duration < 90) {
-      this.errorMessage="Internship Duration should be atleast 90 days or more!";
+      this.errorMessage = "Internship Duration should be atleast 90 days or more!";
       return;
     }
     this.internship.createInternship(this.internshipRequest).subscribe({
       next: (response: any) => {
-       
+
         this.notifier.openPopup('Internship Created Successfully!', '#88d286', 'white', 5000);
         this.userForm.reset();
-      },error:(err)=>{
+      }, error: (err) => {
         if (err.status == 401) {
           this.errorMessage = "Fill up the form fields correctly!";
         }
