@@ -48,7 +48,8 @@ public class InstructorController {
      */
     @PostMapping("internship")
     public ResponseEntity<?> createInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
-        InternshipWrapper savedInternship = internshipService.saveInternship(internship,userDetails.getUsername());
+        log.info("{}", internship.getRequiredSkills());
+        InternshipWrapper savedInternship = internshipService.saveInternship(internship, userDetails.getUsername());
         return new ResponseEntity<>(new Response<>(savedInternship, "Internship Created Successfully", HttpStatus.CREATED), HttpStatus.CREATED);
     }
 
@@ -60,12 +61,34 @@ public class InstructorController {
     @GetMapping("internship")
     public ResponseEntity<?> getAllInternship() {
         List<InternshipWrapper> internships = internshipService.findAllByInstructor();
-        log.info("All internships found");
+//        log.info("All internships found");
         if (internships.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new Response<>(internships), HttpStatus.OK);
     }
+
+    @PutMapping("internship")
+    public ResponseEntity<?> updateInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
+        Internship savedInternship = internshipService.findInternshipByInternshipId(internship.getInternshipId());
+
+        if (savedInternship == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Internship not found");
+        }
+
+        savedInternship.setInternshipName(internship.getInternshipName());
+        savedInternship.setStartDate(internship.getStartDate());
+        savedInternship.setEndDate(internship.getEndDate());
+        savedInternship.setDescription(internship.getDescription());
+        savedInternship.setEducationalQualifications(internship.getEducationalQualifications());
+        savedInternship.setWorkMode(internship.getWorkMode());
+        savedInternship.setStatus(internship.getStatus());
+        savedInternship.setRequiredSkills(internship.getRequiredSkills());
+        internshipService.saveInternship(savedInternship, userDetails.getUsername());
+
+        return ResponseEntity.ok(new InternshipWrapper(savedInternship));
+    }
+
 
     @GetMapping("applications")
     public ResponseEntity<?> getAllApplications() {
@@ -73,12 +96,12 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(applicationWrapperList), HttpStatus.OK);
 
     }
+
     @PostMapping("review-applications")
     public ResponseEntity<?> reviewApplications(@RequestBody StudentApplicationStatus status, @RequestParam Long applicationId) {
-        return  new ResponseEntity<>(new Response<>(applicationService.reviewApplications(status,applicationId),"Application status updated",HttpStatus.ACCEPTED),HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(applicationService.reviewApplications(status, applicationId), "Application status updated", HttpStatus.ACCEPTED), HttpStatus.OK);
 
     }
-
 
 
 }
