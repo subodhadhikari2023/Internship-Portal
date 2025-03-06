@@ -22,6 +22,7 @@ public interface UserService {
      *
      * @param user the user
      * @return the string
+     * @throws Exception the exception
      */
     String verifyUserCredentials(Users user) throws Exception;
 

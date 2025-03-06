@@ -11,11 +11,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type User details service implementation.
+ */
 @Slf4j
 @Service
 public class UserDetailsServiceImplementation implements UserDetailsService {
+    /**
+     * The Users repository.
+     */
     final UsersRepository usersRepository;
 
+    /**
+     * Instantiates a new User details service implementation.
+     *
+     * @param usersRepository the users repository
+     */
     @Autowired
     public UserDetailsServiceImplementation(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;

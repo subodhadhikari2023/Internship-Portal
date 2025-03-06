@@ -1,0 +1,45 @@
+
+<main>
+    <div class="sticky-top">
+        <nav class="navbar">
+            <header class="header">
+                <div class="container-fluid">
+                    <p class="title">Internship Portal - Government of Sikkim</p>
+                </div>
+            </header>
+
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="students-home">
+                    <img src="../../../assets/images/logo.webp" alt="Home" class="logo">
+                </a>
+                <button class="menu-toggle" (click)="toggleMenu()">☰</button>
+                <div class="navbar-links" [class.active]="menuOpen">
+                    <ul class="nav-links">
+                        <li class="nav-item"><a class="nav-link" routerLink="/student">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" routerLink="/student">Applied Internships</a></li>
+                        <li class="nav-item"><a class="nav-link" routerLink="/student">My applications</a></li>
+
+                    </ul>
+                    <div class="profile-dropdown">
+                        <button class="profile-btn" (click)="toggleDropdown('profile')">
+                            <img src="../../../assets/images/logo.webp" alt="Profile" class="profile-img">
+                        </button>
+                        <ul class="dropdown-menu" [class.show]="dropdowns['profile']">
+                            <li><a class="dropdown-item" routerLink="/profile">View Profile</a></li>
+                            <li><a class="dropdown-item" routerLink="/profile/edit">Edit Profile</a></li>
+                            <li><button class="dropdown-item" (click)="logOut()">Logout</button></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid mt-3">
+        <form class="search-form" style="z-index: 1;">
+            <input class="search-input" type="search" placeholder="Search Internships or Applications"
+                style="z-index: 1;">
+            <button class="search-btn" type="submit" style="z-index: 1;">Search</button>
+        </form>
+    </div>
+</main>

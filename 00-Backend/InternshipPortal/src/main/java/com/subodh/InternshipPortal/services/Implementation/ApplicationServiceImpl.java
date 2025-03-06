@@ -20,15 +20,29 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The type Application service.
+ */
 @Slf4j
 @Service
 public class ApplicationServiceImpl implements ApplicationService {
+    /**
+     * The Application repository.
+     */
     final
     ApplicationRepository applicationRepository;
     private final UsersRepository usersRepository;
     private final InternshipRepository internshipRepository;
     private final InternshipService internshipService;
 
+    /**
+     * Instantiates a new Application service.
+     *
+     * @param applicationRepository the application repository
+     * @param usersRepository       the users repository
+     * @param internshipRepository  the internship repository
+     * @param internshipService     the internship service
+     */
     @Autowired
     public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService) {
         this.applicationRepository = applicationRepository;
@@ -38,14 +52,15 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationWrapper save(Application application) {
+    public ApplicationWrapper save(Application application, String userEmail) {
         try {
 
-            if (applicationRepository.existsByInternshipAndStudent(application.getInternship(), application.getStudent())) {
+            Users student = usersRepository.findByUserEmail(userEmail);
+            Optional<?> exists = applicationRepository.existsByInternshipAndStudent(application.getInternship().getInternshipId(), student.getUserId());
+            if (exists.isPresent()) {
                 throw new ApplicationCreationFailedException("Student has already applied for this internship.");
             }
 
-            Users student = usersRepository.findByUserId(application.getStudent().getUserId());
             Internship internship = internshipRepository.findByInternshipId(application.getInternship().getInternshipId());
             application.setStatus(StudentApplicationStatus.SUBMITTED);
             application.setStudent(student);

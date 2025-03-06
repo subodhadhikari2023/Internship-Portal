@@ -23,7 +23,7 @@ public class Internship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "internship_id")
-    private Long internshipId;
+        private Long internshipId;
     /**
      * The Internship name.
      */
@@ -61,6 +61,9 @@ public class Internship {
     @Column(name = "skills")
     private Set<String> requiredSkills;
 
+    /**
+     * The Applications.
+     */
     @OneToMany(mappedBy = "internship")
     @JsonManagedReference
     List<Application> applications;

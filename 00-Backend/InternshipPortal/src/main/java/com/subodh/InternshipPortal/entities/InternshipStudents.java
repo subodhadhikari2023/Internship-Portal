@@ -4,6 +4,9 @@ import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * The type Internship students.
+ */
 @Entity
 @Data
 @Table(name = "internship_students")

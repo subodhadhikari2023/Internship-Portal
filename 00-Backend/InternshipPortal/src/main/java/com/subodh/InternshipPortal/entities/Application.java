@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 
+/**
+ * The type Application.
+ */
 @Entity
 @Data
 public class Application {
@@ -27,6 +30,9 @@ public class Application {
     private Internship internship;
 
 
+    /**
+     * The Status.
+     */
     @Enumerated(EnumType.STRING)
     StudentApplicationStatus status;
 

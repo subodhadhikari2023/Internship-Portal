@@ -22,5 +22,11 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     Users findByUserEmail(String userEmail);
 
 
+    /**
+     * Find by user id users.
+     *
+     * @param userId the user id
+     * @return the users
+     */
     Users findByUserId(Long userId);
 }

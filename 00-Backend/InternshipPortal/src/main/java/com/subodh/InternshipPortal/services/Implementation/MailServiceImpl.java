@@ -7,13 +7,24 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
+/**
+ * The type Mail service.
+ */
 @Service
 public class MailServiceImpl implements MailService {
+    /**
+     * The Mail sender.
+     */
     final JavaMailSender mailSender;
 
     @Value("${mail.host.name}")
     private String mailHost;
 
+    /**
+     * Instantiates a new Mail service.
+     *
+     * @param mailSender the mail sender
+     */
     public MailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
 

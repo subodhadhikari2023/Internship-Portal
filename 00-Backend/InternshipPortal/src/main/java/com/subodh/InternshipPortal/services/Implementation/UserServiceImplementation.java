@@ -32,6 +32,15 @@ public class UserServiceImplementation implements UserService {
     private final RegistrationService registrationService;
 
 
+    /**
+     * Instantiates a new User service implementation.
+     *
+     * @param userRepository      the user repository
+     * @param auth                the auth
+     * @param passwordEncoder     the password encoder
+     * @param jwtUtils            the jwt utils
+     * @param registrationService the registration service
+     */
     @Autowired
     public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService) {
         this.userRepository = userRepository;

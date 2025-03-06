@@ -9,7 +9,7 @@ import { InternshipService } from 'src/app/services/internship.service';
 })
 export class ViewInternshipsComponent implements OnInit {
   internships: any[] = [];
-filteredInternships:any[] = [];
+  filteredInternships: any[] = [];
   constructor(private internshipService: InternshipService) { }
 
   ngOnInit(): void {
@@ -19,7 +19,7 @@ filteredInternships:any[] = [];
     this.internshipService.getInternships().subscribe({
       next: (response) => {
         this.internships = response;
-        this.filteredInternships=response;
+        this.filteredInternships = response;
       },
       error: (err) => {
         console.log(err);
@@ -28,12 +28,12 @@ filteredInternships:any[] = [];
   }
 
   filterInternships(event: any) {
-    const status = event.target.value.toUpperCase(); 
+    const status = event.target.value.toUpperCase();
     if (status === 'ALL') {
       this.filteredInternships = this.internships;
     } else {
       this.filteredInternships = this.internships.filter(internship => internship.status.toUpperCase() === status);
     }
   }
-  
+
 }
