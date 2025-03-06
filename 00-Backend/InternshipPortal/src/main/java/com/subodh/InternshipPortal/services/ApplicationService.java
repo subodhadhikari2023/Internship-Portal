@@ -6,6 +6,7 @@ import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The interface Application service.
@@ -37,4 +38,6 @@ public interface ApplicationService {
      * @return the application wrapper
      */
     ApplicationWrapper reviewApplications(StudentApplicationStatus status, Long applicationId);
+
+    Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long userId);
 }

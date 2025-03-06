@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.repositories;
 
 import com.subodh.InternshipPortal.entities.Application;
+import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +21,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
      * @return the optional
      */
     @Query("SELECT a FROM Application a WHERE a.internship.internshipId IN :internshipId and a.student.userId IN :studentId")
-    Optional<Application> existsByInternshipAndStudent(Long internshipId, Long studentId);
+    Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long studentId);
 
 
     /**

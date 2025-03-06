@@ -14,16 +14,24 @@ export class StudentsHomeComponent implements OnInit {
   userForm!: FormGroup;
   internships: any[] = [];
   filteredInternships: any[] = [];
-  constructor(private internshipService: InternshipService,private notifier:NotificationService) { }
+  appliedInternships: { [key: number]: boolean } = {};
+  constructor(private internshipService: InternshipService, private notifier: NotificationService) { }
 
   ngOnInit(): void {
     this.getInternships();
+    this.filteredInternships.forEach(internship => {
+      this.checkIfApplied(internship.internshipId);
+
+    });
   }
   getInternships() {
     this.internshipService.getInternshipsForStudents().subscribe({
       next: (response) => {
         this.internships = response;
         this.filteredInternships = response;
+        response.forEach((internship: any) => {
+          this.checkIfApplied(internship.internshipId);
+        });
       },
       error: (err) => {
         console.log(err);
@@ -41,18 +49,33 @@ export class StudentsHomeComponent implements OnInit {
   }
 
   applyInternship(internship: any) {
+
     const requestBody = { internship: { internshipId: internship.internshipId } };
     this.internshipService.applyForInternship(requestBody).subscribe({
       next: () => {
-        this.notifier.openPopup('Application Submitted successfully','red','Roboto',5000);
+        this.appliedInternships[internship.internshipId]=true;
+        this.notifier.openPopup('Application Submitted successfully', 'red', 'Roboto', 5000);
       },
       error: (err) => {
-        if(err.status==409){
-          this.notifier.openPopup('Already applied for the internship!','red','Roboto',5000 );
+        if (err.status == 409) {
+          this.notifier.openPopup('Already applied for the internship!', 'red', 'Roboto', 5000);
         }
       }
     });
   }
-  
+
+  checkIfApplied(internshipId: number) {
+
+    this.internshipService.hasStudentApplied(internshipId).subscribe({
+      next: (response: any) => {
+        this.appliedInternships[internshipId] = response.entity;
+
+      },
+      error: (err) => {
+        console.error("Error checking application status:", err);
+      }
+    });
+  }
+
 
 }

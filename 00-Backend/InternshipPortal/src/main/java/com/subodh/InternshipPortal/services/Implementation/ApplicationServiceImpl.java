@@ -96,5 +96,10 @@ public class ApplicationServiceImpl implements ApplicationService {
         return new ApplicationWrapper(application.get());
     }
 
+    @Override
+    public Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long userId) {
+        return applicationRepository.existsByInternshipAndStudent(internshipId, userId);
+    }
+
 
 }

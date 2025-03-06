@@ -49,4 +49,6 @@ public interface UserService {
      * @return the boolean
      */
     boolean emailExists(String userEmail);
+
+    Users findByUserEmail(String username);
 }

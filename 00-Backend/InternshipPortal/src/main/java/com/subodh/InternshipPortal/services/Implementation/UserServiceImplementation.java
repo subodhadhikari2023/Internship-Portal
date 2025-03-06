@@ -30,6 +30,7 @@ public class UserServiceImplementation implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final RegistrationService registrationService;
+    private final UsersRepository usersRepository;
 
 
     /**
@@ -42,12 +43,13 @@ public class UserServiceImplementation implements UserService {
      * @param registrationService the registration service
      */
     @Autowired
-    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService) {
+    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository) {
         this.userRepository = userRepository;
         this.auth = auth;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.registrationService = registrationService;
+        this.usersRepository = usersRepository;
     }
 
     @Override
@@ -87,6 +89,11 @@ public class UserServiceImplementation implements UserService {
     @Override
     public boolean emailExists(String userEmail) {
         return userRepository.findByUserEmail(userEmail)!= null;
+    }
+
+    @Override
+    public Users findByUserEmail(String username) {
+        return usersRepository.findByUserEmail(username);
     }
 
 }
