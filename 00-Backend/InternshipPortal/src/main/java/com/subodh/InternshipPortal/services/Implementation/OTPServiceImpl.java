@@ -13,12 +13,21 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
+/**
+ * The type Otp service.
+ */
 @Service
 public class OTPServiceImpl implements OTPService {
     private final OTPRepository otpRepository;
     private final UsersRepository usersRepository;
     private final Random random = new Random();
 
+    /**
+     * Instantiates a new Otp service.
+     *
+     * @param otpRepository   the otp repository
+     * @param usersRepository the users repository
+     */
     @Autowired
     public OTPServiceImpl(OTPRepository otpRepository, UsersRepository usersRepository) {
         this.otpRepository = otpRepository;

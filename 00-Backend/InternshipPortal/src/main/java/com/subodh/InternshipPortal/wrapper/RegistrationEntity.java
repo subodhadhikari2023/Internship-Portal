@@ -7,6 +7,9 @@ import jakarta.persistence.Id;
 import lombok.Data;
 
 
+/**
+ * The type Registration entity.
+ */
 @Entity
 @Data
 public class RegistrationEntity {

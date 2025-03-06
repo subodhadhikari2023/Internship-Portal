@@ -32,7 +32,8 @@ public class InstructorController {
     /**
      * Instantiates a new Instructor controller.
      *
-     * @param internshipService the internship service
+     * @param internshipService  the internship service
+     * @param applicationService the application service
      */
     public InstructorController(InternshipService internshipService, ApplicationService applicationService) {
         this.internshipService = internshipService;
@@ -43,7 +44,8 @@ public class InstructorController {
     /**
      * Create internship entity.
      *
-     * @param internship the internship
+     * @param internship  the internship
+     * @param userDetails the user details
      * @return the created internship wrapped in the InternshipWrapper
      */
     @PostMapping("internship")
@@ -66,6 +68,13 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(internships), HttpStatus.OK);
     }
 
+    /**
+     * Update internship response entity.
+     *
+     * @param internship  the internship
+     * @param userDetails the user details
+     * @return the response entity
+     */
     @PutMapping("internship")
     public ResponseEntity<?> updateInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
         Internship savedInternship = internshipService.findInternshipByInternshipId(internship.getInternshipId());
@@ -88,6 +97,11 @@ public class InstructorController {
     }
 
 
+    /**
+     * Gets all applications.
+     *
+     * @return the all applications
+     */
     @GetMapping("applications")
     public ResponseEntity<?> getAllApplications() {
         List<ApplicationWrapper> applicationWrapperList = applicationService.findAllofUser();
@@ -95,6 +109,13 @@ public class InstructorController {
 
     }
 
+    /**
+     * Review applications response entity.
+     *
+     * @param status        the status
+     * @param applicationId the application id
+     * @return the response entity
+     */
     @PostMapping("review-applications")
     public ResponseEntity<?> reviewApplications(@RequestBody StudentApplicationStatus status, @RequestParam Long applicationId) {
         return new ResponseEntity<>(new Response<>(applicationService.reviewApplications(status, applicationId), "Application status updated", HttpStatus.ACCEPTED), HttpStatus.OK);

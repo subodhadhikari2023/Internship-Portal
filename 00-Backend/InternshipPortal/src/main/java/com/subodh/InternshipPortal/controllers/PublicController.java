@@ -35,10 +35,11 @@ public class PublicController {
     /**
      * Instantiates a new Public controller.
      *
-     * @param userService the user service
-     * @param otpService  the otp service
-     * @param mailSender  the mail sender
-     * @param mailService the mail service
+     * @param userService         the user service
+     * @param otpService          the otp service
+     * @param mailSender          the mail sender
+     * @param mailService         the mail service
+     * @param registrationService the registration service
      */
     public PublicController(UserService userService, OTPService otpService, JavaMailSenderImpl mailSender, MailService mailService, RegistrationService registrationService) {
         this.userService = userService;
@@ -76,8 +77,7 @@ public class PublicController {
      * Verify otp response entity.
      *
      * @param email the email
-     * @param otp   the otp
-     *              //     * @param user  the user
+     * @param otp   the otp              //     * @param user  the user
      * @return the response entity
      */
     @PostMapping("register/verify")
@@ -136,7 +136,6 @@ public class PublicController {
     public ResponseEntity<?> messageAfterJwtValidation() {
         return new ResponseEntity<>(new LoginResponse("Valid request"),HttpStatus.OK);
     }
-
 
 
     /**

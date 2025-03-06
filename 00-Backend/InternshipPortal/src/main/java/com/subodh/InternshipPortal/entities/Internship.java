@@ -61,6 +61,9 @@ public class Internship {
     @Column(name = "skills")
     private Set<String> requiredSkills;
 
+    /**
+     * The Applications.
+     */
     @OneToMany(mappedBy = "internship")
     @JsonManagedReference
     List<Application> applications;

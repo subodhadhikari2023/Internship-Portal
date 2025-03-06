@@ -6,11 +6,19 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+/**
+ * The type Application wrapper.
+ */
 @AllArgsConstructor
 @Builder
 @Data
 public class ApplicationWrapper {
 
+    /**
+     * Instantiates a new Application wrapper.
+     *
+     * @param application the application
+     */
     public ApplicationWrapper(Application application) {
         this.internshipTitle = application.getInternship().getInternshipName();
         this.status = application.getStatus();

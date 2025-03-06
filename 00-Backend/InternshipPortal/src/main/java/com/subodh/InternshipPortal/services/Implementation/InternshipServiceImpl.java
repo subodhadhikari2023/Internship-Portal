@@ -17,12 +17,21 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The type Internship service.
+ */
 @Slf4j
 @Service
 public class InternshipServiceImpl implements InternshipService {
     private final InternshipRepository internshipRepository;
     private final UsersRepository usersRepository;
 
+    /**
+     * Instantiates a new Internship service.
+     *
+     * @param internshipRepository the internship repository
+     * @param usersRepository      the users repository
+     */
     public InternshipServiceImpl(InternshipRepository internshipRepository, UsersRepository usersRepository) {
         this.internshipRepository = internshipRepository;
         this.usersRepository = usersRepository;

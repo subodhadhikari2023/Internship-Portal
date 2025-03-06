@@ -7,10 +7,18 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * The type Registration service.
+ */
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
     private final RegistrationRepository registrationRepository;
 
+    /**
+     * Instantiates a new Registration service.
+     *
+     * @param registrationRepository the registration repository
+     */
     public RegistrationServiceImpl(RegistrationRepository registrationRepository) {
         this.registrationRepository = registrationRepository;
     }

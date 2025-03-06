@@ -9,6 +9,9 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.util.Set;
 
+/**
+ * The type Internship wrapper.
+ */
 @Data
 @AllArgsConstructor
 public class InternshipWrapper {
@@ -24,6 +27,11 @@ public class InternshipWrapper {
     private WorkMode workMode;
 
 
+    /**
+     * Instantiates a new Internship wrapper.
+     *
+     * @param internship the internship
+     */
     public InternshipWrapper(Internship internship) {
         this.internshipName = internship.getInternshipName();
         this.description = internship.getDescription();
