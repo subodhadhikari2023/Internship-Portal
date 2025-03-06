@@ -38,14 +38,15 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     @Override
-    public ApplicationWrapper save(Application application) {
+    public ApplicationWrapper save(Application application, String userEmail) {
         try {
 
-            if (applicationRepository.existsByInternshipAndStudent(application.getInternship(), application.getStudent())) {
+            Users student = usersRepository.findByUserEmail(userEmail);
+            Optional<?> exists = applicationRepository.existsByInternshipAndStudent(application.getInternship().getInternshipId(), student.getUserId());
+            if (exists.isPresent()) {
                 throw new ApplicationCreationFailedException("Student has already applied for this internship.");
             }
 
-            Users student = usersRepository.findByUserId(application.getStudent().getUserId());
             Internship internship = internshipRepository.findByInternshipId(application.getInternship().getInternshipId());
             application.setStatus(StudentApplicationStatus.SUBMITTED);
             application.setStudent(student);

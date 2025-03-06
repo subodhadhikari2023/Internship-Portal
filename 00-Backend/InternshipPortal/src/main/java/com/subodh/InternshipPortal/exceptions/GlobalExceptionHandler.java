@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ApplicationCreationFailedException.class)
     public ResponseEntity<?> handleApplicationCreationFailedException(ApplicationCreationFailedException ex) {
         ExceptionResponse errorResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
 }

@@ -48,7 +48,6 @@ public class InstructorController {
      */
     @PostMapping("internship")
     public ResponseEntity<?> createInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
-        log.info("{}", internship.getRequiredSkills());
         InternshipWrapper savedInternship = internshipService.saveInternship(internship, userDetails.getUsername());
         return new ResponseEntity<>(new Response<>(savedInternship, "Internship Created Successfully", HttpStatus.CREATED), HttpStatus.CREATED);
     }
@@ -61,7 +60,6 @@ public class InstructorController {
     @GetMapping("internship")
     public ResponseEntity<?> getAllInternship() {
         List<InternshipWrapper> internships = internshipService.findAllByInstructor();
-//        log.info("All internships found");
         if (internships.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

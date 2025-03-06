@@ -23,7 +23,7 @@ public class Internship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "internship_id")
-    private Long internshipId;
+        private Long internshipId;
     /**
      * The Internship name.
      */

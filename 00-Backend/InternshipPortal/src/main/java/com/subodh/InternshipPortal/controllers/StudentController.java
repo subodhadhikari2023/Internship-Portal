@@ -9,6 +9,8 @@ import com.subodh.InternshipPortal.wrapper.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,15 +34,12 @@ public class StudentController {
         List<InternshipWrapper> internshipList = internshipService.findAll();
         return new ResponseEntity<>(new Response<>(internshipList), HttpStatus.OK);
     }
-    @PostMapping("apply")
-    public ResponseEntity<?> apply(@RequestBody Application application) {
-        ApplicationWrapper saved = applicationService.save(application);
-        return new ResponseEntity<>(new Response<>(saved,"Application Submitted", HttpStatus.CREATED),HttpStatus.CREATED);
 
-    }
-    @GetMapping("hello")
-    public ResponseEntity<?> hello() {
-        return new ResponseEntity<>(new Response<>("Hello World"), HttpStatus.OK);
+    @PostMapping("apply")
+    public ResponseEntity<?> apply(@RequestBody Application application, @AuthenticationPrincipal UserDetails userDetails) {
+        ApplicationWrapper saved = applicationService.save(application, userDetails.getUsername());
+        return new ResponseEntity<>(new Response<>(saved, "Application Submitted", HttpStatus.CREATED), HttpStatus.CREATED);
+
     }
 
 
