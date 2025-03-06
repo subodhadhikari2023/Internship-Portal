@@ -23,7 +23,7 @@ export class CustomInterceptor implements HttpInterceptor {
         
         headers: request.headers.set('Authorization', `Bearer ${localToken}`)
       });
-      console.log(cloned.headers.keys());
+      // console.log(cloned.headers.keys());
       return next.handle(cloned);
     }
 

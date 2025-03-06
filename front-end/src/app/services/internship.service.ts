@@ -35,4 +35,10 @@ export class InternshipService {
   applyForInternship(request: any) {
     return this.http.post<any>(`${BASE_URL}students/apply`, request);
   }
+  hasStudentApplied(internshipId: number) {
+    // return this.http.get<boolean>(`${BASE_URL}students/has-applied/${internshipId}`);
+    return this.http.get<{ entity: boolean }>(`${BASE_URL}students/has-applied/${internshipId}`);
+
+  }
+
 }
