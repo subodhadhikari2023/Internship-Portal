@@ -19,11 +19,20 @@ export class InternshipService {
 
   getInternships(): Observable<any[]> {
     return this.http.get<any>(`${BASE_URL}instructors/internship`).pipe(
-      map(response => response.entity || []) // Extract the entity array
+      map(response => response.entity || [])
     );
   }
 
   updateInternship(internship: any) {
     return this.http.put<any>(`${BASE_URL}instructors/internship`, internship);
+  }
+  getInternshipsForStudents() {
+    return this.http.get<any>(`${BASE_URL}students/view-internships`).pipe(
+      map(response => response.entity || [])
+    );
+  }
+
+  applyForInternship(request: any) {
+    return this.http.post<any>(`${BASE_URL}students/apply`, request);
   }
 }

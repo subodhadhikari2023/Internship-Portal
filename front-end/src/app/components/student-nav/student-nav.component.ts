@@ -1,13 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: 'app-student-nav',
+  templateUrl: './student-nav.component.html',
+  styleUrls: ['./student-nav.component.css']
 })
-export class NavbarComponent {
-  
+export class StudentNavComponent implements OnInit {
+
+
+  ngOnInit(): void {
+  }
   menuOpen = false;
   dropdowns: { [key: string]: boolean } = { internships: false, applications: false, profile: false };
 
@@ -18,11 +21,11 @@ export class NavbarComponent {
   }
 
   toggleDropdown(menu: string) {
-    this.dropdowns[menu] = !this.dropdowns[menu]; 
+    this.dropdowns[menu] = !this.dropdowns[menu];
   }
- 
+
   logOut() {
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/home');
   }
 }

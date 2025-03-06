@@ -19,6 +19,7 @@ import { CreateInternshipComponent } from './components/create-internship/create
 import { PopupComponent } from './components/popup/popup.component';
 import { ViewInternshipsComponent } from './components/view-internships/view-internships.component';
 import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
+import { StudentNavComponent } from './components/student-nav/student-nav.component';
 
 
 
@@ -38,7 +39,8 @@ import { EditInternshipComponent } from './components/edit-internship/edit-inter
     CreateInternshipComponent,
     PopupComponent,
     ViewInternshipsComponent,
-    EditInternshipComponent
+    EditInternshipComponent,
+    StudentNavComponent
   ],
   imports: [
     BrowserModule,

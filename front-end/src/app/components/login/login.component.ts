@@ -46,7 +46,7 @@ export class LoginComponent {
         // Example of storing token
         const role: string = this.authService.getUserRole();
         if (role == 'ROLE_STUDENT') {
-          this.router.navigate(['/home'])
+          this.router.navigate(['/student'])
         } else if (role == 'ROLE_INSTRUCTOR') {
           this.router.navigate(['/instructor'])
         }

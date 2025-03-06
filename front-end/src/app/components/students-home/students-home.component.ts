@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IntegrationService } from 'src/app/services/integration.service';
+import { InternshipService } from 'src/app/services/internship.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-students-home',
@@ -8,33 +9,50 @@ import { IntegrationService } from 'src/app/services/integration.service';
   styleUrls: ['./students-home.component.css']
 })
 export class StudentsHomeComponent implements OnInit {
+
   message: string = '';
   userForm!: FormGroup;
+  internships: any[] = [];
+  filteredInternships: any[] = [];
+  constructor(private internshipService: InternshipService,private notifier:NotificationService) { }
 
-
-  constructor(private fb: FormBuilder, private integrationService: IntegrationService) { }
   ngOnInit(): void {
-    this.userForm = this.fb.group({});
-
+    this.getInternships();
+  }
+  getInternships() {
+    this.internshipService.getInternshipsForStudents().subscribe({
+      next: (response) => {
+        this.internships = response;
+        this.filteredInternships = response;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
+  filterInternships(event: any) {
+    const department = event.target.value.toUpperCase();
+    if (department === 'ALL') {
+      this.filteredInternships = this.internships;
+    } else {
+      this.filteredInternships = this.internships.filter(internship => internship.department.toUpperCase() === department);
+    }
+  }
 
-
-  accessMessage() {
-
-    console.log('Button clicked!');
-    // console.log(localStorage.getItem('token'));
-    this.integrationService.accessMessage().subscribe({
-      next: (response) => {
-        // console.log(localStorage.getItem('token'));
-
-        this.message = response.token;
+  applyInternship(internship: any) {
+    const requestBody = { internship: { internshipId: internship.internshipId } };
+    this.internshipService.applyForInternship(requestBody).subscribe({
+      next: () => {
+        this.notifier.openPopup('Application Submitted successfully','red','Roboto',5000);
       },
-      error: (error) => {
-        console.error('Error occurred:', error);
+      error: (err) => {
+        if(err.status==409){
+          this.notifier.openPopup('Already applied for the internship!','red','Roboto',5000 );
+        }
       }
     });
   }
-
+  
 
 }

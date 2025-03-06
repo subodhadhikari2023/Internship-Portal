@@ -1,10 +1,44 @@
-<!-- students-home.component.html -->
-<div style="position: relative;">
-    <button (click)="accessMessage()">Hekki</button>
-</div>
+<body>
+  
+    <nav>
+      <app-student-nav></app-student-nav>
+    </nav>
+    
 
-<!-- Display the token if it is not empty -->
-<div *ngIf="message">
-  <h3>Received Token:</h3>
-  <p>{{ message }}</p>
-</div>
+    <section class="filter-section" style="position: relative;">
+      <div class="filter-container">
+        <label for="statusFilter">Filter by Department:</label>
+        <select id="statusFilter" (change)="filterInternships($event)">
+          <option value="ALL">All</option>
+          <option value="ACTIVE">Active</option>
+          <option value="INACTIVE">Closed</option>
+        </select>
+      </div>
+    </section>
+  
+    <main class="internships-container">
+      <ng-container *ngFor="let internship of filteredInternships">
+        <article class="internship-card" *ngIf="internship.status.toUpperCase() === 'ACTIVE'">
+          <h3><strong>Role:</strong> {{ internship.internshipName }}</h3>
+          <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
+          <p><strong>End Date:</strong> {{ internship.endDate }}</p>
+          <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
+          <p><strong>Description:</strong> {{ internship.description }}</p>
+          <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
+          <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
+          <p>
+            <strong>Status:</strong>
+            <span [class.active]="internship.status === 'ACTIVE'">
+              {{ internship.status }}
+            </span>
+          </p>
+          <button class="btn-primary button" (click)="applyInternship(internship)">Apply</button>
+        </article>
+      </ng-container>
+      <section class="popup">
+        <app-popup></app-popup>
+    </section>
+    </main>
+    
+    
+</body>
