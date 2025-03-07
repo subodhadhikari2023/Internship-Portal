@@ -1,13 +1,16 @@
 package com.subodh.InternshipPortal.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.boot.model.internal.XMLContext;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The type Users.
@@ -37,6 +40,26 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
     private List<Roles> roles;
+
+
+    @ElementCollection
+    @CollectionTable(name = "student_skills", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "student_skills")
+    private Set<String> studentSkills;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "department_id")
+    DepartmentDetails department;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "education_id")
+    @JsonBackReference
+    private Education education;
+
+
+    String resumeFilePath;
+    @Column(columnDefinition = "VARCHAR(255) DEFAULT 'profile.png'")
+    String profilePhotoFilePath;
 
 
     /**
