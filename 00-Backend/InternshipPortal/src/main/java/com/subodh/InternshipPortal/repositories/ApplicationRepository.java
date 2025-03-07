@@ -32,4 +32,7 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
      */
     @Query("SELECT a FROM Application a WHERE a.internship.internshipId IN :internshipIds")
     List<Application> findByInternshipIds(@Param("internshipIds") List<Long> internshipIds);
+
+
+    ApplicationWrapper findByApplicationId(Long applicationId);
 }

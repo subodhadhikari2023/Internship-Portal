@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 /**
- * The type Application wrapper.
+ * The class used to wrap and send response Application.
  */
 @AllArgsConstructor
 @Builder

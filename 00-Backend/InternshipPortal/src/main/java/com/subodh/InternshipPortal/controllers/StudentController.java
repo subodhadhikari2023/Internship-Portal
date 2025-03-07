@@ -5,6 +5,7 @@ import com.subodh.InternshipPortal.entities.Users;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.services.UserService;
+import com.subodh.InternshipPortal.wrapper.APIRequest;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import com.subodh.InternshipPortal.wrapper.Response;
@@ -58,8 +59,8 @@ public class StudentController {
      * Apply response entity.
      *
      * @param application the application
-     * @param userDetails the user details
-     * @return the response entity
+     * @param userDetails the user details passed automatically by the spring boot application.
+     * @return the response entity with entity as saved of ApplicationWrapper Type
      */
     @PostMapping("apply")
     public ResponseEntity<?> apply(@RequestBody Application application, @AuthenticationPrincipal UserDetails userDetails) {
@@ -68,7 +69,14 @@ public class StudentController {
 
     }
 
-    @GetMapping("/has-applied/{internshipId}")
+    /**
+     * Checks whether the student has applied for a particular Internship or not.
+     *
+     * @param internshipId the internship id
+     * @param userDetails  the user details passed automatically by the spring boot application.
+     * @return the response entity with entity as true or false
+     */
+    @GetMapping("has-applied/{internshipId}")
     public ResponseEntity<?> hasApplied(@PathVariable Long internshipId, @AuthenticationPrincipal UserDetails userDetails) {
         Users student = userService.findByUserEmail(userDetails.getUsername());
         Optional<ApplicationWrapper> exists = applicationService.existsByInternshipAndStudent(internshipId, student.getUserId());
@@ -79,4 +87,19 @@ public class StudentController {
         }
     }
 
+
+    
+
+    /**
+     * Check application status response entity.
+     *
+     * @param request the request
+     * @return the response with ApplicationWrapper object inside it
+     */
+    @PostMapping("checkApplicationStatus")
+    public ResponseEntity<?> checkApplicationStatus(@RequestBody APIRequest<Long> request) {
+
+        return new ResponseEntity<>(new Response<>(applicationService.findbyApplicationByApplicationId(request.getEntity())), HttpStatus.OK);
+
+    }
 }

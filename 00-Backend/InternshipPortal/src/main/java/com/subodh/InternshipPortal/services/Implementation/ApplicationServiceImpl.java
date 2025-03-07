@@ -101,5 +101,10 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applicationRepository.existsByInternshipAndStudent(internshipId, userId);
     }
 
+    @Override
+    public ApplicationWrapper findbyApplicationByApplicationId(Long applicationId) {
+       return applicationRepository.findByApplicationId(applicationId);
+    }
+
 
 }

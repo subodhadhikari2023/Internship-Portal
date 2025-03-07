@@ -3,6 +3,7 @@ package com.subodh.InternshipPortal.wrapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 
 /**
  * The type Response.
@@ -11,7 +12,7 @@ import org.springframework.http.HttpStatus;
  */
 @Data
 @AllArgsConstructor
-public class Response<T> {
+public class Response<T>  {
 
     /**
      * Instantiates a new Response.
