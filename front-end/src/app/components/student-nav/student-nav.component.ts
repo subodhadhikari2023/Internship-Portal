@@ -26,6 +26,6 @@ export class StudentNavComponent implements OnInit {
 
   logOut() {
     localStorage.removeItem('token');
-    this.router.navigateByUrl('/home');
+    this.router.navigateByUrl('/');
   }
 }
