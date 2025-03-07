@@ -88,7 +88,10 @@ public class StudentController {
     }
 
 
-    
+    @GetMapping("view-submitted-applications")
+    public ResponseEntity<?> viewSubmittedApplications(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(applicationService.findAllApplicationsByUserEmail(userDetails.getUsername())), HttpStatus.OK);
+    }
 
     /**
      * Check application status response entity.
@@ -96,9 +99,9 @@ public class StudentController {
      * @param request the request
      * @return the response with ApplicationWrapper object inside it
      */
-    @PostMapping("checkApplicationStatus")
-    public ResponseEntity<?> checkApplicationStatus(@RequestBody APIRequest<Long> request) {
+    @PostMapping("check-application-status")
 
+    public ResponseEntity<?> checkApplicationStatus(@RequestBody APIRequest<Long> request) {
         return new ResponseEntity<>(new Response<>(applicationService.findbyApplicationByApplicationId(request.getEntity())), HttpStatus.OK);
 
     }

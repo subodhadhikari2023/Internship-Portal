@@ -41,4 +41,6 @@ public interface ApplicationService {
     Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long userId);
 
     ApplicationWrapper findbyApplicationByApplicationId(Long applicationId);
+
+    List<ApplicationWrapper> findAllApplicationsByUserEmail(String username);
 }

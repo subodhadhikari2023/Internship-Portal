@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.repositories;
 
 import com.subodh.InternshipPortal.entities.Application;
+import com.subodh.InternshipPortal.entities.Users;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -35,4 +36,9 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
 
     ApplicationWrapper findByApplicationId(Long applicationId);
+
+    List<ApplicationWrapper> findAllByStudent(Users student);
+
+//    @Query("SELECT a FROM Application  a WHERE a.student.userId = :userId")
+//    List<ApplicationWrapper> findAllByStudentUserId(@Param("userId") Long userId);
 }
