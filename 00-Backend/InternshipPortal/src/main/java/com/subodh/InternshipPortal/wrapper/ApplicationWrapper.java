@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.UUID;
+
 /**
- * The type Application wrapper.
+ * The class used to wrap and send response Application.
  */
 @AllArgsConstructor
 @Builder

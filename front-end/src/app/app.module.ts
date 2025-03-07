@@ -20,6 +20,7 @@ import { PopupComponent } from './components/popup/popup.component';
 import { ViewInternshipsComponent } from './components/view-internships/view-internships.component';
 import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 import { StudentNavComponent } from './components/student-nav/student-nav.component';
+import { ViewApplicationComponent } from './components/view-application/view-application.component';
 
 
 
@@ -40,7 +41,8 @@ import { StudentNavComponent } from './components/student-nav/student-nav.compon
     PopupComponent,
     ViewInternshipsComponent,
     EditInternshipComponent,
-    StudentNavComponent
+    StudentNavComponent,
+    ViewApplicationComponent
   ],
   imports: [
     BrowserModule,

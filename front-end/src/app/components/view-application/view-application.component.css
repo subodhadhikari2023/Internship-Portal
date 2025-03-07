@@ -1,0 +1,84 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+.applications-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 40px;
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .application-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .application-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+  
+  .application-card h3 {
+    color: #009605;
+    margin-bottom: 10px;
+  }
+  
+  .approved {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .pending {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .rejected {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* Filter section styling */
+  .filter-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .filter-container label {
+    font-size: 16px;
+    margin-right: 10px;
+  }
+  
+  .filter-container select {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .applications-container {
+      grid-template-columns: 1fr;
+      padding: 20px;
+    }
+  
+    .filter-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .filter-container select {
+      width: 100%;
+    }
+  }
+  

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  */
 @Entity
 @Data
+@ToString
 public class Application {
 
 

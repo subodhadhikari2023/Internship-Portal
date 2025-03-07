@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -99,6 +100,17 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long userId) {
         return applicationRepository.existsByInternshipAndStudent(internshipId, userId);
+    }
+
+    @Override
+    public ApplicationWrapper findbyApplicationByApplicationId(Long applicationId) {
+        return applicationRepository.findByApplicationId(applicationId);
+    }
+
+    @Override
+    public List<ApplicationWrapper> findAllApplicationsByUserEmail(String username) {
+        Users user = usersRepository.findByUserEmail(username);
+        return applicationRepository.findAllByStudent(user);
     }
 
 
