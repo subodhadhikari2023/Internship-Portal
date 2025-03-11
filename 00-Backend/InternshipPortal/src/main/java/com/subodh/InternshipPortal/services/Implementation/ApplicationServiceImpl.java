@@ -1,16 +1,10 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
-import com.subodh.InternshipPortal.modals.Application;
-import com.subodh.InternshipPortal.modals.Internship;
-import com.subodh.InternshipPortal.modals.InternshipStudents;
-import com.subodh.InternshipPortal.modals.Users;
+import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import com.subodh.InternshipPortal.exceptions.ApplicationCreationFailedException;
-import com.subodh.InternshipPortal.repositories.ApplicationRepository;
-import com.subodh.InternshipPortal.repositories.InternshipRepository;
-import com.subodh.InternshipPortal.repositories.InternshipStudentRepository;
-import com.subodh.InternshipPortal.repositories.UsersRepository;
+import com.subodh.InternshipPortal.repositories.*;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.services.MailService;
@@ -40,6 +34,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final InternshipService internshipService;
     private final InternshipStudentRepository internshipStudentRepository;
     private final MailService mailService;
+    private final StudentApplicationRepository studentApplicationRepository;
 
     /**
      * Instantiates a new Application service.
@@ -50,13 +45,14 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @param internshipService     the internship service
      */
     @Autowired
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository, MailService mailService) {
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository, MailService mailService, StudentApplicationRepository studentApplicationRepository) {
         this.applicationRepository = applicationRepository;
         this.usersRepository = usersRepository;
         this.internshipRepository = internshipRepository;
         this.internshipService = internshipService;
         this.internshipStudentRepository = internshipStudentRepository;
         this.mailService = mailService;
+        this.studentApplicationRepository = studentApplicationRepository;
     }
 
     @Override
@@ -75,6 +71,8 @@ public class ApplicationServiceImpl implements ApplicationService {
             application.setStudent(student);
             application.setInternship(internship);
             applicationRepository.save(application);
+            studentApplicationRepository.save(new StudentApplication(application));
+
             return new ApplicationWrapper(application);
 
         } catch (IllegalArgumentException e) {
@@ -103,6 +101,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         student.setStudent(application.getStudent());
         student.setStatus(StudentInternshipStatus.valueOf("IN_PROGRESS"));
         internshipStudentRepository.save(student);
+        StudentApplication studentApplication = studentApplicationRepository.findByApplicationId(applicationId);
+        studentApplication.setStatus(status);
+        studentApplicationRepository.save(studentApplication);
         applicationRepository.delete(application);
         mailService.sendApplicationStatusMail(application.getStudent().getUserEmail(), application.getStudent().getUserEmail(), application.getInternship().getInternshipName(), status, application.getInternship().getCreatedBy().getUserEmail(), application.getInternship().getCreatedBy().getDepartment().getDepartmentName());
         return new ApplicationWrapper(application);
@@ -121,7 +122,8 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public List<ApplicationWrapper> findAllApplicationsByUserEmail(String username) {
         Users user = usersRepository.findByUserEmail(username);
-        return applicationRepository.findAllByStudent(user);
+        return studentApplicationRepository.findAllByStudent(user).stream().map(ApplicationWrapper::new).toList();
+//        return applicationRepository.findAllByStudent(user);
     }
 
 
