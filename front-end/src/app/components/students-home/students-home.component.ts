@@ -15,14 +15,16 @@ export class StudentsHomeComponent implements OnInit {
   internships: any[] = [];
   filteredInternships: any[] = [];
   appliedInternships: { [key: number]: boolean } = {};
+  departmentList: string[] = [];
   constructor(private internshipService: InternshipService, private notifier: NotificationService) { }
 
   ngOnInit(): void {
     this.getInternships();
     this.filteredInternships.forEach(internship => {
       this.checkIfApplied(internship.internshipId);
-
     });
+    this.getAllDepartments();
+
   }
   getInternships() {
     this.internshipService.getInternshipsForStudents().subscribe({
@@ -53,7 +55,7 @@ export class StudentsHomeComponent implements OnInit {
     const requestBody = { internship: { internshipId: internship.internshipId } };
     this.internshipService.applyForInternship(requestBody).subscribe({
       next: () => {
-        this.appliedInternships[internship.internshipId]=true;
+        this.appliedInternships[internship.internshipId] = true;
         this.notifier.openPopup('Application Submitted successfully', 'red', 'Roboto', 5000);
       },
       error: (err) => {
@@ -75,6 +77,16 @@ export class StudentsHomeComponent implements OnInit {
         console.error("Error checking application status:", err);
       }
     });
+  }
+
+  getAllDepartments() {
+    this.internshipService.getallDepartments().subscribe({
+      next: (response) => {
+        this.departmentList = response;
+        
+      }
+
+    })
   }
 
 

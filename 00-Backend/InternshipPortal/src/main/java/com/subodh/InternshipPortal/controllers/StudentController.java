@@ -3,6 +3,7 @@ package com.subodh.InternshipPortal.controllers;
 import com.subodh.InternshipPortal.entities.Application;
 import com.subodh.InternshipPortal.entities.Users;
 import com.subodh.InternshipPortal.services.ApplicationService;
+import com.subodh.InternshipPortal.services.DepartmentService;
 import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.wrapper.APIRequest;
@@ -31,6 +32,7 @@ public class StudentController {
     private final InternshipService internshipService;
     private final ApplicationService applicationService;
     private final UserService userService;
+    private final DepartmentService departmentService;
 
     /**
      * Instantiates a new Student controller.
@@ -38,10 +40,11 @@ public class StudentController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
+        this.departmentService = departmentService;
     }
 
     /**
@@ -52,6 +55,7 @@ public class StudentController {
     @GetMapping("view-internships")
     public ResponseEntity<?> viewInternships() {
         List<InternshipWrapper> internshipList = internshipService.findAll();
+//        log.info("Internship List: {}", internshipList);
         return new ResponseEntity<>(new Response<>(internshipList), HttpStatus.OK);
     }
 
@@ -105,4 +109,10 @@ public class StudentController {
         return new ResponseEntity<>(new Response<>(applicationService.findbyApplicationByApplicationId(request.getEntity())), HttpStatus.OK);
 
     }
+
+    @GetMapping("departments")
+    public ResponseEntity<?> departments() {
+        return new ResponseEntity<>(new Response<>(departmentService.findAll()), HttpStatus.OK);
+    }
+
 }

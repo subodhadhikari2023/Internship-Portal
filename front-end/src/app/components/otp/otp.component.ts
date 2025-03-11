@@ -52,7 +52,7 @@ export class OtpComponent implements OnInit {
       .subscribe({
         next: () => {
           console.log('OTP verified successfully');
-          this.router.navigate(['/home']);  
+          this.router.navigate(['/login']);  
         },
         error: (error: any) => {
           console.error('Error verifying OTP:', error);

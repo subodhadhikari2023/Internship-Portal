@@ -8,10 +8,10 @@
   <section class="filter-section" style="position: relative;">
     <div class="filter-container">
       <label for="statusFilter">Filter by Department:</label>
-      <select id="statusFilter" (change)="filterInternships($event)">
+      <select id="statusFilter" (change)="filterInternships($event)" >
         <option value="ALL">All</option>
-        <option value="ACTIVE">Active</option>
-        <option value="INACTIVE">Closed</option>
+        <option *ngFor="let item of departmentList" value="{{item}}">{{item}}</option>
+
       </select>
     </div>
   </section>
@@ -26,6 +26,7 @@
         <p><strong>Description:</strong> {{ internship.description }}</p>
         <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
         <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
+        <p><strong>Department:</strong> {{ internship.department }}</p>
         <p>
           <strong>Status:</strong>
           <span [class.active]="internship.status === 'ACTIVE'">

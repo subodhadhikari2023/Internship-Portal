@@ -23,6 +23,7 @@ export class ViewInternshipsComponent implements OnInit {
       },
       error: (err) => {
         console.log(err);
+
       }
     })
   }

@@ -40,5 +40,10 @@ export class InternshipService {
     return this.http.get<{ entity: boolean }>(`${BASE_URL}students/has-applied/${internshipId}`);
 
   }
+  getallDepartments() {
+    return this.http.get<any>(`${BASE_URL}students/departments`).pipe(
+      map(response => response.entity)
+    );
+  }
 
 }

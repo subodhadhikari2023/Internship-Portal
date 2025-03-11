@@ -5,7 +5,6 @@ import com.subodh.InternshipPortal.enums.InternshipStatus;
 import com.subodh.InternshipPortal.enums.WorkMode;
 import jakarta.persistence.*;
 import lombok.Data;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -67,5 +66,12 @@ public class Internship {
     @OneToMany(mappedBy = "internship")
     @JsonManagedReference
     List<Application> applications;
+
+    /**
+     * The Department.
+     */
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    DepartmentDetails department;
 
 }
