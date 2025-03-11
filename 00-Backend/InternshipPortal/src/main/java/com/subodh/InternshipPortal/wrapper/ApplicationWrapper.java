@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Set;
+
 /**
  * The class used to wrap and send response Application.
  */
@@ -26,6 +28,7 @@ public class ApplicationWrapper {
         this.applicationId = application.getApplicationId();
         this.applicantName = application.getStudent().getUserName();
         this.applicantEmail = application.getStudent().getUserEmail();
+        this.studentSkills = application.getStudent().getStudentSkills();
     }
 
     private String internshipTitle;
@@ -34,5 +37,6 @@ public class ApplicationWrapper {
     private Long applicationId;
     private String applicantName;
     private String applicantEmail;
+    Set<String> studentSkills;
 
 }

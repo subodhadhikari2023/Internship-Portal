@@ -20,4 +20,8 @@ export class ApplicationService {
       map(response => response.entity)
     )
   }
+
+  setApplicationStatus(app:any,appStatus:any){
+   return this.http.post<any>(`${BASE_URL}instructors/review-applications?applicationId=${app.applicationId}`,appStatus);
+  }
 }
