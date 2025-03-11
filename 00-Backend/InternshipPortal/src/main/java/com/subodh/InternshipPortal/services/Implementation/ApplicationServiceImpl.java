@@ -13,6 +13,7 @@ import com.subodh.InternshipPortal.repositories.InternshipStudentRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipService;
+import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -33,12 +34,12 @@ public class ApplicationServiceImpl implements ApplicationService {
     /**
      * The Application repository.
      */
-    final
-    ApplicationRepository applicationRepository;
+    private final ApplicationRepository applicationRepository;
     private final UsersRepository usersRepository;
     private final InternshipRepository internshipRepository;
     private final InternshipService internshipService;
     private final InternshipStudentRepository internshipStudentRepository;
+    private final MailService mailService;
 
     /**
      * Instantiates a new Application service.
@@ -49,15 +50,17 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @param internshipService     the internship service
      */
     @Autowired
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository) {
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository, MailService mailService) {
         this.applicationRepository = applicationRepository;
         this.usersRepository = usersRepository;
         this.internshipRepository = internshipRepository;
         this.internshipService = internshipService;
         this.internshipStudentRepository = internshipStudentRepository;
+        this.mailService = mailService;
     }
 
     @Override
+    @Transactional
     public ApplicationWrapper save(Application application, String userEmail) {
         try {
 
@@ -101,6 +104,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         student.setStatus(StudentInternshipStatus.valueOf("IN_PROGRESS"));
         internshipStudentRepository.save(student);
         applicationRepository.delete(application);
+        mailService.sendApplicationStatusMail(application.getStudent().getUserEmail(), application.getStudent().getUserEmail(), application.getInternship().getInternshipName(), status, application.getInternship().getCreatedBy().getUserEmail(), application.getInternship().getCreatedBy().getDepartment().getDepartmentName());
         return new ApplicationWrapper(application);
     }
 

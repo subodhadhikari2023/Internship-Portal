@@ -1,6 +1,8 @@
 package com.subodh.InternshipPortal.services;
 
 
+import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+
 /**
  * The interface Mail service.
  */
@@ -12,5 +14,8 @@ public interface MailService {
      * @param subject the subject
      * @param body    the body
      */
-    public void sendMail(String toEmail, String subject, String body);
+    void sendMail(String toEmail, String subject, String body);
+    void sendApplicationStatusMail(String toEmail, String studentName, String internshipTitle, StudentApplicationStatus status,String sender, String department);
+
+
 }
