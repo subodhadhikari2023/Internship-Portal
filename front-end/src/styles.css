@@ -5,6 +5,7 @@ body {
   width: 100%;
 }
 
+
 html {
   height: 100%;
 }
@@ -39,3 +40,6 @@ app-root {
   --hover-background: #f1f1f1;    /* Slightly Darker Background for Hover Effects */
 }
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

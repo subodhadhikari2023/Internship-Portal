@@ -1,0 +1,11 @@
+<div class="modal-container">
+    <h2>{{ data.applicantName }}</h2>
+    <p><strong>Email:</strong> {{ data.email }}</p>
+    <p><strong>Internship:</strong> {{ data.internshipTitle }}</p>
+    <p><strong>Status:</strong> {{ data.status }}</p>
+    <p><strong>Resume:</strong> <a [href]="data.resumeUrl" target="_blank">View Resume</a></p>
+    <p><strong>Applied Date:</strong> {{ data.appliedDate }}</p>
+  
+    <button mat-button (click)="close()">Close</button>
+  </div>
+  

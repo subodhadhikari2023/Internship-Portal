@@ -1,5 +1,3 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { StudentsHomeComponent } from './components/students-home/students-home.component';
 import { LandingComponent } from './components/landing/landing.component';
@@ -13,6 +11,8 @@ import { ViewInternshipsComponent } from './components/view-internships/view-int
 import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 import {ViewApplicationComponent} from "./components/view-application/view-application.component";
 import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
+import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 
 

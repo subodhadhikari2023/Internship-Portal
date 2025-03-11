@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './components/login/login.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { StudentsHomeComponent } from './components/students-home/students-home.component';
 import { LandingComponent } from './components/landing/landing.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { OtpComponent } from './components/otp/otp.component';
 import { VerifyComponent } from './components/verify/verify.component';
-import { CustomInterceptor } from './interceptors/custom.interceptor';
 import { InstructorsHomeComponent } from './components/instructors-home/instructors-home.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CreateInternshipComponent } from './components/create-internship/create-internship.component';
 import { PopupComponent } from './components/popup/popup.component';
@@ -21,14 +23,16 @@ import { ViewInternshipsComponent } from './components/view-internships/view-int
 import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 import { StudentNavComponent } from './components/student-nav/student-nav.component';
 import { ViewApplicationComponent } from './components/view-application/view-application.component';
-import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
+import { ViewApplicationModalComponent } from './components/view-application-modal/view-application-modal.component';
 
-
+// Interceptors
+import { CustomInterceptor } from './interceptors/custom.interceptor';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
     LoginComponent,
     StudentsHomeComponent,
     LandingComponent,
@@ -36,7 +40,6 @@ import { ViewApplicationsComponent } from './components/view-applications/view-a
     OtpComponent,
     VerifyComponent,
     InstructorsHomeComponent,
-    NavbarComponent,
     FooterComponent,
     CreateInternshipComponent,
     PopupComponent,
@@ -44,21 +47,25 @@ import { ViewApplicationsComponent } from './components/view-applications/view-a
     EditInternshipComponent,
     StudentNavComponent,
     ViewApplicationComponent,
-    ViewApplicationsComponent
+    ViewApplicationModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
-
-
+    HttpClientModule,
+    BrowserAnimationsModule, // ✅ Added this
+    MatDialogModule, // ✅ Added this
+    MatButtonModule // ✅ Added this
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS, useClass: CustomInterceptor,
-    multi: true
-  }],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CustomInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
