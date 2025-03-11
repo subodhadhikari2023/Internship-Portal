@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.wrapper;
 
 import com.subodh.InternshipPortal.modals.Application;
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+import com.subodh.InternshipPortal.modals.StudentApplication;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +23,16 @@ public class ApplicationWrapper {
      * @param application the application
      */
     public ApplicationWrapper(Application application) {
+        this.internshipTitle = application.getInternship().getInternshipName();
+        this.status = application.getStatus();
+        this.contactPerson = application.getInternship().getCreatedBy().getUserEmail();
+        this.applicationId = application.getApplicationId();
+        this.applicantName = application.getStudent().getUserName();
+        this.applicantEmail = application.getStudent().getUserEmail();
+        this.studentSkills = application.getStudent().getStudentSkills();
+    }
+
+    public ApplicationWrapper(StudentApplication application) {
         this.internshipTitle = application.getInternship().getInternshipName();
         this.status = application.getStatus();
         this.contactPerson = application.getInternship().getCreatedBy().getUserEmail();
