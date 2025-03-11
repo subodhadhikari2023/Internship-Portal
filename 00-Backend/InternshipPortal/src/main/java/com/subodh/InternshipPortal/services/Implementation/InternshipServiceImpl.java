@@ -45,6 +45,8 @@ public class InternshipServiceImpl implements InternshipService {
             internship.setCreatedBy(user);
             Set<String> requiredSkills = internship.getRequiredSkills().stream().map(String::trim).filter(skill -> !skill.isEmpty()).collect(Collectors.toSet());
             internship.setRequiredSkills(requiredSkills);
+            internship.setDepartment(user.getDepartment());
+            log.info("{}",user.getDepartment());
             Internship saved = internshipRepository.save(internship);
             return new InternshipWrapper(saved);
 
