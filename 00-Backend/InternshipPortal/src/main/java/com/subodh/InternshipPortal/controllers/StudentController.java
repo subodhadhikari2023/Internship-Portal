@@ -55,7 +55,6 @@ public class StudentController {
     @GetMapping("view-internships")
     public ResponseEntity<?> viewInternships() {
         List<InternshipWrapper> internshipList = internshipService.findAll();
-//        log.info("Internship List: {}", internshipList);
         return new ResponseEntity<>(new Response<>(internshipList), HttpStatus.OK);
     }
 

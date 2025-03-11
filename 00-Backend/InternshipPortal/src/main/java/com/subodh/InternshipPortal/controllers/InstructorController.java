@@ -116,9 +116,9 @@ public class InstructorController {
      * @param applicationId the application id
      * @return the response entity
      */
-    @PostMapping("view-applications")
-    public ResponseEntity<?> reviewApplications(@RequestBody StudentApplicationStatus status, @RequestParam Long applicationId) {
-        return new ResponseEntity<>(new Response<>(applicationService.reviewApplications(status, applicationId), "Application status updated", HttpStatus.ACCEPTED), HttpStatus.OK);
+    @PostMapping("review-applications")
+    public ResponseEntity<?> reviewApplications(@RequestBody String status, @RequestParam Long applicationId) {
+        return new ResponseEntity<>(new Response<>(applicationService.reviewApplications(StudentApplicationStatus.valueOf(status), applicationId)), HttpStatus.OK);
 
     }
 

@@ -14,6 +14,7 @@
                             <th>Internship Title</th>
                             <th>Applicant Email</th>
                             <th>Status</th>
+                            <!-- <th>Student Skills</th>                             -->
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -25,9 +26,13 @@
                             <td>{{ app.applicantEmail }}</td>
                             <td>{{ app.status }}</td>
                             <td>
-                                <button class="btn-view" (click)="viewDetails(app)">View</button>
-                                <button class="btn-approve" (click)="approveApplication(app)">Approve</button>
-                                <button class="btn-reject" (click)="rejectApplication(app)">Reject</button>
+                                <button class="btn-view" (click)="viewDetails(app)">View Student Details</button>
+                                <!-- <a routerLink="" target="_blank" >View Student Details</a> -->
+                                <button class="btn-approve" (click)="updateApplicationStatus(app,'ACCEPTED')" >Approve
+                                </button>
+
+                                <button class="btn-reject"
+                                    (click)="updateApplicationStatus(app,'REJECTED')">Reject</button>
                             </td>
                         </tr>
                     </tbody>
@@ -35,7 +40,7 @@
             </div>
 
             <ng-template #noApplications>
-                <p class="no-data">No applications found.</p>
+                <p class="no-data">No pending applications found.</p>
             </ng-template>
         </div>
 

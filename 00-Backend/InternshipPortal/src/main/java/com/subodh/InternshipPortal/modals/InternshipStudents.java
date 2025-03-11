@@ -12,6 +12,7 @@ import lombok.Data;
 @Table(name = "internship_students")
 public class InternshipStudents {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long studentInternshipId;
 
     @ManyToOne

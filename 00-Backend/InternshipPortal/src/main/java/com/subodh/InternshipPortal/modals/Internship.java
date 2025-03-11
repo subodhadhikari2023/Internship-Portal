@@ -5,6 +5,7 @@ import com.subodh.InternshipPortal.enums.InternshipStatus;
 import com.subodh.InternshipPortal.enums.WorkMode;
 import jakarta.persistence.*;
 import lombok.Data;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class Internship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "internship_id")
-        private Long internshipId;
+    private Long internshipId;
     /**
      * The Internship name.
      */

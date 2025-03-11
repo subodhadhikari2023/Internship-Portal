@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApplicationService } from 'src/app/services/application.service';
-import { InternshipService } from 'src/app/services/internship.service';
 
 @Component({
   selector: 'app-view-applications',
@@ -8,17 +8,9 @@ import { InternshipService } from 'src/app/services/internship.service';
   styleUrls: ['./view-applications.component.css']
 })
 export class ViewApplicationsComponent implements OnInit {
-viewDetails(_t23: any) {
-throw new Error('Method not implemented.');
-}
-rejectApplication(_t23: any) {
-throw new Error('Method not implemented.');
-}
-approveApplication(_t23: any) {
-throw new Error('Method not implemented.');
-}
+
   aplicationList: any[] = [];
-  constructor(private applicationService: ApplicationService) { }
+  constructor(private applicationService: ApplicationService, private http: Router) { }
 
   ngOnInit(): void {
     this.getAllApplications();
@@ -33,5 +25,18 @@ throw new Error('Method not implemented.');
       }
     })
   }
+  viewDetails(_t23: any) {
+    this.http.navigate(['/instructor']);
+  }
 
+  updateApplicationStatus(request: any, appStatus: any) {
+
+    this.applicationService.setApplicationStatus(request, appStatus).subscribe({
+      next: () => {
+        this.getAllApplications();
+      }
+    });
+
+
+  }
 }
