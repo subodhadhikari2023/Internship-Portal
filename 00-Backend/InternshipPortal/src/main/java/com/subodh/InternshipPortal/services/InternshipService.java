@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.services;
 
-import com.subodh.InternshipPortal.entities.Internship;
+import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 
 import java.util.List;

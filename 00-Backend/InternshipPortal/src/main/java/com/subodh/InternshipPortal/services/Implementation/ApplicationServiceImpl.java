@@ -1,8 +1,8 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
-import com.subodh.InternshipPortal.entities.Application;
-import com.subodh.InternshipPortal.entities.Internship;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.modals.Application;
+import com.subodh.InternshipPortal.modals.Internship;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import com.subodh.InternshipPortal.exceptions.ApplicationCreationFailedException;
 import com.subodh.InternshipPortal.repositories.ApplicationRepository;
@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

@@ -25,14 +25,8 @@
                             </ul>
 
                         </li>
-                        <li class="nav-item dropdown" (click)="toggleDropdown('applications')">
-                            <a class="nav-link">Applications</a>
-                            <ul class="dropdown-menu" [class.show]="dropdowns['applications']">
-                                <li><a>Create Application</a></li>
-                                <li><a>View Applications</a></li>
-                                <li><a>Edit Application</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" routerLink="/instructor/applications">Applications</a></li>
+
                     </ul>
                     <div class="profile-dropdown">
                         <button class="profile-btn" (click)="toggleDropdown('profile')">

@@ -1,8 +1,8 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 
-import com.subodh.InternshipPortal.entities.Internship;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.modals.Internship;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.exceptions.InternshipCreationFailedException;
 import com.subodh.InternshipPortal.repositories.InternshipRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;

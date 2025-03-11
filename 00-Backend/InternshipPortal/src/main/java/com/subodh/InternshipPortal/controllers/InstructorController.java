@@ -5,7 +5,7 @@ import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import com.subodh.InternshipPortal.wrapper.Response;
-import com.subodh.InternshipPortal.entities.Internship;
+import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.services.InternshipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

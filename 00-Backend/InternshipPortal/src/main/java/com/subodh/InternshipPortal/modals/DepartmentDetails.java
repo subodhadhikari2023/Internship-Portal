@@ -1,4 +1,4 @@
-package com.subodh.InternshipPortal.entities;
+package com.subodh.InternshipPortal.modals;
 
 import jakarta.persistence.*;
 import lombok.Data;

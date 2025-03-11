@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.wrapper;
 
-import com.subodh.InternshipPortal.entities.Internship;
+import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.enums.InternshipStatus;
 import com.subodh.InternshipPortal.enums.WorkMode;
 import lombok.AllArgsConstructor;

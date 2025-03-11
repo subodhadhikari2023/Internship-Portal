@@ -1,7 +1,7 @@
 package com.subodh.InternshipPortal.repositories;
 
-import com.subodh.InternshipPortal.entities.Application;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.modals.Application;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.services;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.modals.Users;
 import java.util.List;
 
 /**

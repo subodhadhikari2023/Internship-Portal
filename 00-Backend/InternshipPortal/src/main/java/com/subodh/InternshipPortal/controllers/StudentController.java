@@ -1,7 +1,7 @@
 package com.subodh.InternshipPortal.controllers;
 
-import com.subodh.InternshipPortal.entities.Application;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.modals.Application;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.DepartmentService;
 import com.subodh.InternshipPortal.services.InternshipService;

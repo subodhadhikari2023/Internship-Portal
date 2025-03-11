@@ -12,6 +12,7 @@ import { CreateInternshipComponent } from './components/create-internship/create
 import { ViewInternshipsComponent } from './components/view-internships/view-internships.component';
 import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 import {ViewApplicationComponent} from "./components/view-application/view-application.component";
+import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
 
 
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'instructor/create-internship', component: CreateInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' }, pathMatch: 'full' },
   { path: 'instructor/view-internships', component: ViewInternshipsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/manage-internships', component: EditInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+  { path: 'instructor/applications', component: ViewApplicationsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
   { path: 'verify', component: VerifyComponent },

@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.repositories;
 
-import com.subodh.InternshipPortal.entities.DepartmentDetails;
+import com.subodh.InternshipPortal.modals.DepartmentDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package com.subodh.InternshipPortal.entities;
+package com.subodh.InternshipPortal.modals;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,10 +12,10 @@ import java.time.Year;
 
 @Entity
 @Data
-public class MastersEducation {
+public class DiplomaEducation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long masterEducationId;
+    private Long diplomaEducationId;
 
     private String collegeName;
 

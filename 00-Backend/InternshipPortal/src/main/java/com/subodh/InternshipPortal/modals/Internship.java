@@ -1,4 +1,4 @@
-package com.subodh.InternshipPortal.entities;
+package com.subodh.InternshipPortal.modals;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.subodh.InternshipPortal.enums.InternshipStatus;

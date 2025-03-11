@@ -1,12 +1,10 @@
 package com.subodh.InternshipPortal.wrapper;
 
-import com.subodh.InternshipPortal.entities.Application;
+import com.subodh.InternshipPortal.modals.Application;
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-
-import java.util.UUID;
 
 /**
  * The class used to wrap and send response Application.
@@ -25,12 +23,16 @@ public class ApplicationWrapper {
         this.internshipTitle = application.getInternship().getInternshipName();
         this.status = application.getStatus();
         this.contactPerson = application.getInternship().getCreatedBy().getUserEmail();
-        this.applicationId=application.getApplicationId();
+        this.applicationId = application.getApplicationId();
+        this.applicantName = application.getStudent().getUserName();
+        this.applicantEmail = application.getStudent().getUserEmail();
     }
 
     private String internshipTitle;
     private StudentApplicationStatus status;
     private String contactPerson;
     private Long applicationId;
+    private String applicantName;
+    private String applicantEmail;
 
 }

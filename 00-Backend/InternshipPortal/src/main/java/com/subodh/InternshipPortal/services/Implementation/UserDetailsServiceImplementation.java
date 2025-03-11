@@ -1,8 +1,8 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 
-import com.subodh.InternshipPortal.entities.UserPrincipal;
-import com.subodh.InternshipPortal.entities.Users;
+import com.subodh.InternshipPortal.modals.UserPrincipal;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

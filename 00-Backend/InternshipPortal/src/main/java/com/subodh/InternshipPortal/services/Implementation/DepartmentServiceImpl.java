@@ -1,12 +1,10 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
-import com.subodh.InternshipPortal.entities.DepartmentDetails;
+import com.subodh.InternshipPortal.modals.DepartmentDetails;
 import com.subodh.InternshipPortal.repositories.DepartmentRepository;
 import com.subodh.InternshipPortal.services.DepartmentService;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 

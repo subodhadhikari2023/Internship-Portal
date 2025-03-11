@@ -1,0 +1,125 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+
+body {
+    min-height: 100vh;
+    height: fit-content;
+}
+
+.applications-container {
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.applications-table {
+    max-width: 100vw;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.applications-table th,
+.applications-table td {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    text-align: left;
+}
+
+.applications-table th {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Button styles */
+.btn-view,
+.btn-approve,
+.btn-reject {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+.btn-view {
+    background-color: var(--info-color);
+    color: rgb(0, 152, 30);
+}
+
+.btn-approve {
+    background-color: var(--success-color);
+    color: rgb(0, 0, 0);
+}
+
+.btn-reject {
+    background-color: var(--error-color);
+    color: rgb(172, 0, 0);
+}
+
+.no-data {
+    color: var(--secondary-color);
+    text-align: center;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .applications-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .applications-table thead {
+        display: none;
+    }
+
+    .applications-table tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .applications-table tr {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--border-color);
+        margin-bottom: 10px;
+        padding: 10px;
+        background: white;
+        border-radius: 8px;
+    }
+
+    .applications-table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px;
+        border: none;
+    }
+
+    .applications-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: var(--primary-color);
+    }
+
+    .btn-view,
+    .btn-approve,
+    .btn-reject {
+        width: 100%;
+        margin-top: 5px;
+    }
+}

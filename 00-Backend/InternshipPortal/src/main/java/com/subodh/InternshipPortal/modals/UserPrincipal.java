@@ -1,4 +1,4 @@
-package com.subodh.InternshipPortal.entities;
+package com.subodh.InternshipPortal.modals;
 
 
 import org.springframework.security.core.GrantedAuthority;

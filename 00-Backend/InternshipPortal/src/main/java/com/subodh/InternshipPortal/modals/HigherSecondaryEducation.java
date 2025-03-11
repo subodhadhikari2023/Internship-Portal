@@ -1,4 +1,4 @@
-package com.subodh.InternshipPortal.entities;
+package com.subodh.InternshipPortal.modals;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,20 +12,21 @@ import java.time.Year;
 
 @Entity
 @Data
-public class DiplomaEducation {
+public class HigherSecondaryEducation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long diplomaEducationId;
+    private Long higherSecondaryEducationId;
 
-    private String collegeName;
+    private String schoolName;
 
-    private String courseName;
-
-    private Year startYear;
+    private String boardName;
 
     private Year passingYear;
 
     @DecimalMin(value = "0.00", inclusive = false)
     @DecimalMax(value = "100.00", inclusive = false)
-    private Long passingPercentage;
+    private Double passingPercentage;
+
+
+    private String stream;
 }

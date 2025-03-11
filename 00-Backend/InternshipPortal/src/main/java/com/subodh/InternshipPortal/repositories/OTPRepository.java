@@ -1,6 +1,6 @@
 package com.subodh.InternshipPortal.repositories;
 
-import com.subodh.InternshipPortal.entities.OneTimePassword;
+import com.subodh.InternshipPortal.modals.OneTimePassword;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

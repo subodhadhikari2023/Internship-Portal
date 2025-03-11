@@ -4,7 +4,7 @@ package com.subodh.InternshipPortal.controllers;
 import com.subodh.InternshipPortal.wrapper.LoginResponse;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.wrapper.RegistrationResponse;
-import com.subodh.InternshipPortal.entities.*;
+import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
 import com.subodh.InternshipPortal.services.RegistrationService;
