@@ -23,6 +23,8 @@ import { StudentNavComponent } from './components/student-nav/student-nav.compon
 import { ViewApplicationComponent } from './components/view-application/view-application.component';
 import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
 import { ViewInternshipStudentComponent } from './components/view-internship-student/view-internship-student.component';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { ViewEnrolledStudentsComponent } from './components/view-enrolled-students/view-enrolled-students.component';
 
 
 
@@ -46,7 +48,9 @@ import { ViewInternshipStudentComponent } from './components/view-internship-stu
     StudentNavComponent,
     ViewApplicationComponent,
     ViewApplicationsComponent,
-    ViewInternshipStudentComponent
+    ViewInternshipStudentComponent,
+    CreateProjectComponent,
+    ViewEnrolledStudentsComponent
   ],
   imports: [
     BrowserModule,

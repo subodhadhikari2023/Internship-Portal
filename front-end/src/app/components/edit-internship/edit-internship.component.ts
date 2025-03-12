@@ -40,11 +40,11 @@ export class EditInternshipComponent implements OnInit {
       workMode: internship.workMode,
       status: internship.status,
       // requiredSkills: internship.requiredSkills
-      requiredSkills: Array.isArray(internship.requiredSkills) 
-    ? internship.requiredSkills 
-    : internship.requiredSkills.split(',').map((skill: string) => skill.trim())
+      requiredSkills: Array.isArray(internship.requiredSkills)
+        ? internship.requiredSkills
+        : internship.requiredSkills.split(',').map((skill: string) => skill.trim())
     };
-    console.log(updatedInternship);
+    // console.log(updatedInternship);
 
     this.internshipService.updateInternship(updatedInternship).subscribe({
       next: (response) => {

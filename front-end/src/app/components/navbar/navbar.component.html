@@ -18,20 +18,22 @@
                         <li class="nav-item dropdown" (click)="toggleDropdown('internships')">
                             <a class="nav-link">Internships</a>
                             <ul class="dropdown-menu" [class.show]="dropdowns['internships']">
-                                <li><a routerLink="/instructor/create-internship" routerLinkActive="active">Create Internship</a></li>
+                                <li><a routerLink="/instructor/create-internship" routerLinkActive="active">Create
+                                        Internship</a></li>
                                 <li><a routerLink="/instructor/view-internships">View Internships</a></li>
                                 <li><a routerLink="/instructor/manage-internships">Edit Internship</a></li>
                             </ul>
                         </li>
-                        <li class="nav-item dropdown" (click)="toggleDropdown('internship-students')">
-                            <a class="nav-link">Internship Students</a>
-                            <ul class="dropdown-menu" [class.show]="dropdowns['internship-students']">
-                                <li><a routerLink="/instructor/create-internship" routerLinkActive="active">Create Internship</a></li>
-                                <li><a routerLink="/instructor/view-internships">View Internships</a></li>
-                                <li><a routerLink="/instructor/manage-internships">Edit Internship</a></li>
-                            </ul>
+
+                        <li class="nav-item"><a class="nav-link" routerLink="/instructor/create-project">Create
+                                Project</a></li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/instructor/view-internship-students">Internship
+                                Students</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" routerLink="/instructor/applications">Applications</a>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/instructor/applications">Applications</a>
                         </li>
 
                     </ul>

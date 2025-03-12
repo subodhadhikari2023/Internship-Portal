@@ -14,6 +14,8 @@ import { EditInternshipComponent } from './components/edit-internship/edit-inter
 import {ViewApplicationComponent} from "./components/view-application/view-application.component";
 import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
 import { ViewInternshipStudentComponent } from './components/view-internship-student/view-internship-student.component';
+import { CreateProjectComponent } from './components/create-project/create-project.component';
+import { ViewEnrolledStudentsComponent } from './components/view-enrolled-students/view-enrolled-students.component';
 
 
 
@@ -29,6 +31,8 @@ const routes: Routes = [
   { path: 'instructor/view-internships', component: ViewInternshipsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/manage-internships', component: EditInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/applications', component: ViewApplicationsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+  { path: 'instructor/create-project', component: CreateProjectComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+  { path: 'instructor/view-internship-students', component: ViewEnrolledStudentsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
   { path: 'verify', component: VerifyComponent },
