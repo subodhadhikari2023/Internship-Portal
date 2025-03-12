@@ -78,7 +78,6 @@ public class ApplicationServiceImpl implements ApplicationService {
             application.setInternship(internship);
             applicationRepository.save(application);
             studentApplicationRepository.save(new StudentApplication(application));
-
             return new ApplicationWrapper(application);
 
         } catch (IllegalArgumentException e) {
@@ -122,7 +121,8 @@ public class ApplicationServiceImpl implements ApplicationService {
 
     @Override
     public Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long userId) {
-        return applicationRepository.existsByInternshipAndStudent(internshipId, userId);
+//        return applicationRepository.existsByInternshipAndStudent(internshipId, userId);
+        return studentApplicationRepository.existsByInternshipAndStudent(internshipId, userId);
     }
 
     @Override
