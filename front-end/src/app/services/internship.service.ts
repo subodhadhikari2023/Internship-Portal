@@ -46,4 +46,10 @@ export class InternshipService {
     );
   }
 
+  getSelectedInternshipsForStudents() {
+    return this.http.get<any>(`${BASE_URL}students/selected-internships`).pipe(
+      map(response => response.entity)
+    )
+  }
+
 }

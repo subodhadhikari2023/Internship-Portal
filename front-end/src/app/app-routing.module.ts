@@ -13,6 +13,7 @@ import { ViewInternshipsComponent } from './components/view-internships/view-int
 import { EditInternshipComponent } from './components/edit-internship/edit-internship.component';
 import {ViewApplicationComponent} from "./components/view-application/view-application.component";
 import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
+import { ViewInternshipStudentComponent } from './components/view-internship-student/view-internship-student.component';
 
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'student', component: StudentsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'student/view-applications', component: ViewApplicationComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
+  { path: 'student/view-internships', component: ViewInternshipStudentComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'instructor', component: InstructorsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/create-internship', component: CreateInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' }, pathMatch: 'full' },
   { path: 'instructor/view-internships', component: ViewInternshipsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
