@@ -22,6 +22,7 @@ import { EditInternshipComponent } from './components/edit-internship/edit-inter
 import { StudentNavComponent } from './components/student-nav/student-nav.component';
 import { ViewApplicationComponent } from './components/view-application/view-application.component';
 import { ViewApplicationsComponent } from './components/view-applications/view-applications.component';
+import { ViewInternshipStudentComponent } from './components/view-internship-student/view-internship-student.component';
 
 
 
@@ -44,7 +45,8 @@ import { ViewApplicationsComponent } from './components/view-applications/view-a
     EditInternshipComponent,
     StudentNavComponent,
     ViewApplicationComponent,
-    ViewApplicationsComponent
+    ViewApplicationsComponent,
+    ViewInternshipStudentComponent
   ],
   imports: [
     BrowserModule,

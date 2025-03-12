@@ -1,0 +1,35 @@
+<body>
+    <nav>
+        <app-student-nav></app-student-nav>
+    </nav>
+    <main>
+        <div class="internship-container">
+            <h2 class="title">My Selected Internships</h2>
+
+            <div *ngIf="internships?.length; else noInternships" class="internship-list">
+                <div *ngFor="let internship of internships" class="internship-card">
+                    <h3 class="internship-title">{{ internship.internshipName }}</h3>
+                    <p class="internship-description">{{ internship.description }}</p>
+                    <div class="internship-details">
+                        <strong>Department:</strong> {{ internship.departmentName }}
+                        <strong>Duration:</strong> {{ internship.startDate }} - {{ internship.endDate }}
+                        <strong>Status:</strong> {{ internship.status }}
+                        <strong>Instructor:</strong> {{ internship.instructorName }}
+                        <strong>Work Mode:</strong> {{ internship.workMode }}
+                        <strong>Projects:</strong>
+                        <span *ngIf="internship.projectName?.length; else noProjects">
+                            {{ internship.projectName?.join(', ') }}
+                        </span>
+                        <ng-template #noProjects>No projects assigned.🫠</ng-template>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <ng-template #noInternships>
+                <p class="no-internships">No internships selected yet.</p>
+            </ng-template>
+        </div>
+    </main>
+</body>
