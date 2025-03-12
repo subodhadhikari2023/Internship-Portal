@@ -24,7 +24,6 @@ import java.util.List;
 @RequestMapping("api/v1/instructors")
 @CrossOrigin
 public class InstructorController {
-
     private final InternshipService internshipService;
     private final ApplicationService applicationService;
 
@@ -65,6 +64,7 @@ public class InstructorController {
         if (internships.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+
         return new ResponseEntity<>(new Response<>(internships), HttpStatus.OK);
     }
 
@@ -82,7 +82,6 @@ public class InstructorController {
         if (savedInternship == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Internship not found");
         }
-
         savedInternship.setInternshipName(internship.getInternshipName());
         savedInternship.setStartDate(internship.getStartDate());
         savedInternship.setEndDate(internship.getEndDate());
@@ -92,7 +91,6 @@ public class InstructorController {
         savedInternship.setStatus(internship.getStatus());
         savedInternship.setRequiredSkills(internship.getRequiredSkills());
         internshipService.saveInternship(savedInternship, userDetails.getUsername());
-
         return ResponseEntity.ok(new InternshipWrapper(savedInternship));
     }
 
@@ -121,7 +119,6 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(applicationService.reviewApplications(StudentApplicationStatus.valueOf(status), applicationId)), HttpStatus.OK);
 
     }
-
 
 
 }
