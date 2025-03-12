@@ -78,7 +78,7 @@ public class InstructorController {
     @PutMapping("internship")
     public ResponseEntity<?> updateInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
         Internship savedInternship = internshipService.findInternshipByInternshipId(internship.getInternshipId());
-
+        log.info("{}", internship.getEducationalQualifications());
         if (savedInternship == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Internship not found");
         }

@@ -23,7 +23,7 @@ public class InternshipWrapper {
     private String contactPerson;
     private InternshipStatus status;
     private Set<String> requiredSkills;
-    private String educationalQualification;
+    private String educationalQualifications;
     private WorkMode workMode;
     private String department;
 
@@ -42,7 +42,7 @@ public class InternshipWrapper {
         this.status = internship.getStatus();
         this.internshipId = internship.getInternshipId();
         this.requiredSkills = internship.getRequiredSkills();
-        this.educationalQualification = internship.getEducationalQualifications();
+        this.educationalQualifications = internship.getEducationalQualifications();
         this.workMode = internship.getWorkMode();
         this.department = internship.getDepartment().getDepartmentName();
 
