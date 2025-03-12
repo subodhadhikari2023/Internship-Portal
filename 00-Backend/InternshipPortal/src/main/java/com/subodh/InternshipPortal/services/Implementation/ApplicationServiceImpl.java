@@ -8,10 +8,12 @@ import com.subodh.InternshipPortal.repositories.*;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.services.MailService;
+import com.subodh.InternshipPortal.services.ProjectService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,9 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final InternshipStudentRepository internshipStudentRepository;
     private final MailService mailService;
     private final StudentApplicationRepository studentApplicationRepository;
+    private final ProjectService projectService;
+    @Value("${file.storage.path}")
+    private String rootFolderPath;
 
     /**
      * Instantiates a new Application service.
@@ -45,7 +50,7 @@ public class ApplicationServiceImpl implements ApplicationService {
      * @param internshipService     the internship service
      */
     @Autowired
-    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository, MailService mailService, StudentApplicationRepository studentApplicationRepository) {
+    public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository, MailService mailService, StudentApplicationRepository studentApplicationRepository, ProjectService projectService) {
         this.applicationRepository = applicationRepository;
         this.usersRepository = usersRepository;
         this.internshipRepository = internshipRepository;
@@ -53,6 +58,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         this.internshipStudentRepository = internshipStudentRepository;
         this.mailService = mailService;
         this.studentApplicationRepository = studentApplicationRepository;
+        this.projectService = projectService;
     }
 
     @Override
@@ -92,21 +98,26 @@ public class ApplicationServiceImpl implements ApplicationService {
         return applications.stream().map(ApplicationWrapper::new).toList();
     }
 
-    @Transactional
+
     @Override
     public ApplicationWrapper reviewApplications(StudentApplicationStatus status, Long applicationId) {
         Application application = applicationRepository.findById(applicationId).get();
-        InternshipStudents student = new InternshipStudents();
-        student.setInternship(application.getInternship());
-        student.setStudent(application.getStudent());
-        student.setStatus(StudentInternshipStatus.valueOf("IN_PROGRESS"));
-        internshipStudentRepository.save(student);
+        if (status == StudentApplicationStatus.ACCEPTED) {
+            InternshipStudents student = new InternshipStudents();
+            student.setInternship(application.getInternship());
+            student.setStudent(application.getStudent());
+            student.setStatus(StudentInternshipStatus.valueOf("IN_PROGRESS"));
+            internshipStudentRepository.save(student);
+            projectService.createFolder(rootFolderPath, application.getInternship().getDepartment().getDepartmentName(), application.getInternship().getInternshipName(), application.getStudent().getUserEmail());
+
+
+        }
         StudentApplication studentApplication = studentApplicationRepository.findByApplicationId(applicationId);
         studentApplication.setStatus(status);
-        studentApplicationRepository.save(studentApplication);
+        StudentApplication saved = studentApplicationRepository.save(studentApplication);
         applicationRepository.delete(application);
         mailService.sendApplicationStatusMail(application.getStudent().getUserEmail(), application.getStudent().getUserEmail(), application.getInternship().getInternshipName(), status, application.getInternship().getCreatedBy().getUserEmail(), application.getInternship().getCreatedBy().getDepartment().getDepartmentName());
-        return new ApplicationWrapper(application);
+        return new ApplicationWrapper(saved);
     }
 
     @Override
@@ -123,7 +134,6 @@ public class ApplicationServiceImpl implements ApplicationService {
     public List<ApplicationWrapper> findAllApplicationsByUserEmail(String username) {
         Users user = usersRepository.findByUserEmail(username);
         return studentApplicationRepository.findAllByStudent(user).stream().map(ApplicationWrapper::new).toList();
-//        return applicationRepository.findAllByStudent(user);
     }
 
 

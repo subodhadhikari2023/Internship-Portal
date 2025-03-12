@@ -28,4 +28,15 @@ public class AsyncConfiguration {
         executor.initialize();
         return executor;
     }
+
+    @Bean(name = "projectExecutor")
+    public Executor projectExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(500);
+        executor.setThreadNamePrefix("Project Thread");
+        executor.initialize();
+        return executor;
+    }
 }

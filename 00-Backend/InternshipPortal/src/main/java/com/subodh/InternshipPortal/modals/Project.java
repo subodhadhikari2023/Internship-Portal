@@ -41,4 +41,8 @@ public class Project {
 
     @Enumerated(EnumType.STRING)
     private StudentInternshipStatus status;
+
+//    @ManyToOne
+//    @JoinColumn(name = "student_internship_id",referencedColumnName = "student_internship_id")
+//    private InternshipStudents internshipStudents;
 }

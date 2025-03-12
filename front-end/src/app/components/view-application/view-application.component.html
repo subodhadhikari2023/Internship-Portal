@@ -11,7 +11,7 @@
           <option value="ALL">All</option>
           <option value="SUBMITTED">Submitted</option>
           <option value="REJECTED">Rejected</option>
-          <option value="APPROVED">Approved</option>
+          <option value="ACCEPTED">Accepted</option>
         </select>
       </div>
     </section>
@@ -26,7 +26,7 @@
             <strong>Status:</strong> 
             <span [ngClass]="{
               'submitted': application.status === 'SUBMITTED',
-              'approved': application.status === 'APPROVED',
+              'accepted': application.status === 'ACCEPTED',
               'rejected': application.status === 'REJECTED'
             }">
               {{ application.status }}
