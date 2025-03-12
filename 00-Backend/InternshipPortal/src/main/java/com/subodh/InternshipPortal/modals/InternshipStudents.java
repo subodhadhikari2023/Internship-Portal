@@ -4,6 +4,8 @@ import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 /**
  * The type Internship students.
  */
@@ -25,5 +27,10 @@ public class InternshipStudents {
 
     @Enumerated(EnumType.STRING)
     private StudentInternshipStatus status;
+
+    @OneToMany(mappedBy = "internshipStudents", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Project> projects;
+
+
 
 }

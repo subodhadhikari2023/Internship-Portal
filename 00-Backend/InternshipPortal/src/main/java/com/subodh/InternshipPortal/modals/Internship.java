@@ -76,8 +76,6 @@ public class Internship {
     @JoinColumn(name = "department_id")
     DepartmentDetails department;
 
-    @OneToMany(mappedBy = "internships")
-    @JsonManagedReference
-    private Set<Project> project;
+
 
 }

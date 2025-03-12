@@ -61,6 +61,13 @@ public class Users {
     String profilePhotoFilePath;
 
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<InternshipStudents> enrolledInternships;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Project> projects;
+
+
     /**
      * Add role.
      *
