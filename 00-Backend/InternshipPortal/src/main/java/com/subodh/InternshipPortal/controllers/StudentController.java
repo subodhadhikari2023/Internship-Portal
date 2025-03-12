@@ -2,14 +2,8 @@ package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.modals.Application;
 import com.subodh.InternshipPortal.modals.Users;
-import com.subodh.InternshipPortal.services.ApplicationService;
-import com.subodh.InternshipPortal.services.DepartmentService;
-import com.subodh.InternshipPortal.services.InternshipService;
-import com.subodh.InternshipPortal.services.UserService;
-import com.subodh.InternshipPortal.wrapper.APIRequest;
-import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
-import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
-import com.subodh.InternshipPortal.wrapper.Response;
+import com.subodh.InternshipPortal.services.*;
+import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +27,7 @@ public class StudentController {
     private final ApplicationService applicationService;
     private final UserService userService;
     private final DepartmentService departmentService;
+    private final InternshipStudentsService internshipStudentsService;
 
     /**
      * Instantiates a new Student controller.
@@ -40,11 +35,12 @@ public class StudentController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
         this.departmentService = departmentService;
+        this.internshipStudentsService = internshipStudentsService;
     }
 
     /**
@@ -112,6 +108,12 @@ public class StudentController {
     @GetMapping("departments")
     public ResponseEntity<?> departments() {
         return new ResponseEntity<>(new Response<>(departmentService.findAll()), HttpStatus.OK);
+    }
+
+    @GetMapping("selected-internships")
+    public ResponseEntity<?> internship(@AuthenticationPrincipal UserDetails userDetails) {
+        List<InternshipStudentsWrapper> all = internshipStudentsService.findAllByStudentId(userService.findByUserEmail(userDetails.getUsername()).getUserId());
+        return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
 
 }

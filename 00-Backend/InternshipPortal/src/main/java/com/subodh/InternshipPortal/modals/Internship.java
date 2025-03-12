@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.modals;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.subodh.InternshipPortal.enums.InternshipStatus;
 import com.subodh.InternshipPortal.enums.WorkMode;
@@ -74,5 +75,9 @@ public class Internship {
     @ManyToOne
     @JoinColumn(name = "department_id")
     DepartmentDetails department;
+
+    @OneToMany(mappedBy = "internships")
+    @JsonManagedReference
+    private Set<Project> project;
 
 }

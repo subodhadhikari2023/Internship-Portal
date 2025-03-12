@@ -1,5 +1,7 @@
 package com.subodh.InternshipPortal.modals;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -32,9 +34,9 @@ public class Project {
     @JoinColumn(nullable = false, name = "student_id", referencedColumnName = "user_id")
     private Users user;
 
-    @ManyToOne
-    @JoinColumn(name = "internship_id", referencedColumnName = "internship_id")
-    private Internship internship;
+//    @ManyToOne
+//    @JoinColumn(name = "internship_id", referencedColumnName = "internship_id")
+//    private Internship internship;
 
     @Column(nullable = false)
     private LocalDate uploadDate;
@@ -45,4 +47,11 @@ public class Project {
 //    @ManyToOne
 //    @JoinColumn(name = "student_internship_id",referencedColumnName = "student_internship_id")
 //    private InternshipStudents internshipStudents;
+
+    @ManyToOne
+    @JoinColumn(name = "internship_id",referencedColumnName = "internship_id")
+    @JsonBackReference
+    private Internship internships;
+
+
 }
