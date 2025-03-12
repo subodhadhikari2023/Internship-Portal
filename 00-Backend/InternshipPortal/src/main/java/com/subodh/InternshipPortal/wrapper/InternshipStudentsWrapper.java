@@ -1,6 +1,5 @@
 package com.subodh.InternshipPortal.wrapper;
 
-import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.modals.Project;
 import lombok.AllArgsConstructor;
@@ -11,8 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.yaml.snakeyaml.tokens.Token.ID.Value;
 
 @Data
 @Builder
@@ -36,7 +33,7 @@ public class InternshipStudentsWrapper {
         this.projectName = internshipStudents.getProjects().stream().map(Project::getProjectName).collect(Collectors.toSet());
         this.instructorName = internshipStudents.getInternship().getCreatedBy().getUserEmail();
         this.departmentName = internshipStudents.getInternship().getDepartment().getDepartmentName();
-        this.status = String.valueOf(internshipStudents.getInternship().getStatus());
+        this.status = String.valueOf(internshipStudents.getStatus());
         this.startDate = internshipStudents.getInternship().getStartDate();
         this.endDate = internshipStudents.getInternship().getEndDate();
         this.workMode = String.valueOf(internshipStudents.getInternship().getWorkMode());

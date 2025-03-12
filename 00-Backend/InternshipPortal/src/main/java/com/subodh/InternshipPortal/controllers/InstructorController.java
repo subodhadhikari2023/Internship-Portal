@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import com.subodh.InternshipPortal.services.ApplicationService;
+import com.subodh.InternshipPortal.services.InternshipStudentsService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import com.subodh.InternshipPortal.wrapper.Response;
@@ -26,6 +27,7 @@ import java.util.List;
 public class InstructorController {
     private final InternshipService internshipService;
     private final ApplicationService applicationService;
+    private final InternshipStudentsService internshipStudentsService;
 
 
     /**
@@ -34,9 +36,10 @@ public class InstructorController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public InstructorController(InternshipService internshipService, ApplicationService applicationService) {
+    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
+        this.internshipStudentsService = internshipStudentsService;
     }
 
 
@@ -78,7 +81,7 @@ public class InstructorController {
     @PutMapping("internship")
     public ResponseEntity<?> updateInternship(@RequestBody Internship internship, @AuthenticationPrincipal UserDetails userDetails) {
         Internship savedInternship = internshipService.findInternshipByInternshipId(internship.getInternshipId());
-
+        log.info("{}", internship.getEducationalQualifications());
         if (savedInternship == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Internship not found");
         }
@@ -118,6 +121,11 @@ public class InstructorController {
     public ResponseEntity<?> reviewApplications(@RequestBody String status, @RequestParam Long applicationId) {
         return new ResponseEntity<>(new Response<>(applicationService.reviewApplications(StudentApplicationStatus.valueOf(status), applicationId)), HttpStatus.OK);
 
+    }
+
+    @GetMapping("internship-students")
+    public ResponseEntity<?> getAllInternshipStudents(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername())),HttpStatus.OK);
     }
 
 

@@ -9,6 +9,7 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
 })
 export class InternshipService {
 
+
   constructor(private http: HttpClient) { }
 
   createInternship(request: InternshipCreationRequest): Observable<any> {
@@ -36,7 +37,6 @@ export class InternshipService {
     return this.http.post<any>(`${BASE_URL}students/apply`, request);
   }
   hasStudentApplied(internshipId: number) {
-    // return this.http.get<boolean>(`${BASE_URL}students/has-applied/${internshipId}`);
     return this.http.get<{ entity: boolean }>(`${BASE_URL}students/has-applied/${internshipId}`);
 
   }
@@ -52,4 +52,9 @@ export class InternshipService {
     )
   }
 
+  getStudentsEnrolledInInternshipsCreated() {
+    return this.http.get<any>(`${BASE_URL}instructors/internship-students`).pipe(
+      map(response => response.entity)
+    )
+  }
 }

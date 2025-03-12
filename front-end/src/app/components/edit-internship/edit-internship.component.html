@@ -36,8 +36,8 @@
               <span *ngIf="!internship.isEditing">{{ internship.description }}</span>
             </td>
             <td>
-              <input *ngIf="internship.isEditing" [(ngModel)]="internship.educationalQualification" />
-              <span *ngIf="!internship.isEditing">{{ internship.educationalQualification }}</span>
+              <input *ngIf="internship.isEditing" [(ngModel)]="internship.educationalQualifications" />
+              <span *ngIf="!internship.isEditing">{{ internship.educationalQualifications }}</span>
             </td>
             <td>
               <select *ngIf="internship.isEditing" [(ngModel)]="internship.workMode">

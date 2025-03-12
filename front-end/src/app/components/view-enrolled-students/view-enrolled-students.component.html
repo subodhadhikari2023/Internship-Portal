@@ -1,0 +1,41 @@
+<body>
+    <nav><app-navbar></app-navbar></nav>
+    <main>
+        <div class="container">
+            <h2>Enrolled Students</h2>
+
+            <table *ngIf="students.length > 0; else noStudents" class="student-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Email</th>
+                        <th>Assigned Internship</th>
+                        <th>Internship Status </th>
+                        <th>Assigned Project</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let student of students; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ student.userEmail }}</td>
+                        <td>{{ student.internshipName }}</td>
+                        <td>{{ student.status }}</td>
+                        <td>
+                            <ng-container *ngIf="student.projectName && student.projectName.length > 0; else noProject">
+                                {{ student.projectName.join(', ') }}
+                            </ng-container>
+                            <ng-template #noProject>
+                                No projects assigned
+                            </ng-template>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ng-template #noStudents>
+                <p class="no-data">No students enrolled yet.</p>
+            </ng-template>
+        </div>
+
+    </main>
+</body>
