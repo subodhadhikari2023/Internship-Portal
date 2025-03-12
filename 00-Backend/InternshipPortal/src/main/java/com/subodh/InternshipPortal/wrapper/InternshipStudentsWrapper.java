@@ -1,6 +1,5 @@
 package com.subodh.InternshipPortal.wrapper;
 
-import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.modals.Project;
 import lombok.AllArgsConstructor;
@@ -11,8 +10,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.yaml.snakeyaml.tokens.Token.ID.Value;
 
 @Data
 @Builder
