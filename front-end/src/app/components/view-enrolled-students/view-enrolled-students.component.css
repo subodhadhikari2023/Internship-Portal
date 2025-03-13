@@ -3,8 +3,8 @@ body{
     padding: 0;
     box-sizing: border-box;
     position: relative;
-    min-height: fit-content;
-    height: 100vh;
+    min-height: 100vh;
+    height: fit-content;
 }
 .container {
     width: 90%;
@@ -52,4 +52,51 @@ body{
     color: var(--complementary-color);
     font-weight: bold;
   }
+  @media screen and (max-width: 768px) {
+    .student-table, 
+    .student-table thead, 
+    .student-table tbody, 
+    .student-table th, 
+    .student-table td, 
+    .student-table tr {
+      display: block;
+    }
+  
+    .student-table thead {
+      display: none;
+    }
+  
+    .student-table tbody tr {
+      display: flex;
+      flex-direction: column;
+      background: var(--card-background);
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px var(--border-color);
+      text-align: left;  /* Aligns text to left */
+    }
+  
+    .student-table td {
+      display: flex;
+      flex-direction: column; /* Makes each cell stack content properly */
+      align-items: flex-start; /* Aligns text to the left */
+      padding: 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+  
+    .student-table td:last-child {
+      border-bottom: none;
+    }
+  
+    .student-table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: var(--primary-color);
+      display: block;
+      margin-bottom: 4px;
+    }
+  }
+  
+  
   

@@ -7,8 +7,8 @@ body {
   margin: 0;
   font-family: Roboto, sans-serif;
   background-color: #f5f5f5;
-  min-height: fit-content;
-  height: 100vh;
+  height: fit-content;
+  min-height:100vh;
   position: relative;
 }
 
@@ -120,6 +120,8 @@ button:hover {
   td,
   tr {
     display: block;
+    align-items: flex-start; /* Align text to the left */
+
   }
 
   thead {
@@ -156,8 +158,8 @@ button:hover {
     color: #007bff;
   }
   body{
-    min-height: fit-content;
-    height: 100vh;
+    height: fit-content;
+    min-height: 100vh;
 
   }
 }

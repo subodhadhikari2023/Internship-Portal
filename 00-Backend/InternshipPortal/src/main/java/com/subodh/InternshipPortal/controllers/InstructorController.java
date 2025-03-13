@@ -128,5 +128,11 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername())),HttpStatus.OK);
     }
 
+//   @GetMapping("enrolled-students")
+//    public ResponseEntity<?> getAllEnrolledStudents(@AuthenticationPrincipal UserDetails userDetails) {
+//
+//
+//   }
+
 
 }
