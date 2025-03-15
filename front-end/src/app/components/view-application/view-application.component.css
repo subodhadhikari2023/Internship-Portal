@@ -13,8 +13,8 @@
   margin: auto;
 }
 body{
-  min-height: fit-content;
-  height: 100vh;
+  min-height: 100vh;
+  height: fit-content;
 }
 .application-card {
   background: #f9f9f9;

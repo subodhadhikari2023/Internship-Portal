@@ -101,11 +101,13 @@ h2 {
         padding: 10px;
         background: white;
         border-radius: 8px;
+        text-align: center; /* Aligns entire row content to left */
     }
 
     .applications-table td {
         display: flex;
-        justify-content: space-between;
+        flex-direction: column; /* Ensures proper stacking */
+        align-items: center; /* Aligns text content to left */
         padding: 8px;
         border: none;
     }
@@ -114,6 +116,8 @@ h2 {
         content: attr(data-label);
         font-weight: bold;
         color: var(--primary-color);
+        display: block;
+        margin-bottom: 4px;
     }
 
     .btn-view,
@@ -123,3 +127,4 @@ h2 {
         margin-top: 5px;
     }
 }
+
