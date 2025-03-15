@@ -1,1 +1,41 @@
-<p>create-project works!</p>
+<nav><app-navbar></app-navbar></nav>
+<body>
+    <section>
+        <form [formGroup]="projectForm" (ngSubmit)="submitProject()">
+            <fieldset>
+                <legend>Create a New Project</legend>
+
+                <div>
+                    <label for="student">Select Student:</label>
+                    <select id="student" formControlName="studentEmail" (change)="onStudentChange($event)">
+                        <option value="" disabled>Select a student</option>
+                        <option *ngFor="let student of students" [value]="student.email">
+                            {{ student.email }}
+                        </option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="internship">Select Internship:</label>
+                    <select id="internship" formControlName="internship">
+                        <option value="" disabled>Select an internship</option>
+                        <option *ngFor="let internship of selectedInternships" [value]="internship">
+                            {{ internship }}
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label for="submissionDate">Submission Date:</label>
+                    <input id="submissionDate" type="date" formControlName="submissionDate" (change)="validateSubmissionDate()" />
+                    <span class="error" *ngIf="submissionError">{{ submissionError }}</span>
+                </div>
+                <div>
+                    <label for="projectName">Project Name:</label>
+                    <input id="projectName" type="text" formControlName="projectName" placeholder="Enter project name" />
+                </div>
+
+                <button type="submit" [disabled]="projectForm.invalid">Create Project</button>
+            </fieldset>
+        </form>
+    </section>
+</body>
