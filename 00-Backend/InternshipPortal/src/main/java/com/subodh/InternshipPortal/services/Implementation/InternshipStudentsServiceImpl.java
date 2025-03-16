@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.modals.InternshipStudents;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.repositories.InternshipStudentRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.InternshipStudentsService;
@@ -31,9 +32,12 @@ public class InternshipStudentsServiceImpl implements InternshipStudentsService 
         return internships.isEmpty() ? Collections.emptyList() : internships.stream().map(InternshipStudentsWrapper::new).collect(Collectors.toList());
     }
 
+
     @Override
     public List<InternshipStudentsWrapper> findAllStudentsOfInternshipsCreated(String userEmail) {
-        List<InternshipStudents> internshipStudents = internshipStudentRepository.findAllByInternship_CreatedBy(usersRepository.findByUserEmail(userEmail));
+        Users user = usersRepository.findByUserEmail(userEmail);
+        List<InternshipStudents> internshipStudents = internshipStudentRepository.findAllByInternship_CreatedBy(user);
         return internshipStudents.isEmpty() ? Collections.emptyList() : internshipStudents.stream().map(InternshipStudentsWrapper::new).collect(Collectors.toList());
     }
+
 }

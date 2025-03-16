@@ -1,9 +1,12 @@
 package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+import com.subodh.InternshipPortal.modals.InternshipStudents;
+import com.subodh.InternshipPortal.repositories.ProjectRepository;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipStudentsService;
 import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
+import com.subodh.InternshipPortal.wrapper.InternshipStudentsWrapper;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 import com.subodh.InternshipPortal.wrapper.Response;
 import com.subodh.InternshipPortal.modals.Internship;
@@ -28,6 +31,7 @@ public class InstructorController {
     private final InternshipService internshipService;
     private final ApplicationService applicationService;
     private final InternshipStudentsService internshipStudentsService;
+    private final ProjectRepository projectRepository;
 
 
     /**
@@ -36,10 +40,11 @@ public class InstructorController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService) {
+    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectRepository projectRepository) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.internshipStudentsService = internshipStudentsService;
+        this.projectRepository = projectRepository;
     }
 
 
@@ -125,7 +130,8 @@ public class InstructorController {
 
     @GetMapping("internship-students")
     public ResponseEntity<?> getAllInternshipStudents(@AuthenticationPrincipal UserDetails userDetails) {
-        return new ResponseEntity<>(new Response<>(internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername())),HttpStatus.OK);
+        List<InternshipStudentsWrapper> all = internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername());
+        return new ResponseEntity<>(new Response<>(all),HttpStatus.OK);
     }
 
 //   @GetMapping("enrolled-students")

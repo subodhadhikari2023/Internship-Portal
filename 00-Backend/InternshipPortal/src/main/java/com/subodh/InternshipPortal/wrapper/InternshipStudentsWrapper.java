@@ -28,9 +28,13 @@ public class InternshipStudentsWrapper {
 
 
     public InternshipStudentsWrapper(InternshipStudents internshipStudents) {
+        Set<Project> projectsCopy = Set.copyOf(internshipStudents.getProjects());
+
         this.internshipName = internshipStudents.getInternship().getInternshipName();
         this.userEmail = internshipStudents.getStudent().getUserEmail();
-        this.projectName = internshipStudents.getProjects().stream().map(Project::getProjectName).collect(Collectors.toSet());
+        this.projectName = projectsCopy.stream()
+                .map(Project::getProjectName)
+                .collect(Collectors.toSet());
         this.instructorName = internshipStudents.getInternship().getCreatedBy().getUserEmail();
         this.departmentName = internshipStudents.getInternship().getDepartment().getDepartmentName();
         this.status = String.valueOf(internshipStudents.getStatus());
