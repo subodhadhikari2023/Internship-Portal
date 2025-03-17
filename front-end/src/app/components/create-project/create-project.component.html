@@ -1,4 +1,5 @@
 <nav><app-navbar></app-navbar></nav>
+
 <body>
     <section>
         <form [formGroup]="projectForm" (ngSubmit)="submitProject()">
@@ -17,21 +18,38 @@
 
                 <div>
                     <label for="internship">Select Internship:</label>
-                    <select id="internship" formControlName="internship">
+                    <select id="internship" formControlName="internship" (change)="onInternshipChange($event)">
                         <option value="" disabled>Select an internship</option>
-                        <option *ngFor="let internship of selectedInternships" [value]="internship">
-                            {{ internship }}
+                        <option *ngFor="let internship of selectedInternships" [value]="internship.name">
+                            {{ internship.name }}
                         </option>
                     </select>
+
                 </div>
+                <div *ngIf="selectedInternshipStartDate && selectedInternshipEndDate" class="alert alert-info">
+                    <b>Internship Duration:</b> {{ selectedInternshipStartDate }} to {{ selectedInternshipEndDate }}
+                    <br>
+                    <b>Note</b>: Submission date must be within this period.
+                </div>
+                <div *ngIf="submissionError" class="alert alert-danger">
+                    {{ submissionError }}
+                </div>
+                
                 <div>
                     <label for="submissionDate">Submission Date:</label>
-                    <input id="submissionDate" type="date" formControlName="submissionDate" (change)="validateSubmissionDate()" />
-                    <span class="error" *ngIf="submissionError">{{ submissionError }}</span>
+                    <input id="submissionDate" type="date" formControlName="submissionDate"
+                        (change)="validateSubmissionDate()" />
                 </div>
+                
                 <div>
                     <label for="projectName">Project Name:</label>
-                    <input id="projectName" type="text" formControlName="projectName" placeholder="Enter project name" />
+                    <input id="projectName" type="text" formControlName="projectName"
+                        placeholder="Enter project name" />
+                </div>
+                <div>
+                    <label for="projectDescription">Description</label>
+                    <textarea type="text" name="projectDescription" formControlName="projectDescription"
+                        placeholder="Enter the project details here, it should include all the project details."></textarea>
                 </div>
 
                 <button type="submit" [disabled]="projectForm.invalid">Create Project</button>

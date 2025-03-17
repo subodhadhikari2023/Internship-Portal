@@ -120,3 +120,163 @@ button:disabled {
         max-width: 650px;
     }
 }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--hover-background);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  height: fit-content;
+}
+
+/* Section to contain the form */
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+/* Form container */
+form {
+  background-color: var(--card-background);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 500px; /* Ensures form doesn’t get too wide */
+  min-width: 320px; /* Prevents it from getting too small */
+  transition: all 0.3s ease-in-out;
+  margin-top: 10vh;
+}
+
+/* Grouping form elements */
+fieldset {
+  border: 2px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+}
+
+/* Form title */
+legend {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary-color);
+  padding: 5px;
+}
+
+/* Labels */
+label {
+  font-size: 14px;
+  color: var(--font-color);
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Input fields and dropdowns */
+select,
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: var(--background-color);
+  color: var(--font-light);
+}
+
+/* Input focus effect */
+select:focus,
+input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0px 0px 4px rgba(2, 148, 7, 0.5);
+}
+
+textarea {
+    width: 100%; /* ✅ Ensures it never exceeds the form width */
+    min-height: 8vh; /* ✅ Responsive minimum height */
+    /* max-height: 25vh; ✅ Responsive maximum height */
+    resize: vertical; /* ✅ Allows resizing only vertically */
+    padding: 0.7em; /* ✅ Scales padding based on font size */
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem; /* ✅ Uses rem for scalability */
+    font-size: 1rem; /* ✅ Keeps text size consistent */
+    background-color: var(--background-color);
+    color: var(--font-light);
+  }
+  
+  /* Focus effect */
+  textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0px 0px 0.3rem rgba(var(--primary-color-rgb), 0.5);
+  }
+  
+  /* Responsive adjustments */
+  @media screen and (max-width: 768px) {
+    textarea {
+      min-height: 6vh; /* 📱 Slightly smaller height for mobile */
+      height: 20vh; 
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    textarea {
+      height: 18vh;
+      font-size: 0.85rem;
+    }
+  }
+  
+/* Submit button */
+button {
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  border: none;
+  padding: 12px;
+  width: 100%;
+  font-size: 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+button:hover {
+  background-color: var(--dark-accent);
+}
+
+/* Disabled button styling */
+button:disabled {
+  background-color: var(--border-color);
+  color: var(--font-light);
+  cursor: not-allowed;
+}
+
+/* Responsive Design */
+@media screen and (min-width: 768px) {
+  form {
+    width: 70%;
+    max-width: 600px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  form {
+    width: 50%;
+    max-width: 650px;
+  }
+}

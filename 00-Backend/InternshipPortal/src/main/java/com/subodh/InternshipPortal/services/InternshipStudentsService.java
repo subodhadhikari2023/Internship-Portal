@@ -1,8 +1,7 @@
 package com.subodh.InternshipPortal.services;
 
+import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.wrapper.InternshipStudentsWrapper;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 

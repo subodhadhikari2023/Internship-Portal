@@ -1,11 +1,11 @@
 package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+import com.subodh.InternshipPortal.modals.Project;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipStudentsService;
-import com.subodh.InternshipPortal.wrapper.ApplicationWrapper;
-import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
-import com.subodh.InternshipPortal.wrapper.Response;
+import com.subodh.InternshipPortal.services.ProjectService;
+import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.services.InternshipService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +28,7 @@ public class InstructorController {
     private final InternshipService internshipService;
     private final ApplicationService applicationService;
     private final InternshipStudentsService internshipStudentsService;
+    private final ProjectService projectService;
 
 
     /**
@@ -36,10 +37,11 @@ public class InstructorController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService) {
+    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.internshipStudentsService = internshipStudentsService;
+        this.projectService = projectService;
     }
 
 
@@ -125,14 +127,16 @@ public class InstructorController {
 
     @GetMapping("internship-students")
     public ResponseEntity<?> getAllInternshipStudents(@AuthenticationPrincipal UserDetails userDetails) {
-        return new ResponseEntity<>(new Response<>(internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername())),HttpStatus.OK);
+        List<InternshipStudentsWrapper> all = internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername());
+        return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
 
-//   @GetMapping("enrolled-students")
-//    public ResponseEntity<?> getAllEnrolledStudents(@AuthenticationPrincipal UserDetails userDetails) {
-//
-//
-//   }
+    @PostMapping("create-project")
+    public ResponseEntity<?> createProject(@RequestBody ProjectWrapper project) {
+        Project savedProject = projectService.saveProject(project);
+        return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
+
+    }
 
 
 }

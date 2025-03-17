@@ -9,8 +9,13 @@ import { InternshipService } from 'src/app/services/internship.service';
 })
 export class CreateProjectComponent implements OnInit {
   projectForm!: FormGroup;
-  students: { email: string, internships: string[] }[] = [];
-  selectedInternships: string[] = [];
+  submissionError = "";
+  students: {
+    email: string,
+    internships: { name: string, startDate: string, endDate: string }[]
+  }[] = [];
+  selectedInternships: { name: string, startDate: string, endDate: string }[] = [];
+
 
   constructor(private fb: FormBuilder, private internshipService: InternshipService) { }
 
@@ -22,13 +27,17 @@ export class CreateProjectComponent implements OnInit {
   getStudentsAndInternships() {
     this.internshipService.getStudentsEnrolledInInternshipsCreated().subscribe({
       next: (res) => {
-        const studentInternshipMap = new Map<string, string[]>();
+        const studentInternshipMap = new Map<string, { name: string, startDate: string, endDate: string }[]>();
 
         res.forEach((item: any) => {
           if (!studentInternshipMap.has(item.userEmail)) {
             studentInternshipMap.set(item.userEmail, []);
           }
-          studentInternshipMap.get(item.userEmail)?.push(item.internshipName);
+          studentInternshipMap.get(item.userEmail)?.push({
+            name: item.internshipName,
+            startDate: item.startDate,
+            endDate: item.endDate
+          });
         });
 
         this.students = Array.from(studentInternshipMap, ([email, internships]) => ({
@@ -46,7 +55,10 @@ export class CreateProjectComponent implements OnInit {
     this.projectForm = this.fb.group({
       studentEmail: ['', Validators.required],
       internship: ['', Validators.required],
-      projectName: ['', [Validators.required, Validators.minLength(3)]]
+      projectName: ['', [Validators.required, Validators.minLength(3)]],
+      submissionDate: ['', Validators.required],
+      projectDescription: ['', Validators.required]
+
     });
   }
 
@@ -54,13 +66,74 @@ export class CreateProjectComponent implements OnInit {
     const studentEmail = (event.target as HTMLSelectElement).value;
     const selectedStudent = this.students.find(student => student.email === studentEmail);
     this.selectedInternships = selectedStudent ? selectedStudent.internships : [];
-    this.projectForm.controls['internship'].setValue(''); // Reset internship dropdown
+    this.projectForm.controls['internship'].setValue('');
   }
 
+  selectedInternshipStartDate: string = "";
+  selectedInternshipEndDate: string = "";
+
+  onInternshipChange(event: Event) {
+    const internshipName = (event.target as HTMLSelectElement).value;
+    const selectedInternship = this.selectedInternships.find(internship => internship.name === internshipName);
+
+    if (selectedInternship) {
+      this.selectedInternshipStartDate = selectedInternship.startDate;
+      this.selectedInternshipEndDate = selectedInternship.endDate;
+    } else {
+      this.selectedInternshipStartDate = "";
+      this.selectedInternshipEndDate = "";
+    }
+
+    this.validateSubmissionDate();
+  }
+
+
+
+
+  validateSubmissionDate() {
+    const submissionDate = new Date(this.projectForm.controls['submissionDate'].value);
+    const today = new Date();
+    const startDate = new Date(this.selectedInternshipStartDate);
+    const endDate = new Date(this.selectedInternshipEndDate);
+
+    if (submissionDate < today) {
+      this.submissionError = "Submission date cannot be in the past.";
+      this.projectForm.controls['submissionDate'].setErrors({ invalidDate: true });
+    } else if (submissionDate < startDate || submissionDate > endDate) {
+      this.submissionError = ` Submission date must be between ${this.selectedInternshipStartDate} and ${this.selectedInternshipEndDate}.`;
+      this.projectForm.controls['submissionDate'].setErrors({ invalidRange: true });
+    } else {
+      this.submissionError = "";
+      this.projectForm.controls['submissionDate'].setErrors(null);
+    }
+  }
+
+
+
   submitProject() {
+
+    const project = {
+      projectName: this.projectForm.value.projectName,
+      projectDescription: this.projectForm.value.projectDescription,
+      studentEmail: this.projectForm.value.studentEmail,
+      internshipName: this.projectForm.value.internship,
+      submissionDate: this.projectForm.value.submissionDate
+
+    };
+    console.log(project);
     if (this.projectForm.valid) {
-      console.log("Project Data:", this.projectForm.value);
-      // Call backend API to save the project
+      this.internshipService.createProject(project).subscribe({
+        next: (res) => {
+          this.projectForm.reset();
+          console.log(res);
+
+        },
+        error: (err) => {
+          console.log(err);
+
+        }
+      })
+
     } else {
       console.log("Form is invalid");
     }

@@ -57,4 +57,11 @@ export class InternshipService {
       map(response => response.entity)
     )
   }
+
+
+  createProject(request: any) {
+    return this.http.post<any>(`${BASE_URL}instructors/create-project`, request).pipe(
+      map(res => res.entity)
+    )
+  }
 }
