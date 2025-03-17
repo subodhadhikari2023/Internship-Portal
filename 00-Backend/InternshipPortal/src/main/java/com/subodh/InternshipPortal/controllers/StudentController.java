@@ -5,12 +5,18 @@ import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +34,8 @@ public class StudentController {
     private final UserService userService;
     private final DepartmentService departmentService;
     private final InternshipStudentsService internshipStudentsService;
-
+    @Value("${file.storage.path}")
+    private String rootFolderPath;
     /**
      * Instantiates a new Student controller.
      *
@@ -115,5 +122,26 @@ public class StudentController {
         List<InternshipStudentsWrapper> all = internshipStudentsService.findAllByStudentId(userService.findByUserEmail(userDetails.getUsername()).getUserId());
         return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
+    @GetMapping("download")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
+        log.info("File download initiated");
+        try {
+            // 🔹 Convert relative path back to absolute
+            String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
+            File file = new File(absolutePath);
+            if (!file.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            Resource resource = new UrlResource(file.toURI());
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)  // Change based on file type
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 }

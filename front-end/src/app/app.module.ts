@@ -26,6 +26,7 @@ import { ViewInternshipStudentComponent } from './components/view-internship-stu
 import { CreateProjectComponent } from './components/create-project/create-project.component';
 import { ViewEnrolledStudentsComponent } from './components/view-enrolled-students/view-enrolled-students.component';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
+import { ViewProjectDetailsStudentComponent } from './components/view-project-details-student/view-project-details-student.component';
 
 
 
@@ -52,7 +53,8 @@ import { ProjectDetailsComponent } from './components/project-details/project-de
     ViewInternshipStudentComponent,
     CreateProjectComponent,
     ViewEnrolledStudentsComponent,
-    ProjectDetailsComponent
+    ProjectDetailsComponent,
+    ViewProjectDetailsStudentComponent
   ],
   imports: [
     BrowserModule,

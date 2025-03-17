@@ -1,0 +1,21 @@
+<app-student-nav></app-student-nav>
+
+<div *ngIf="projectDetails" class="project-container">
+    <h2 class="project-title">Project Details</h2>
+    <div class="project-info">
+        <p><strong>Name:</strong> {{ projectDetails.projectName }}</p>
+        <p><strong>Student Email:</strong> {{ projectDetails.studentEmail }}</p>
+        <p><strong>Submission Date:</strong> {{ projectDetails.submissionDate }}</p>
+        <p><strong>Internship:</strong> {{ projectDetails.internshipName }}</p>
+        <p><strong>Description:</strong> {{ projectDetails.projectDescription }}</p>
+    </div>
+ 
+    <div class="mycont">
+        <button class="download-btn" (click)="downloadFile(projectDetails.projectDescriptionFile)">
+            📥 Download Description
+        </button>
+    </div>
+    
+
+
+</div>
