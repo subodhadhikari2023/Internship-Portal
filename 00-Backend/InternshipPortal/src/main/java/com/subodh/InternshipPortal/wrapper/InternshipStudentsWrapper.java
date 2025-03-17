@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class InternshipStudentsWrapper {
     private String internshipName;
     private String userEmail;
-    private Set<String> projectName;
+    private Set<ProjectWrapper> projects;
     private String instructorName;
     private String departmentName;
     private String status;
@@ -32,8 +32,15 @@ public class InternshipStudentsWrapper {
 
         this.internshipName = internshipStudents.getInternship().getInternshipName();
         this.userEmail = internshipStudents.getStudent().getUserEmail();
-        this.projectName = projectsCopy.stream()
-                .map(Project::getProjectName)
+        this.projects = projectsCopy.stream()
+                .map(project -> new ProjectWrapper(
+                        project.getProjectId(),
+                        project.getProjectName(),
+                        project.getProjectDescription(),
+                        internshipStudents.getStudent().getUserEmail(),
+                        project.getSubmissionDate(),
+                        internshipStudents.getInternship().getInternshipName()
+                ))
                 .collect(Collectors.toSet());
         this.instructorName = internshipStudents.getInternship().getCreatedBy().getUserEmail();
         this.departmentName = internshipStudents.getInternship().getDepartment().getDepartmentName();

@@ -1,7 +1,6 @@
 package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
-import com.subodh.InternshipPortal.modals.Project;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipStudentsService;
 import com.subodh.InternshipPortal.services.ProjectService;
@@ -133,7 +132,7 @@ public class InstructorController {
 
     @PostMapping("create-project")
     public ResponseEntity<?> createProject(@RequestBody ProjectWrapper project) {
-        Project savedProject = projectService.saveProject(project);
+        ProjectWrapper savedProject = projectService.saveProject(project);
         return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
 
     }

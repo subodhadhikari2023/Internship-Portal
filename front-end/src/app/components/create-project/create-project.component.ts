@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InternshipService } from 'src/app/services/internship.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-create-project',
@@ -17,7 +18,7 @@ export class CreateProjectComponent implements OnInit {
   selectedInternships: { name: string, startDate: string, endDate: string }[] = [];
 
 
-  constructor(private fb: FormBuilder, private internshipService: InternshipService) { }
+  constructor(private fb: FormBuilder, private internshipService: InternshipService, private notifier: NotificationService) { }
 
   ngOnInit(): void {
     this.getStudentsAndInternships();
@@ -125,8 +126,7 @@ export class CreateProjectComponent implements OnInit {
       this.internshipService.createProject(project).subscribe({
         next: (res) => {
           this.projectForm.reset();
-          console.log(res);
-
+          this.notifier.openPopup('Project Created and Assigned Successfully!', '#88d286', 'white', 5000);
         },
         error: (err) => {
           console.log(err);

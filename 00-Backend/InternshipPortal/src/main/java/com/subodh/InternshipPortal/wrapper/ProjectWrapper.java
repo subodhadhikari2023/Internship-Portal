@@ -13,28 +13,20 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProjectWrapper {
+    private Long projectId;
     private String projectName;
     private String projectDescription;
     private String studentEmail;
     private LocalDate submissionDate;
     private String internshipName;
 
-    public ProjectWrapper(String projectName, String projectDescription, String studentEmail, LocalDate submissionDate) {
+    public ProjectWrapper(String projectName, String projectDescription, String studentEmail, LocalDate submissionDate,Long projectId) {
         this.projectName = projectName;
+        this.projectId=projectId;
         this.projectDescription = projectDescription;
         this.studentEmail = studentEmail;
         this.submissionDate = submissionDate;
     }
 
-    public List<ProjectWrapper> fromInternshipStudent(InternshipStudents dbProject) {
-        return dbProject.getProjects().stream().map(project ->
-                new ProjectWrapper(
-                        project.getProjectName(),
-                        project.getProjectDescription(),
-                        dbProject.getStudent().getUserEmail(),
-                        project.getSubmissionDate(),  // Each project retains its own submission date
-                        dbProject.getInternship().getInternshipName()
-                )
-        ).collect(Collectors.toList());
-    }
+
 }

@@ -30,14 +30,14 @@ public class ProjectServiceImpl implements ProjectService {
         String finalPath = String.format("%s/%s/%s/%s", rootFolderPath, departmentName, internshipName, userEmail);
         File dir = new File(finalPath);
         if (!dir.exists()) {
-            dir.mkdirs();
+            boolean mkdirs = dir.mkdirs();
         }
         CompletableFuture.completedFuture(finalPath);
     }
 
     @Override
-    public Project saveProject(ProjectWrapper project) {
-        InternshipStudents studentInternship = internshipStudentRepository.findByInternship_InternshipNameAndStudent_UserEmail(project.getInternshipName(),project.getStudentEmail());
+    public ProjectWrapper saveProject(ProjectWrapper project) {
+        InternshipStudents studentInternship = internshipStudentRepository.findByInternship_InternshipNameAndStudent_UserEmail(project.getInternshipName(), project.getStudentEmail());
         if (studentInternship == null) {
             throw new RuntimeException("Internship or student not found.");
         }
@@ -49,11 +49,11 @@ public class ProjectServiceImpl implements ProjectService {
         dbProject.setStatus(StudentInternshipStatus.IN_PROGRESS);
         dbProject.setUser(studentInternship.getStudent());
         studentInternship.getProjects().add(dbProject);
-
         internshipStudentRepository.save(studentInternship);
-       projectRepository.save(dbProject);
+        projectRepository.save(dbProject);
 
-       return dbProject;
+        return new ProjectWrapper(dbProject.getProjectName(),dbProject.getProjectDescription(),studentInternship.getStudent().getUserEmail(),dbProject.getSubmissionDate(), dbProject.getProjectId());
     }
+
 
 }
