@@ -18,9 +18,10 @@ public class Project {
     @Column(nullable = false)
     private String projectName;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "LONGTEXT")
     private String projectDescription;
 
+    private String projectDescriptionFilePath;
 
     private String fileName;
 

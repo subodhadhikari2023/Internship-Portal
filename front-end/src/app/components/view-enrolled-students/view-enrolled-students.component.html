@@ -23,7 +23,7 @@
                         <td>
                             <ng-container *ngIf="student.projects && student.projects.length > 0; else noProject">
                                 <ng-container *ngFor="let project of student.projects; let last = last">
-                                    <a [routerLink]="['/project-details', project.projectId]" class="project-link">
+                                    <a [routerLink]="['/instructor/project-details', project.projectId]" class="project-link">
                                         {{ project.projectName }}
                                     </a><span *ngIf="!last">, </span>
                                 </ng-container>

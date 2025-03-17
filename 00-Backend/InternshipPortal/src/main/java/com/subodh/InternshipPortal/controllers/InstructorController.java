@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -131,10 +132,10 @@ public class InstructorController {
     }
 
     @PostMapping("create-project")
-    public ResponseEntity<?> createProject(@RequestBody ProjectWrapper project) {
-        ProjectWrapper savedProject = projectService.saveProject(project);
-        return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
+    public ResponseEntity<?> createProject(@RequestPart("project") ProjectWrapper project, @RequestPart("file") MultipartFile file) {
 
+        ProjectWrapper savedProject = projectService.saveProject(project, file);
+        return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
     }
 
 

@@ -1,0 +1,38 @@
+.project-container {
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  background: var(--card-background);
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 20px auto;
+  min-height: 60vh;
+  max-height: fit-content;
+}
+
+.project-title {
+  color: var(--primary-color);
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.project-info p {
+  color: var(--font-color);
+  font-size: 16px;
+  margin: 8px 0;
+  padding: 5px;
+  border-left: 4px solid var(--accent-color);
+  background: var(--hover-background);
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.project-info p strong {
+  color: var(--secondary-color);
+}

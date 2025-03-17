@@ -1,13 +1,11 @@
 package com.subodh.InternshipPortal.wrapper;
 
-import com.subodh.InternshipPortal.modals.InternshipStudents;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -19,14 +17,24 @@ public class ProjectWrapper {
     private String studentEmail;
     private LocalDate submissionDate;
     private String internshipName;
+//    private transient MultipartFile projectDescriptionFile;
 
-    public ProjectWrapper(String projectName, String projectDescription, String studentEmail, LocalDate submissionDate,Long projectId) {
+    public ProjectWrapper(String projectName,
+                          String projectDescription,
+                          String studentEmail,
+                          LocalDate submissionDate,
+                          Long projectId
+    ) {
         this.projectName = projectName;
-        this.projectId=projectId;
         this.projectDescription = projectDescription;
+        this.projectId = projectId;
         this.studentEmail = studentEmail;
         this.submissionDate = submissionDate;
+
+
     }
+
+
 
 
 }
