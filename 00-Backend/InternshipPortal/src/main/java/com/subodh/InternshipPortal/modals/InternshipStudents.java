@@ -1,7 +1,6 @@
 package com.subodh.InternshipPortal.modals;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -32,7 +31,7 @@ public class InternshipStudents {
     private StudentInternshipStatus status;
 
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "internship_students_projects",
             joinColumns = @JoinColumn(name = "student_internship_id"),

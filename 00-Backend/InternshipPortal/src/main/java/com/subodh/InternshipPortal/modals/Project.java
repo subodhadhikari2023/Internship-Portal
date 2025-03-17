@@ -21,15 +21,17 @@ public class Project {
     @Column(nullable = false)
     private String projectDescription;
 
-    @Column(nullable = false)
+
     private String fileName;
 
     private String fileType;
 
-    @Column(nullable = false)
+
     private String filePath;
 
     @Column(nullable = false)
+    private LocalDate submissionDate;
+
     private LocalDate uploadDate;
 
     @Enumerated(EnumType.STRING)
