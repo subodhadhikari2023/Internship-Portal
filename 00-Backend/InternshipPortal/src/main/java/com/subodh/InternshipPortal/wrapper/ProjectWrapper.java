@@ -3,8 +3,9 @@ package com.subodh.InternshipPortal.wrapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 @Data
@@ -17,19 +18,23 @@ public class ProjectWrapper {
     private String studentEmail;
     private LocalDate submissionDate;
     private String internshipName;
+    private String projectDescriptionFile;
 //    private transient MultipartFile projectDescriptionFile;
 
     public ProjectWrapper(String projectName,
                           String projectDescription,
                           String studentEmail,
                           LocalDate submissionDate,
-                          Long projectId
+                          Long projectId,
+                          String projectDescriptionFile
     ) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
         this.projectId = projectId;
         this.studentEmail = studentEmail;
         this.submissionDate = submissionDate;
+        this.projectDescriptionFile = "/api/v1/instructors/download?filePath=" + URLEncoder.encode(projectDescriptionFile, StandardCharsets.UTF_8);
+
 
 
     }

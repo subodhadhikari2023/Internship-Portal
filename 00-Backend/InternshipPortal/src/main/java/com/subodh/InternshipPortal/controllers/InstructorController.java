@@ -8,12 +8,26 @@ import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.services.InternshipService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
+import java.io.File;
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 
@@ -30,7 +44,8 @@ public class InstructorController {
     private final InternshipStudentsService internshipStudentsService;
     private final ProjectService projectService;
 
-
+    @Value("${file.storage.path}")
+    private String rootFolderPath;
     /**
      * Instantiates a new Instructor controller.
      *
@@ -136,6 +151,29 @@ public class InstructorController {
 
         ProjectWrapper savedProject = projectService.saveProject(project, file);
         return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
+    }
+
+    @GetMapping("download")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
+        log.info("File download initiated");
+        try {
+            // 🔹 Convert relative path back to absolute
+            String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
+
+            File file = new File(absolutePath);
+            if (!file.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            Resource resource = new UrlResource(file.toURI());
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)  // Change based on file type
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 

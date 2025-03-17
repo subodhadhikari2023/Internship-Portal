@@ -4,7 +4,6 @@ import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.modals.Project;
 import com.subodh.InternshipPortal.repositories.InternshipStudentRepository;
-import com.subodh.InternshipPortal.repositories.ProjectRepository;
 import com.subodh.InternshipPortal.services.ProjectService;
 import com.subodh.InternshipPortal.wrapper.ProjectWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +20,11 @@ import java.util.concurrent.CompletableFuture;
 @Service
 
 public class ProjectServiceImpl implements ProjectService {
-    private final ProjectRepository projectRepository;
     private final InternshipStudentRepository internshipStudentRepository;
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
-    public ProjectServiceImpl(ProjectRepository projectRepository, InternshipStudentRepository internshipStudentRepository) {
-        this.projectRepository = projectRepository;
+    public ProjectServiceImpl(InternshipStudentRepository internshipStudentRepository) {
         this.internshipStudentRepository = internshipStudentRepository;
     }
 
@@ -58,27 +55,22 @@ public class ProjectServiceImpl implements ProjectService {
         dbProject.setStatus(StudentInternshipStatus.IN_PROGRESS);
         dbProject.setUser(studentInternship.getStudent());
 
-        studentInternship.getProjects().add(dbProject);
-        internshipStudentRepository.save(studentInternship);
-        projectRepository.save(dbProject);
-
-        // ✅ Ensure the folder structure exists before saving the file
+        // ✅ Create folder structure dynamically
         String FILE_PATH = createFolder(rootFolderPath,
                 studentInternship.getInternship().getDepartment().getDepartmentName(),
                 studentInternship.getInternship().getInternshipName(),
                 studentInternship.getStudent().getUserEmail()
         ).join();
 
-
-        log.info("File Path: " + FILE_PATH);
-
+        // ✅ Define project description folder path
         String path = String.format("%s/%s/description", FILE_PATH, dbProject.getProjectName());
         File projectFolder = new File(path);
 
         if (!projectFolder.exists()) {
-            projectFolder.mkdirs();  // ✅ Create the folder structure if missing
+            projectFolder.mkdirs();  // ✅ Ensure the directory exists
         }
 
+        // ✅ Define description file
         File descriptionFile = new File(projectFolder, "description.pdf");
 
         try {
@@ -87,14 +79,27 @@ public class ProjectServiceImpl implements ProjectService {
             throw new RuntimeException("Error saving file: " + e.getMessage(), e);
         }
 
+        // ✅ Extract the relative path dynamically
+        String absolutePath = descriptionFile.getAbsolutePath();
+        String relativePath = absolutePath.replaceFirst("^" + rootFolderPath, "/storage/Internship-Portal");
+
+        // ✅ Store only the relative path in the database
+        dbProject.setProjectDescriptionFilePath(relativePath);
+        studentInternship.getProjects().add(dbProject);
+
+        // ✅ Save only internshipStudent (Cascade should save the project)
+        internshipStudentRepository.save(studentInternship);
+
         return new ProjectWrapper(
                 dbProject.getProjectName(),
                 dbProject.getProjectDescription(),
                 studentInternship.getStudent().getUserEmail(),
                 dbProject.getSubmissionDate(),
-                dbProject.getProjectId()
+                dbProject.getProjectId(),
+                dbProject.getProjectDescriptionFilePath()
         );
     }
+
 
 
 }
