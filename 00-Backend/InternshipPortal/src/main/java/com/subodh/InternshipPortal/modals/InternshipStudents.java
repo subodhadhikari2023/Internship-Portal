@@ -5,6 +5,7 @@ import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -38,6 +39,14 @@ public class InternshipStudents {
             inverseJoinColumns = @JoinColumn(name = "project_id")
     )
     private Set<Project> projects;
+
+
+    public void addProject(Project project) {
+        if(projects==null){
+            projects = new HashSet<>();
+            projects.add(project);
+        }
+    }
 
 
 }

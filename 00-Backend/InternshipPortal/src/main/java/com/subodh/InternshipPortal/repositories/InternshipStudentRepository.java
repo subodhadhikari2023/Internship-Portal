@@ -18,5 +18,5 @@ public interface InternshipStudentRepository extends JpaRepository<InternshipStu
     List<InternshipStudents> findAllByInternship_CreatedBy(@Param("createdBy") Users createdBy);
 
 
-
+    InternshipStudents findByInternship_InternshipNameAndStudent_UserEmail(String internshipInternshipName, String studentUserEmail);
 }
