@@ -3,21 +3,39 @@
 <div *ngIf="projectDetails" class="project-container">
     <h2 class="project-title">Project Details</h2>
     <div class="project-info">
-        <p><strong>Name:</strong> {{ projectDetails.projectName }}</p>
-        <p><strong>Student Email:</strong> {{ projectDetails.studentEmail }}</p>
-        <p><strong>Submission Date:</strong> {{ projectDetails.submissionDate }}</p>
-        <p><strong>Internship:</strong> {{ projectDetails.internshipName }}</p>
-        <p><strong>Description:</strong> {{ projectDetails.projectDescription }}</p>
+        <p><strong>Name:</strong> {{ projectDetails?.projectName }}</p>
+        <p><strong>Student Email:</strong> {{ projectDetails?.studentEmail }}</p>
+        <p><strong>Submission Date:</strong> {{ projectDetails?.submissionDate }}</p>
+        <p><strong>Internship:</strong> {{ projectDetails?.internshipName }}</p>
+        <p><strong>Description:</strong> {{ projectDetails?.projectDescription }}</p>
     </div>
- 
+
     <div class="mycont">
-        <button class="download-btn" (click)="downloadFile(projectDetails.projectDescriptionFile)">
+        <button class="download-btn" (click)="downloadFile(projectDetails?.projectDescriptionFile)">
             📥 Download Description
         </button>
-
-      
     </div>
-    
 
+    <div class="upload-section">
+        <!-- ✅ Prevents undefined errors using '?' -->
+        <p *ngIf="projectDetails?.projectFile; else uploadTemplate" class="uploaded-notice">
+            ✅ Project already uploaded. You cannot change it.
+        </p>
 
+        <!-- If projectFile is not present, this template is used -->
+        <ng-template #uploadTemplate>
+            <p class="upload-notice">
+                ⚠️ You can upload your project only once. This action cannot be undone.
+            </p>
+            <input type="file" accept=".zip, .gzip, .rar" (change)="onFileSelected($event)" />
+            <button class="upload-btn" [disabled]="!selectedFile || isUploading" (click)="uploadProjectFile()">
+                📤 {{ isUploading ? "Uploading..." : "Upload Project" }}
+            </button>
+        </ng-template>
+    </div>
 </div>
+
+<!-- Show a loader if projectDetails is not loaded yet -->
+<p *ngIf="!projectDetails" class="loading-message">
+    ⏳ Loading project details...
+</p>

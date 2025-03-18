@@ -64,4 +64,15 @@ export class InternshipService {
       map(res => res.entity)
     )
   }
+
+  uploadProjectFile(projectId: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<any>(
+      `${BASE_URL}students/upload-project?projectId=${projectId}`,
+      formData
+    );
+  }
+  
 }

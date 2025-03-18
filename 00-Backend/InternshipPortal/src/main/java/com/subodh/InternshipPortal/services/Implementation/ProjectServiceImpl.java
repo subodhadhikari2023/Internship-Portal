@@ -82,7 +82,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         internshipStudentRepository.save(studentInternship);
 
-        return new ProjectWrapper(dbProject.getProjectName(), dbProject.getProjectDescription(), studentInternship.getStudent().getUserEmail(), dbProject.getSubmissionDate(), dbProject.getProjectId(), dbProject.getProjectDescriptionFilePath());
+        return new ProjectWrapper(dbProject.getProjectName(), dbProject.getProjectDescription(), studentInternship.getStudent().getUserEmail(), dbProject.getSubmissionDate(), dbProject.getProjectId(), dbProject.getProjectDescriptionFilePath(),dbProject.getProjectFile());
     }
 
     @Override
@@ -133,7 +133,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         return new ProjectWrapper(project.getProjectName(), project.getProjectDescription(),
                 project.getUser().getUserEmail(), project.getSubmissionDate(),
-                project.getProjectId(), project.getProjectFile());
+                project.getProjectId(), project.getProjectDescriptionFilePath(),project.getProjectFile());
     }
 
 }

@@ -27,7 +27,7 @@ public class Project {
     private String projectFile;
 
     private String projectFileType;
-
+///storage/Internship-Portal/Information Technology/Data Science Internship/subodhadhikari929@gmail.com/Data Science Internship/project-files/projectData.pdf
     @Column(nullable = false)
     private LocalDate submissionDate;
 

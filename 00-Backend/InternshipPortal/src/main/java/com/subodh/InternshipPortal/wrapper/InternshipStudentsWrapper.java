@@ -40,7 +40,8 @@ public class InternshipStudentsWrapper {
                         internshipStudents.getStudent().getUserEmail(),
                         project.getSubmissionDate(),
                         internshipStudents.getInternship().getInternshipName(),
-                        project.getProjectDescriptionFilePath()
+                        project.getProjectDescriptionFilePath(),
+                        project.getProjectFile()
                 ))
                 .collect(Collectors.toSet());
         this.instructorName = internshipStudents.getInternship().getCreatedBy().getUserEmail();
