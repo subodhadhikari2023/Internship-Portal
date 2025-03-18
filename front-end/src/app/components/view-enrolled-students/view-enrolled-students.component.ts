@@ -24,5 +24,8 @@ export class ViewEnrolledStudentsComponent implements OnInit {
       }
     })
   }
+  isLastProject(project: string, projects: string[]): boolean {
+    return projects.indexOf(project) === projects.length - 1;
+  }
 
 }

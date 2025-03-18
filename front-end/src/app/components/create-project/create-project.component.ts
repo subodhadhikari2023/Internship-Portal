@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InternshipService } from 'src/app/services/internship.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-create-project',
@@ -17,7 +18,7 @@ export class CreateProjectComponent implements OnInit {
   selectedInternships: { name: string, startDate: string, endDate: string }[] = [];
 
 
-  constructor(private fb: FormBuilder, private internshipService: InternshipService) { }
+  constructor(private fb: FormBuilder, private internshipService: InternshipService, private notifier: NotificationService) { }
 
   ngOnInit(): void {
     this.getStudentsAndInternships();
@@ -57,7 +58,9 @@ export class CreateProjectComponent implements OnInit {
       internship: ['', Validators.required],
       projectName: ['', [Validators.required, Validators.minLength(3)]],
       submissionDate: ['', Validators.required],
-      projectDescription: ['', Validators.required]
+      projectDescription: ['', Validators.required],
+      descriptionFile: [null, Validators.required] 
+
 
     });
   }
@@ -111,33 +114,44 @@ export class CreateProjectComponent implements OnInit {
 
 
   submitProject() {
-
-    const project = {
+    if (this.projectForm.invalid || !this.selectedFile) {
+      console.log("Form is invalid or file not selected");
+      return;
+    }
+  
+    const projectData = {
       projectName: this.projectForm.value.projectName,
       projectDescription: this.projectForm.value.projectDescription,
       studentEmail: this.projectForm.value.studentEmail,
       internshipName: this.projectForm.value.internship,
       submissionDate: this.projectForm.value.submissionDate
-
     };
-    console.log(project);
-    if (this.projectForm.valid) {
-      this.internshipService.createProject(project).subscribe({
-        next: (res) => {
-          this.projectForm.reset();
-          console.log(res);
+  
 
-        },
-        error: (err) => {
-          console.log(err);
+    const formData = new FormData();
+    formData.append("project", new Blob([JSON.stringify(projectData)], { type: "application/json" }));
+    formData.append("file", this.selectedFile);
+  
+    this.internshipService.createProject(formData).subscribe({
+      next: (res) => {
+        this.projectForm.reset();
+        this.selectedFile = null;
+        this.notifier.openPopup('Project Created and Assigned Successfully!', '#88d286', 'white', 5000);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+  
+  selectedFile: File | null = null;
 
-        }
-      })
-
-    } else {
-      console.log("Form is invalid");
+  onFileChange(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
     }
   }
-
+  
 
 }

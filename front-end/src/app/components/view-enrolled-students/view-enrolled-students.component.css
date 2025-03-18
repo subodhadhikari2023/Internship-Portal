@@ -45,7 +45,7 @@ body{
   
   .student-table tr:hover {
     background-color: var(--light-accent);
-    color: white;
+    color: rgb(169, 0, 0);
   }
   
   .no-data {

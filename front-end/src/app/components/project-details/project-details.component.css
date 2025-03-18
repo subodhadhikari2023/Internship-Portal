@@ -1,0 +1,96 @@
+.project-container {
+  padding: 20px;
+  box-sizing: border-box;
+  margin: auto;
+  background: var(--card-background);
+  border-radius: 16px;
+  border: 2px solid var(--border-color);
+  box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.15);
+  max-width: 700px;
+  min-height: 100vh; /* Pushes content down */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+
+.project-container:hover {
+  transform: scale(1.01);
+  box-shadow: 6px 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.project-title {
+  color: var(--primary-color);
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.project-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.project-info p {
+  color: var(--font-color);
+  font-size: 17px;
+  padding: 12px;
+  border-left: 5px solid var(--accent-color);
+  background: var(--hover-background);
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+}
+
+.project-info p:hover {
+  transform: translateX(5px);
+  background: var(--light-accent);
+  color: white;
+}
+
+.project-info p strong {
+  color: var(--secondary-color);
+  font-size: 18px;
+}
+
+.mycont {
+  height: 30vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--card-background);
+  border-radius: 12px;
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+}
+
+.mycont:hover {
+  transform: scale(1.02);
+}
+
+.download-btn {
+  background: var(--primary-color);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.download-btn:hover {
+  background: var(--dark-accent);
+  transform: scale(1.07);
+  box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.3);
+}

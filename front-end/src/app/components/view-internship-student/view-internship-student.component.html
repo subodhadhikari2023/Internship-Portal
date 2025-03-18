@@ -17,13 +17,17 @@
                         <strong>Instructor:</strong> {{ internship.instructorName }}
                         <strong>Work Mode:</strong> {{ internship.workMode }}
                         <strong>Projects:</strong>
-                        <span *ngIf="internship.projectName?.length; else noProjects">
-                            {{ internship.projectName?.join(', ') }}
-                        </span>
-                        <ng-template #noProjects>No projects assigned.🫠</ng-template>
+                        <ng-container *ngIf="internship.projects && internship.projects.length > 0; else noProject">
+                            <ng-container *ngFor="let project of internship.projects; let last = last">
+                                <a [routerLink]="['/student/project-details', project.projectId]" class="project-link">
+                                    {{ project.projectName }}
+                                </a>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noProject>
+                            No projects assigned
+                        </ng-template>
                     </div>
-
-
                 </div>
             </div>
 

@@ -51,9 +51,14 @@
                     <textarea type="text" name="projectDescription" formControlName="projectDescription"
                         placeholder="Enter the project details here, it should include all the project details."></textarea>
                 </div>
+                <div>
+                    <label for="descriptionFile">Upload Description in pdf</label>
+                    <input type="file" accept=".pdf" formControlName="descriptionFile" id="descriptionFile" (change)="onFileChange($event)">
+                </div>
 
                 <button type="submit" [disabled]="projectForm.invalid">Create Project</button>
             </fieldset>
         </form>
     </section>
+   <app-popup> </app-popup>
 </body>

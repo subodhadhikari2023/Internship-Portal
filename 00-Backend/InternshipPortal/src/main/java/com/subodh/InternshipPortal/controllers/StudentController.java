@@ -5,12 +5,19 @@ import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +35,9 @@ public class StudentController {
     private final UserService userService;
     private final DepartmentService departmentService;
     private final InternshipStudentsService internshipStudentsService;
+    private final ProjectService projectService;
+    @Value("${file.storage.path}")
+    private String rootFolderPath;
 
     /**
      * Instantiates a new Student controller.
@@ -35,12 +45,13 @@ public class StudentController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
         this.departmentService = departmentService;
         this.internshipStudentsService = internshipStudentsService;
+        this.projectService = projectService;
     }
 
     /**
@@ -116,4 +127,31 @@ public class StudentController {
         return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
 
+    @GetMapping("download")
+    public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
+        try {
+            String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
+
+            File file = new File(absolutePath);
+            if (!file.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            Resource resource = new UrlResource(file.toURI());
+
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_PDF)  // Change based on file type
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PostMapping("upload-project")
+    public ResponseEntity<?> uploadProject(@RequestParam Long projectId, @RequestBody MultipartFile file) {
+        log.info("Uploading project");
+        ProjectWrapper projectWrapper = projectService.saveProjectFile(projectId, file);
+        return new ResponseEntity<>(new Response<>(projectWrapper), HttpStatus.OK);
+    }
 }

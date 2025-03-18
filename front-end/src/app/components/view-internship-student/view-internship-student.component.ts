@@ -26,5 +26,11 @@ export class ViewInternshipStudentComponent implements OnInit {
       }
     })
   }
+  getProjectNames(internship: any): string {
+    if (internship.projects && Array.isArray(internship.projects)) {
+        return internship.projects.map((project: { projectName: any; }) => project.projectName).join(', ');
+    }
+    return 'No projects assigned.🫠';
+}
 
 }
