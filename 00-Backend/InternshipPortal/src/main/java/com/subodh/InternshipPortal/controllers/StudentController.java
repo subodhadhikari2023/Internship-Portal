@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
@@ -34,20 +35,23 @@ public class StudentController {
     private final UserService userService;
     private final DepartmentService departmentService;
     private final InternshipStudentsService internshipStudentsService;
+    private final ProjectService projectService;
     @Value("${file.storage.path}")
     private String rootFolderPath;
+
     /**
      * Instantiates a new Student controller.
      *
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
         this.departmentService = departmentService;
         this.internshipStudentsService = internshipStudentsService;
+        this.projectService = projectService;
     }
 
     /**
@@ -122,11 +126,10 @@ public class StudentController {
         List<InternshipStudentsWrapper> all = internshipStudentsService.findAllByStudentId(userService.findByUserEmail(userDetails.getUsername()).getUserId());
         return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
+
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
-        log.info("File download initiated");
         try {
-            // 🔹 Convert relative path back to absolute
             String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
             File file = new File(absolutePath);
@@ -143,5 +146,12 @@ public class StudentController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @PostMapping("upload-project")
+    public ResponseEntity<?> uploadProject(@RequestParam Long projectId, @RequestBody MultipartFile file) {
+        log.info("Uploading project");
+        ProjectWrapper projectWrapper = projectService.saveProjectFile(projectId, file);
+        return new ResponseEntity<>(new Response<>(projectWrapper), HttpStatus.OK);
     }
 }

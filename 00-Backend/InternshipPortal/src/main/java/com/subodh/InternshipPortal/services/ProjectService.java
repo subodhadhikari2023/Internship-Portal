@@ -9,4 +9,6 @@ public interface ProjectService {
     CompletableFuture<String> createFolder(String rootFolderPath, String departmentName, String internshipName, String userEmail);
 
     ProjectWrapper saveProject(ProjectWrapper project, MultipartFile file);
+
+    ProjectWrapper saveProjectFile(Long projectId, MultipartFile file);
 }

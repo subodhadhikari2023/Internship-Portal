@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.Mutability;
 
 import java.time.LocalDate;
 
@@ -18,17 +19,14 @@ public class Project {
     @Column(nullable = false)
     private String projectName;
 
-    @Column(nullable = false,columnDefinition = "LONGTEXT")
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String projectDescription;
 
     private String projectDescriptionFilePath;
 
-    private String fileName;
+    private String projectFile;
 
-    private String fileType;
-
-
-    private String filePath;
+    private String projectFileType;
 
     @Column(nullable = false)
     private LocalDate submissionDate;
@@ -43,8 +41,6 @@ public class Project {
     @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Users user;
-
-
 
 
 }
