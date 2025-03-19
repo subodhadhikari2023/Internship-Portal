@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 
 @Data
@@ -20,6 +18,7 @@ public class ProjectWrapper {
     private String internshipName;
     private String projectDescriptionFile;
     private String projectFile;
+    private String projectStatus;
 //    private transient MultipartFile projectDescriptionFile;
 
     public ProjectWrapper(String projectName,
@@ -28,21 +27,22 @@ public class ProjectWrapper {
                           LocalDate submissionDate,
                           Long projectId,
                           String projectDescriptionFile,
-                          String projectFile
+                          String projectFile,
+                          String projectStatus
+
     ) {
         this.projectName = projectName;
         this.projectDescription = projectDescription;
         this.projectId = projectId;
         this.studentEmail = studentEmail;
         this.submissionDate = submissionDate;
-        this.projectFile=projectFile;
-        this.projectDescriptionFile = "/api/v1/instructors/download?filePath=" + URLEncoder.encode(projectDescriptionFile, StandardCharsets.UTF_8);
-
+        this.projectFile = projectFile;
+        this.projectDescriptionFile = projectDescriptionFile;
+//        this.projectDescriptionFile = "/api/v1/instructors/download?filePath=" + URLEncoder.encode(projectDescriptionFile, StandardCharsets.UTF_8);
+        this.projectStatus = projectStatus;
 
 
     }
-
-
 
 
 }

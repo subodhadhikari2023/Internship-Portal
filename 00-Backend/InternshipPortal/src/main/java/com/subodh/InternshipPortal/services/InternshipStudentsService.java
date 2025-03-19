@@ -9,4 +9,5 @@ public interface InternshipStudentsService {
     List<InternshipStudentsWrapper> findAllByStudentId(Long userId);
 
     List<InternshipStudentsWrapper> findAllStudentsOfInternshipsCreated(String userEmail);
+
 }

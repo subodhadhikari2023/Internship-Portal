@@ -10,6 +10,7 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
 export class InternshipService {
 
 
+
   constructor(private http: HttpClient) { }
 
   createInternship(request: InternshipCreationRequest): Observable<any> {
@@ -74,5 +75,8 @@ export class InternshipService {
       formData
     );
   }
-  
+
+  markProjectAsComplete(updateData: { projectId: number; status: string; }) {
+    return this.http.post<any>(`${BASE_URL}instructors/change-project-status/${updateData.projectId}`, updateData.status);
+  }
 }

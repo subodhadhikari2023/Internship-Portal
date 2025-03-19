@@ -12,6 +12,7 @@ export class ProjectDetailsComponent implements OnInit {
   projectDetails: any = null;
   projectId: number | null = null;
   sanitizedPdfUrl: SafeResourceUrl | null = null;
+  projectStatus: any | null;
 
   constructor(
     private route: ActivatedRoute,
@@ -62,6 +63,9 @@ export class ProjectDetailsComponent implements OnInit {
       return;
     }
   
+    // Extract filename from filePath
+    const fileName = filePath.split('/').pop() || "downloaded_file"; // Default name fallback
+  
     const apiUrl = `http://localhost:8080/internship-portal/api/v1/instructors/download?filePath=${encodeURIComponent(filePath)}`;
   
     fetch(apiUrl, {
@@ -80,7 +84,7 @@ export class ProjectDetailsComponent implements OnInit {
         const blobUrl = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = blobUrl;
-        link.setAttribute("download", "Project_Description.pdf"); // Set filename
+        link.setAttribute("download", fileName); // Use extracted filename
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -89,5 +93,24 @@ export class ProjectDetailsComponent implements OnInit {
       .catch((error) => console.error("Download error:", error));
   }
   
-  
+  markProjectAsComplete(): void {
+    if (!this.projectDetails || !this.projectId) return;
+
+    const updateData = {
+      projectId: this.projectId,
+      status: "COMPLETED",
+    };
+
+    this.internshipService.markProjectAsComplete(updateData).subscribe({
+      next: (response) => {
+        console.log("Project marked as complete:", response);
+        this.fetchProjectDetails();
+      },
+      error: (err) => {
+        console.error("Error marking project as complete:", err);
+      },
+    });
+  }
+
+
 }

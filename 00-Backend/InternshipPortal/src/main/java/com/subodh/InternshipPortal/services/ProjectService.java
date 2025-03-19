@@ -11,4 +11,6 @@ public interface ProjectService {
     ProjectWrapper saveProject(ProjectWrapper project, MultipartFile file);
 
     ProjectWrapper saveProjectFile(Long projectId, MultipartFile file);
+
+    ProjectWrapper changeProjectStatus(Long projectId, String status);
 }
