@@ -59,13 +59,16 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
     this.internshipService.getSelectedInternshipsForStudents().subscribe({
       next: (internships) => {
         let foundProject = null;
-
+      
+       
         for (let internship of internships) {
           foundProject = internship.projects?.find(
             (project: any) => project.projectId === this.projectId
+            
           );
 
           if (foundProject) {
+            console.log(foundProject);
             break; 
           }
         }
@@ -93,6 +96,7 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
     }
 
     const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(filePath)}`;
+
 
     fetch(apiUrl, {
       method: "GET",

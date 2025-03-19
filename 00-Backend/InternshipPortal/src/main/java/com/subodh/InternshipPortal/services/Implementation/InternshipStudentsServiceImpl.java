@@ -23,7 +23,6 @@ public class InternshipStudentsServiceImpl implements InternshipStudentsService 
     public InternshipStudentsServiceImpl(InternshipStudentRepository internshipStudentRepository, UsersRepository usersRepository) {
         this.internshipStudentRepository = internshipStudentRepository;
         this.usersRepository = usersRepository;
-
     }
 
     @Override
@@ -39,5 +38,7 @@ public class InternshipStudentsServiceImpl implements InternshipStudentsService 
         List<InternshipStudents> internshipStudents = internshipStudentRepository.findAllByInternship_CreatedBy(user);
         return internshipStudents.isEmpty() ? Collections.emptyList() : internshipStudents.stream().map(InternshipStudentsWrapper::new).collect(Collectors.toList());
     }
+
+
 
 }

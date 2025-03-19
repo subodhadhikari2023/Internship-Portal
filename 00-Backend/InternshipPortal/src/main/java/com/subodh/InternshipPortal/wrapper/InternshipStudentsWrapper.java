@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.wrapper;
 
+import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.modals.Project;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class InternshipStudentsWrapper {
     private String workMode;
 
 
+
     public InternshipStudentsWrapper(InternshipStudents internshipStudents) {
         Set<Project> projectsCopy = Set.copyOf(internshipStudents.getProjects());
 
@@ -41,7 +43,9 @@ public class InternshipStudentsWrapper {
                         project.getSubmissionDate(),
                         internshipStudents.getInternship().getInternshipName(),
                         project.getProjectDescriptionFilePath(),
-                        project.getProjectFile()
+                        project.getProjectFile(),
+                        String.valueOf(project.getStatus())
+
                 ))
                 .collect(Collectors.toSet());
         this.instructorName = internshipStudents.getInternship().getCreatedBy().getUserEmail();

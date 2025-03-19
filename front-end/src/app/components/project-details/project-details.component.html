@@ -1,21 +1,65 @@
 <app-navbar></app-navbar>
 
 <div *ngIf="projectDetails" class="project-container">
-    <h2 class="project-title">Project Details</h2>
-    <div class="project-info">
-        <p><strong>Name:</strong> {{ projectDetails.projectName }}</p>
-        <p><strong>Student Email:</strong> {{ projectDetails.studentEmail }}</p>
-        <p><strong>Submission Date:</strong> {{ projectDetails.submissionDate }}</p>
-        <p><strong>Internship:</strong> {{ projectDetails.internshipName }}</p>
-        <p><strong>Description:</strong> {{ projectDetails.projectDescription }}</p>
-    </div>
- 
-    <div class="mycont">
-        <button class="download-btn" (click)="downloadFile(projectDetails.projectDescriptionFile)">
-            📥 Download Description
-        </button>
-    </div>
+  <h2 class="project-title">Project Details</h2>
+  <div class="project-info">
+    <p><strong>Name:</strong> {{ projectDetails.projectName }}</p>
+    <p><strong>Student Email:</strong> {{ projectDetails.studentEmail }}</p>
+    <p><strong>Submission Date:</strong> {{ projectDetails.submissionDate }}</p>
+    <p><strong>Internship:</strong> {{ projectDetails.internshipName }}</p>
+    <p><strong>Project Status:</strong> {{ projectDetails.projectStatus }}</p>
+
+    <p>
+      <strong>Project File:</strong>
+      <span *ngIf="projectDetails.projectFile; else noFile">
+        <button class="project-download-btn" (click)="downloadFile(projectDetails.projectFile)">📥 Download Project File</button>
+      </span>
+    </p>
+
+    <ng-template #noFile>
+      <p style="
+        color: var(--complementary-color);
+        font-weight: bold;
+        text-align: center;
+        background: var(--hover-background);
+        padding: 12px;
+        border-radius: 8px;
+      ">
+        ❌ Project File not submitted
+      </p>
+    </ng-template>
     
 
+    <p *ngIf="!projectDetails.projectFile" style="
+    color: var(--complementary-color);
+    font-weight: bold;
+    text-align: center;
+    background: var(--hover-background);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 5px solid var(--triadic-color1);
+  ">
+    ❌ You cannot mark this project as completed until the file is submitted.
+  </p>
+  
+
+    <button 
+      *ngIf="projectDetails.projectFile && projectDetails.projectStatus !== 'COMPLETED'" 
+      (click)="markProjectAsComplete()">
+      ✅ Mark Project as Complete
+    </button>
+
+    <p *ngIf="projectDetails.projectStatus === 'COMPLETED'" style="color: green; font-weight: bold;">
+      ✅ This project is already marked as complete.
+    </p>
+
+    <p><strong>Description:</strong> {{ projectDetails.projectDescription }}</p>
+  </div>
+
+  <div class="mycont">
+    <button class="download-btn" (click)="downloadFile(projectDetails.projectDescriptionFile)">
+      📥 Download Description
+    </button>
+  </div>
 
 </div>

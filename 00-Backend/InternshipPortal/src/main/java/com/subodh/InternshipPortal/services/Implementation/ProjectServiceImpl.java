@@ -15,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 @Slf4j
@@ -82,7 +85,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         internshipStudentRepository.save(studentInternship);
 
-        return new ProjectWrapper(dbProject.getProjectName(), dbProject.getProjectDescription(), studentInternship.getStudent().getUserEmail(), dbProject.getSubmissionDate(), dbProject.getProjectId(), dbProject.getProjectDescriptionFilePath(),dbProject.getProjectFile());
+        return new ProjectWrapper(dbProject.getProjectName(), dbProject.getProjectDescription(), studentInternship.getStudent().getUserEmail(), dbProject.getSubmissionDate(), dbProject.getProjectId(), dbProject.getProjectDescriptionFilePath(), dbProject.getProjectFile(), String.valueOf(dbProject.getStatus()));
     }
 
     @Override
@@ -131,9 +134,46 @@ public class ProjectServiceImpl implements ProjectService {
         project.setProjectFile(relativePath);
         projectRepository.save(project);
 
-        return new ProjectWrapper(project.getProjectName(), project.getProjectDescription(),
-                project.getUser().getUserEmail(), project.getSubmissionDate(),
-                project.getProjectId(), project.getProjectDescriptionFilePath(),project.getProjectFile());
+        return new ProjectWrapper(
+                project.getProjectName(),
+                project.getProjectDescription(),
+                project.getUser().getUserEmail(),
+                project.getSubmissionDate(),
+                project.getProjectId(),
+                project.getProjectDescriptionFilePath(),
+                project.getProjectFile(),
+                String.valueOf(project.getStatus()));
+    }
+
+    @Override
+    public ProjectWrapper changeProjectStatus(Long projectId, String status) {
+        Optional<Project> project = Optional.ofNullable(projectRepository.findById(projectId).orElse(null));
+        Project dbProject = project.get();
+        dbProject.setStatus(StudentInternshipStatus.valueOf(status));
+        projectRepository.save(dbProject);
+
+
+        String userEmail = project.get().getUser().getUserEmail();
+        List<InternshipStudents> internshipStudentsList = internshipStudentRepository.findAllByStudent_UserEmail(userEmail);
+
+        for (InternshipStudents internshipStudents : internshipStudentsList) {
+           boolean allProjectsCompleted =internshipStudents.getProjects().stream().allMatch(p -> p.getStatus().equals(StudentInternshipStatus.COMPLETED));
+           if (allProjectsCompleted) {
+               internshipStudents.setStatus(StudentInternshipStatus.COMPLETED);
+               internshipStudentRepository.save(internshipStudents);
+           }
+        }
+
+        return new ProjectWrapper(
+                dbProject.getProjectName(),
+                dbProject.getProjectDescription(),
+                dbProject.getUser().getUserEmail(),
+                dbProject.getSubmissionDate(),
+                dbProject.getProjectId(),
+                dbProject.getProjectDescriptionFilePath(),
+                dbProject.getProjectFile(),
+                String.valueOf(Objects.requireNonNull(projectRepository.findById(projectId).orElse(null)).getStatus())
+        );
     }
 
 }

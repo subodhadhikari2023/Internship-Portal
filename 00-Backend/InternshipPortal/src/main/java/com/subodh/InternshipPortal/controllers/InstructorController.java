@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.services.ApplicationService;
 import com.subodh.InternshipPortal.services.InternshipStudentsService;
 import com.subodh.InternshipPortal.services.ProjectService;
@@ -23,11 +24,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.charset.StandardCharsets;
 
 import java.util.List;
 
@@ -46,6 +42,7 @@ public class InstructorController {
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
+
     /**
      * Instantiates a new Instructor controller.
      *
@@ -174,6 +171,12 @@ public class InstructorController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    @PostMapping("change-project-status/{projectId}")
+    public ResponseEntity<?> changeProjectStatus(@PathVariable Long projectId, @RequestBody String status) {
+        log.info("Change project status initiated");
+        return new ResponseEntity<>(new Response<>(projectService.changeProjectStatus(projectId, status)), HttpStatus.OK);
     }
 
 

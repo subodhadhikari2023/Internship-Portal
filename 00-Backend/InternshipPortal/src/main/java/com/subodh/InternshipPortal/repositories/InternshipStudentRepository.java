@@ -19,4 +19,6 @@ public interface InternshipStudentRepository extends JpaRepository<InternshipStu
 
 
     InternshipStudents findByInternship_InternshipNameAndStudent_UserEmail(String internshipInternshipName, String studentUserEmail);
+
+    List<InternshipStudents> findAllByStudent_UserEmail(String studentUserEmail);
 }
