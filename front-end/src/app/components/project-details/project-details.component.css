@@ -87,6 +87,9 @@
   align-items: center;
   gap: 12px;
   box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  outline: none;
 }
 
 .download-btn:hover {
@@ -94,3 +97,30 @@
   transform: scale(1.07);
   box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.3);
 }
+
+
+.project-download-btn {
+  background: var(--secondary-color);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  outline: none;
+}
+
+.project-download-btn:hover {
+  background: var(--triadic-color2);
+  transform: scale(1.07);
+  box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.3);
+}
+

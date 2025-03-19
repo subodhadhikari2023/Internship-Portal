@@ -12,17 +12,36 @@
     <p>
       <strong>Project File:</strong>
       <span *ngIf="projectDetails.projectFile; else noFile">
-        <button (click)="downloadFile(projectDetails.projectFile)">📥 Download Project File</button>
+        <button class="project-download-btn" (click)="downloadFile(projectDetails.projectFile)">📥 Download Project File</button>
       </span>
     </p>
 
     <ng-template #noFile>
-      <p style="color: red; font-weight: bold;">❌ Project File not submitted</p>
+      <p style="
+        color: var(--complementary-color);
+        font-weight: bold;
+        text-align: center;
+        background: var(--hover-background);
+        padding: 12px;
+        border-radius: 8px;
+      ">
+        ❌ Project File not submitted
+      </p>
     </ng-template>
+    
 
-    <p *ngIf="!projectDetails.projectFile" style="color: red; font-weight: bold;">
-      ❌ You cannot mark this project as completed until the file is submitted.
-    </p>
+    <p *ngIf="!projectDetails.projectFile" style="
+    color: var(--complementary-color);
+    font-weight: bold;
+    text-align: center;
+    background: var(--hover-background);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 5px solid var(--triadic-color1);
+  ">
+    ❌ You cannot mark this project as completed until the file is submitted.
+  </p>
+  
 
     <button 
       *ngIf="projectDetails.projectFile && projectDetails.projectStatus !== 'COMPLETED'" 
