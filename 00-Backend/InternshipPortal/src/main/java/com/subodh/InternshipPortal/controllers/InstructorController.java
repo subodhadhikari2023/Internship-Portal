@@ -1,30 +1,23 @@
 package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
-import com.subodh.InternshipPortal.modals.InternshipStudents;
-import com.subodh.InternshipPortal.services.ApplicationService;
-import com.subodh.InternshipPortal.services.InternshipStudentsService;
-import com.subodh.InternshipPortal.services.ProjectService;
-import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.modals.Internship;
-import com.subodh.InternshipPortal.services.InternshipService;
+import com.subodh.InternshipPortal.services.*;
+import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-
 import java.io.File;
-
 import java.util.List;
 
 /**
@@ -39,6 +32,7 @@ public class InstructorController {
     private final ApplicationService applicationService;
     private final InternshipStudentsService internshipStudentsService;
     private final ProjectService projectService;
+    private final CertificateService certificateService;
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
@@ -49,11 +43,12 @@ public class InstructorController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
+    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectService projectService, CertificateService certificateService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.internshipStudentsService = internshipStudentsService;
         this.projectService = projectService;
+        this.certificateService = certificateService;
     }
 
 
@@ -177,6 +172,12 @@ public class InstructorController {
     public ResponseEntity<?> changeProjectStatus(@PathVariable Long projectId, @RequestBody String status) {
         log.info("Change project status initiated");
         return new ResponseEntity<>(new Response<>(projectService.changeProjectStatus(projectId, status)), HttpStatus.OK);
+    }
+
+    @PostMapping("generate-certificate")
+    public ResponseEntity<?> generateCertificate() {
+        certificateService.createCertificate(new APIRequest<>(1L));
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
