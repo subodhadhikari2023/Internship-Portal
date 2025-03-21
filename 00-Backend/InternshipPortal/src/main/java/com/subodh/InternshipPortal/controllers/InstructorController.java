@@ -175,9 +175,9 @@ public class InstructorController {
     }
 
     @PostMapping("generate-certificate")
-    public ResponseEntity<?> generateCertificate() {
-        certificateService.createCertificate(new APIRequest<>(1L));
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> generateCertificate(@RequestParam Long internshipStudentId) {
+        CertificateWrapper certificate = certificateService.createCertificate(internshipStudentId);
+        return new ResponseEntity<>(new Response<>(certificate),HttpStatus.OK);
     }
 
 

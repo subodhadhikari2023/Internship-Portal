@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.modals;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
@@ -9,13 +10,14 @@ import java.time.LocalDate;
 @Entity
 @Data
 public class Certificate {
+
     @Id
-    @GeneratedValue
-    @UuidGenerator
-    @Column(length = 36, nullable = false, updatable = false)
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String certificateId;
 
-    private String certificateName;
+
+    private String certificateFilePath;
 
     private LocalDate issueDate;
 
@@ -23,9 +25,9 @@ public class Certificate {
     @JoinColumn(name = "internship_students_id", referencedColumnName = "studentInternshipId")
     private InternshipStudents internshipStudents;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id",referencedColumnName = "user_id")
     private Users student;
 
-    private String certificateFilePath;
 
 }

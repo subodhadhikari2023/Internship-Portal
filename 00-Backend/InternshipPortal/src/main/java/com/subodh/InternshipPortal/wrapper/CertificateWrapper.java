@@ -1,19 +1,17 @@
 package com.subodh.InternshipPortal.wrapper;
 
 import com.subodh.InternshipPortal.modals.Certificate;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.util.UriComponentsBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+@Slf4j
 @Data
-@AllArgsConstructor
 public class CertificateWrapper {
     private String certificateId;
-    private String certificateName;
+    private String certificateFilePath;
     private String internshipName;
     private LocalDate startDate;
     private LocalDate completionDate;
@@ -21,27 +19,25 @@ public class CertificateWrapper {
     private String internshipDepartment;
     private String instructorName;
     private LocalDate issuedDate;
-
-    @Value("${organization.logo.path}")
-    private String organizationLogoPath;
-
-    @Value("${official.seal.path}")
-    private String officialSealPath;
-
-    @Value("${instructor.signature.path}")
-    private String instructorSignaturePath;
-
-    @Value("${director.signature.path}")
-    private String directorSignaturePath;
-
-    @Value("${url.prefix}")
-    private String urlPrefix;
-
-
     private String verifyingURL;
 
-    public CertificateWrapper(Certificate certificate) {
+    private String organizationLogoPath;
+
+    private String officialSealPath;
+
+    private String instructorSignaturePath;
+
+    private String directorSignaturePath;
+
+    public CertificateWrapper(
+            Certificate certificate,
+            String organizationLogoPath,
+            String officialSealPath,
+            String instructorSignaturePath,
+            String directorSignaturePath,
+            String urlPrefix) {
         this.certificateId = certificate.getCertificateId();
+        this.certificateFilePath = certificate.getCertificateFilePath();
         this.internshipName = certificate.getInternshipStudents().getInternship().getInternshipName();
         this.startDate = certificate.getInternshipStudents().getInternship().getStartDate();
         this.completionDate = certificate.getInternshipStudents().getInternship().getEndDate();
@@ -49,7 +45,12 @@ public class CertificateWrapper {
         this.internshipDepartment = certificate.getInternshipStudents().getInternship().getDepartment().getDepartmentName();
         this.instructorName = certificate.getInternshipStudents().getInternship().getCreatedBy().getUserName();
         this.issuedDate = certificate.getIssueDate();
-        this.verifyingURL = UriComponentsBuilder.fromUriString(this.urlPrefix).queryParam("certificateId", this.certificateId).toUriString();
+        this.organizationLogoPath = organizationLogoPath;
+        this.officialSealPath = officialSealPath;
+        this.instructorSignaturePath = instructorSignaturePath;
+        this.directorSignaturePath = directorSignaturePath;
+        this.verifyingURL = urlPrefix + certificate.getCertificateId();
+
 
 
     }
@@ -60,6 +61,10 @@ public class CertificateWrapper {
 
     public String getCompletionDate() {
         return formatDate(completionDate);
+    }
+
+    public String getIssuedDate() {
+        return formatDate(issuedDate);
     }
 
     private String formatDate(LocalDate date) {
