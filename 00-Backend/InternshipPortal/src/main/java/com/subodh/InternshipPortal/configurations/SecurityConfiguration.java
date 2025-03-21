@@ -49,8 +49,9 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         request -> request
-                                .requestMatchers("/api/v1/register","/api/v1/login","/api/v1/register/verify")
+                                .requestMatchers("/api/v1/public/**")
                                 .permitAll()
+                                .requestMatchers("internship-portal/api/v1/common/**").hasAnyRole("ADMIN", "STUDENT","INSTRUCTOR")
                                 .requestMatchers("/api/v1/students/**").hasRole("STUDENT")
                                 .requestMatchers("/api/v1/instructors/**").hasRole("INSTRUCTOR")
                                 .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")

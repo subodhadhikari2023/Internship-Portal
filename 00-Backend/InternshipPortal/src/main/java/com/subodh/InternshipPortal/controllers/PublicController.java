@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.controllers;
 
 
+import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.wrapper.LoginResponse;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.wrapper.RegistrationResponse;
@@ -9,10 +10,13 @@ import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
+import com.subodh.InternshipPortal.wrapper.UserWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @Slf4j
-@RequestMapping("api/v1")
+@RequestMapping("api/v1/public")
 public class PublicController {
 
 
@@ -30,6 +34,7 @@ public class PublicController {
     private final OTPService otpService;
     private final MailService mailService;
     private final RegistrationService registrationService;
+    private final UsersRepository usersRepository;
 
 
     /**
@@ -41,11 +46,12 @@ public class PublicController {
      * @param mailService         the mail service
      * @param registrationService the registration service
      */
-    public PublicController(UserService userService, OTPService otpService, JavaMailSenderImpl mailSender, MailService mailService, RegistrationService registrationService) {
+    public PublicController(UserService userService, OTPService otpService, JavaMailSenderImpl mailSender, MailService mailService, RegistrationService registrationService, UsersRepository usersRepository) {
         this.userService = userService;
         this.otpService = otpService;
         this.mailService = mailService;
         this.registrationService = registrationService;
+        this.usersRepository = usersRepository;
     }
 
 
@@ -59,7 +65,7 @@ public class PublicController {
     @Transactional
     public ResponseEntity<?> registerV2(@RequestBody RegistrationEntity user) {
         if (!userService.emailExists(user.getUserEmail())) {
-            log.info("{}",registrationService.findAllByEmail(user.getUserEmail()));
+            log.info("{}", registrationService.findAllByEmail(user.getUserEmail()));
             if (registrationService.findByEmail(user.getUserEmail()) != null) {
                 registrationService.delete(user);
             }
@@ -134,7 +140,7 @@ public class PublicController {
      */
     @GetMapping("message")
     public ResponseEntity<?> messageAfterJwtValidation() {
-        return new ResponseEntity<>(new LoginResponse("Valid request"),HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponse("Valid request"), HttpStatus.OK);
     }
 
 
@@ -146,6 +152,8 @@ public class PublicController {
     @GetMapping("admin")
     public ResponseEntity<?> admin() {
         log.info("Endpoint for admin");
-        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the admin"),HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the admin"), HttpStatus.OK);
     }
+
+
 }
