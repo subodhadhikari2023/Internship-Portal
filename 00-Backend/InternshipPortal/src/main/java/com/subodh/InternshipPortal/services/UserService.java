@@ -1,6 +1,9 @@
 package com.subodh.InternshipPortal.services;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.modals.Users;
+import com.subodh.InternshipPortal.wrapper.StudentWrapper;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.List;
 
 /**
@@ -51,4 +54,6 @@ public interface UserService {
     boolean emailExists(String userEmail);
 
     Users findByUserEmail(String username);
+
+    StudentWrapper updateStudent(UserDetails userDetails, StudentWrapper userWrapper);
 }

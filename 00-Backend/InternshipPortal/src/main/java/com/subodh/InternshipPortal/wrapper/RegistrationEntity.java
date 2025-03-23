@@ -19,7 +19,7 @@ public class RegistrationEntity {
     private String userEmail;
     private String userPassword;
     private String userName;
-    private Number userPhoneNumber;
+    private Long userPhoneNumber;
 
 
 }

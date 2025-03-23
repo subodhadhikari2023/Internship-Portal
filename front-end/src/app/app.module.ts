@@ -27,6 +27,7 @@ import { CreateProjectComponent } from './components/create-project/create-proje
 import { ViewEnrolledStudentsComponent } from './components/view-enrolled-students/view-enrolled-students.component';
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 import { ViewProjectDetailsStudentComponent } from './components/view-project-details-student/view-project-details-student.component';
+import { UpdateProfileStudentComponent } from './components/update-profile-student/update-profile-student.component';
 
 
 
@@ -54,7 +55,8 @@ import { ViewProjectDetailsStudentComponent } from './components/view-project-de
     CreateProjectComponent,
     ViewEnrolledStudentsComponent,
     ProjectDetailsComponent,
-    ViewProjectDetailsStudentComponent
+    ViewProjectDetailsStudentComponent,
+    UpdateProfileStudentComponent
   ],
   imports: [
     BrowserModule,

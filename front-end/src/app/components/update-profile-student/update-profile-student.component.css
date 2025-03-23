@@ -1,0 +1,133 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    position: relative;
+}
+body{
+    min-height: 100vh;
+    height: fit-content;
+}
+
+.update-profile-container {
+    background-color: var(--background-color);
+    color: var(--font-color);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px var(--border-color);
+    max-width: 750px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Section headers clearly separated */
+.section-header {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 15px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.profile-picture-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.profile-picture-container img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--secondary-color);
+}
+
+.upload-btn {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.upload-btn:hover {
+    background-color: var(--complementary-color);
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+/* Each section is a block with its own fields */
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--font-light);
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 16px;
+    background-color: var(--card-background);
+    color: var(--font-color);
+    transition: border 0.3s ease;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0px 0px 6px var(--accent-color);
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.button-group button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+.button-group button:hover {
+    background-color: var(--dark-accent);
+}
+
+
+/* Responsive Styles */
+@media screen and (min-width: 768px) {
+    .form-section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Two columns for structured layout */
+        gap: 20px;
+    }
+}
