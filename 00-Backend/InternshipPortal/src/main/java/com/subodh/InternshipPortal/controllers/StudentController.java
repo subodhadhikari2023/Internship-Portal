@@ -25,6 +25,7 @@ import java.util.Optional;
 /**
  * The type Student controller.
  */
+
 @Slf4j
 @RestController
 @CrossOrigin
@@ -153,7 +154,6 @@ public class StudentController {
 
     @PostMapping("upload-project")
     public ResponseEntity<?> uploadProject(@RequestParam Long projectId, @RequestBody MultipartFile file) {
-        log.info("Uploading project");
         ProjectWrapper projectWrapper = projectService.saveProjectFile(projectId, file);
         return new ResponseEntity<>(new Response<>(projectWrapper), HttpStatus.OK);
     }
@@ -165,8 +165,9 @@ public class StudentController {
         return new ResponseEntity<>(new Response<>(userWrapper), HttpStatus.OK);
     }
 
-    @PostMapping("update-profile")
+    @PutMapping("update-profile")
     public ResponseEntity<?> updateProfile(@RequestBody StudentWrapper userWrapper, @AuthenticationPrincipal UserDetails userDetails) {
+        log.info("update-profile");
         return new ResponseEntity<>(new Response<>(userService.updateStudent(userDetails, userWrapper)), HttpStatus.OK);
     }
 }

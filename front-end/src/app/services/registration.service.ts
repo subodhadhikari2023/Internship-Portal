@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class RegistrationService {
 
   private registeredEmail: string = '';
-  private baseUrl = 'http://localhost:8080/internship-portal/api/v1';
+  private baseUrl = 'http://localhost:8080/internship-portal/api/v1/public';
 
   constructor(private http: HttpClient) { }
 

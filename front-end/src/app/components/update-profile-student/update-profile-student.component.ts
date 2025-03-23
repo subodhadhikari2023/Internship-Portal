@@ -12,7 +12,7 @@ export class UpdateProfileStudentComponent implements OnInit {
   studentData: any = {};
   isEditing: boolean = false;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.fetchStudentDetails();
@@ -40,9 +40,16 @@ export class UpdateProfileStudentComponent implements OnInit {
   }
 
   updateProfile() {
+    if (typeof (this.studentData.skills) == 'string') {
+      this.studentData.skills = this.studentData.skills.split(",");
+    }
     this.userService.updateStudentProfile(this.studentData).subscribe({
       next: (res) => {
         this.isEditing = false;
+        this.fetchStudentDetails();
+       
+
+
       },
       error: (err) => {
         console.error(err);

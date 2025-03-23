@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.wrapper;
 
 import com.subodh.InternshipPortal.modals.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Year;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Slf4j
 @Data
+@NoArgsConstructor
 public class StudentWrapper {
     // Personal Information
     private String userEmail;

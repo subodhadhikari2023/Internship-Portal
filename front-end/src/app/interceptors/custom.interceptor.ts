@@ -6,7 +6,6 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Token } from '@angular/compiler';
 
 @Injectable()
 export class CustomInterceptor implements HttpInterceptor {
