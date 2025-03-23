@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,8 @@ public class Users {
     private String userEmail;
 
     @Column(name = "user_phone_number", nullable = false, unique = true)
-    private Number userPhoneNumber;
+    @Length(min = 10, max = 10)
+    private Long userPhoneNumber;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JsonManagedReference
@@ -55,8 +57,8 @@ public class Users {
     @JsonBackReference
     private Education education;
 
-
     String resumeFilePath;
+
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'profile.png'")
     String profilePhotoFilePath;
 

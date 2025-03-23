@@ -1,0 +1,113 @@
+<body>
+    <nav><app-student-nav></app-student-nav></nav>
+    <main>
+        <div class="update-profile-container">
+            <h2>Update Your Profile</h2>
+
+            <!-- Profile Picture -->
+            <div class="profile-picture-container">
+                <img
+                    [src]="studentData.profilePictureFilePath ? studentData.profilePictureFilePath : '../../../assets/images/Gove-of-Sikkim-logo.webp'"
+                    alt="Profile Picture"
+                />
+                <button class="upload-btn" *ngIf="isEditing">Upload New Picture</button>
+            </div>
+
+            <!-- Profile Form -->
+            <form class="profile-form">
+                <!-- Personal Information -->
+                <div class="full-width">
+                    <label for="userName">Full Name</label>
+                    <input id="userName" type="text" [(ngModel)]="studentData.userName" name="userName" [readonly]="!isEditing" />
+                </div>
+
+                <div class="full-width">
+                    <label for="userEmail">Email</label>
+                    <input id="userEmail" type="email" [(ngModel)]="studentData.userEmail" name="userEmail" disabled />
+                </div>
+
+                <div>
+                    <label for="phoneNumber">Phone Number</label>
+                    <input id="phoneNumber" type="text" [(ngModel)]="studentData.phoneNumber" name="phoneNumber" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Secondary Education -->
+                <h3>Secondary Education</h3>
+                <div>
+                    <label for="secondarySchoolName">School Name</label>
+                    <input id="secondarySchoolName" type="text" [(ngModel)]="studentData.secondarySchoolName" name="secondarySchoolName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="secondaryBoardName">Board Name</label>
+                    <input id="secondaryBoardName" type="text" [(ngModel)]="studentData.secondaryBoardName" name="secondaryBoardName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="secondaryPassingYear">Passing Year</label>
+                    <input id="secondaryPassingYear" type="number" [(ngModel)]="studentData.secondaryPassingYear" name="secondaryPassingYear" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="secondaryPassingPercentage">Percentage</label>
+                    <input id="secondaryPassingPercentage" type="number" [(ngModel)]="studentData.secondaryPassingPercentage" name="secondaryPassingPercentage" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Higher Secondary Education -->
+                <h3>Higher Secondary Education</h3>
+                <div>
+                    <label for="higherSecondarySchoolName">School Name</label>
+                    <input id="higherSecondarySchoolName" type="text" [(ngModel)]="studentData.higherSecondarySchoolName" name="higherSecondarySchoolName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="higherSecondaryBoardName">Board Name</label>
+                    <input id="higherSecondaryBoardName" type="text" [(ngModel)]="studentData.higherSecondaryBoardName" name="higherSecondaryBoardName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="higherSecondaryPassingYear">Passing Year</label>
+                    <input id="higherSecondaryPassingYear" type="number" [(ngModel)]="studentData.higherSecondaryPassingYear" name="higherSecondaryPassingYear" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="higherSecondaryPassingPercentage">Percentage</label>
+                    <input id="higherSecondaryPassingPercentage" type="number" [(ngModel)]="studentData.higherSecondaryPassingPercentage" name="higherSecondaryPassingPercentage" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="higherSecondaryStream">Stream</label>
+                    <input id="higherSecondaryStream" type="text" [(ngModel)]="studentData.higherSecondaryStream" name="higherSecondaryStream" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Skills -->
+                <h3>Skills</h3>
+                <div>
+                    <label for="skills">Skills</label>
+                    <input id="skills" type="text" [(ngModel)]="studentData.skills" name="skills" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Resume -->
+                <h3>Resume</h3>
+                <div>
+                    <label for="resume">Resume</label>
+                    <input id="resume" type="text" [(ngModel)]="studentData.resumeFilePath" name="resume" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Profile Completeness -->
+                <h3>Profile Completeness</h3>
+                <div class="profile-completeness">
+                    <label>Profile Completeness: </label>
+                    <span>{{ studentData.profileCompleteness }}%</span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
+                    <button *ngIf="isEditing" (click)="updateProfile()">Save</button>
+                    <button *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>

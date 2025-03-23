@@ -28,6 +28,6 @@ public class BachelorsEducation {
 
     @DecimalMin(value = "0.00", inclusive = false)
     @DecimalMax(value = "100.00", inclusive = false)
-    private Long passingPercentage;
+    private Double passingPercentage;
 
 }

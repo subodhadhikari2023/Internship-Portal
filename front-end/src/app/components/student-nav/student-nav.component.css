@@ -343,3 +343,13 @@
 {
   background-color: #029407;
 }
+/* Explicitly set the background and text color for dropdown items */
+.dropdown-item {
+  background-color: #029407 !important; /* Maintain the green background */
+  color: #e0e0e0 !important; /* Keep text color consistent */
+}
+
+.dropdown-item:hover {
+  background-color: #029407 !important; /* Prevent background color change */
+  color: #e0e0e0 !important; /* Prevent text color change */
+}

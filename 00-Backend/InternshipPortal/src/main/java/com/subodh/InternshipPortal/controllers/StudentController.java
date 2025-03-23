@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.modals.Application;
 import com.subodh.InternshipPortal.modals.Users;
+import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ public class StudentController {
     private final DepartmentService departmentService;
     private final InternshipStudentsService internshipStudentsService;
     private final ProjectService projectService;
+    private final UsersRepository usersRepository;
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
@@ -45,13 +47,14 @@ public class StudentController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService, UsersRepository usersRepository) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
         this.departmentService = departmentService;
         this.internshipStudentsService = internshipStudentsService;
         this.projectService = projectService;
+        this.usersRepository = usersRepository;
     }
 
     /**
@@ -153,5 +156,17 @@ public class StudentController {
         log.info("Uploading project");
         ProjectWrapper projectWrapper = projectService.saveProjectFile(projectId, file);
         return new ResponseEntity<>(new Response<>(projectWrapper), HttpStatus.OK);
+    }
+
+    @GetMapping("get-profile-details")
+    public ResponseEntity<?> getProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
+        Users user = usersRepository.findByUserEmail(userDetails.getUsername());
+        StudentWrapper userWrapper = new StudentWrapper(user);
+        return new ResponseEntity<>(new Response<>(userWrapper), HttpStatus.OK);
+    }
+
+    @PostMapping("update-profile")
+    public ResponseEntity<?> updateProfile(@RequestBody StudentWrapper userWrapper, @AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(userService.updateStudent(userDetails, userWrapper)), HttpStatus.OK);
     }
 }
