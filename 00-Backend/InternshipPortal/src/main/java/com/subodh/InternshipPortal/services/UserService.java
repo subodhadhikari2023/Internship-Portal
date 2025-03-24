@@ -3,6 +3,7 @@ import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -56,4 +57,6 @@ public interface UserService {
     Users findByUserEmail(String username);
 
     StudentWrapper updateStudent(UserDetails userDetails, StudentWrapper userWrapper);
+
+    StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file);
 }

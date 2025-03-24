@@ -3,6 +3,7 @@ package com.subodh.InternshipPortal.modals;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -34,8 +35,7 @@ public class Users {
     @Column(name = "user_email", nullable = false, unique = true)
     private String userEmail;
 
-    @Column(name = "user_phone_number", nullable = false, unique = true)
-    @Length(min = 10, max = 10)
+    @Digits(integer = 15, fraction = 0, message = "Phone number must be a valid number with at most 15 digits")
     private Long userPhoneNumber;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)

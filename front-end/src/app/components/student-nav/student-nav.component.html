@@ -24,7 +24,11 @@
                     </ul>
                     <div class="profile-dropdown">
                         <button class="profile-btn" (click)="toggleDropdown('profile')">
-                            <img src="../../../assets/images/logo.webp" alt="Profile" class="profile-img">
+                            <!-- <img src="../../../assets/images/logo.webp" alt="Profile" class="profile-img"> -->
+                            <img
+                            [src]="studentData.profilePictureFilePath ? studentData.profilePictureFilePath : '../../../assets/images/default-profile/image.png'"
+                            alt="Profile Picture" class="profile-img"
+                        /> 
                         </button>
                         <ul class="dropdown-menu" [class.show]="dropdowns['profile']">
                             <!-- <li><a class="dropdown-item" routerLink="/profile">View Profile</a></li> -->

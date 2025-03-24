@@ -13,7 +13,7 @@ export class IntegrationService {
 
   }
   doLogin(request: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${BASE_URL}login`, request);
+    return this.http.post<LoginResponse>(`${BASE_URL}public/login`, request);
   }
   accessMessage() {
     return this.http.get<LoginResponse>(`${BASE_URL}students/hello`);

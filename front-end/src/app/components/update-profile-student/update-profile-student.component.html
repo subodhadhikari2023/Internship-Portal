@@ -6,19 +6,32 @@
 
             <!-- Profile Picture -->
             <div class="profile-picture-container">
-                <img
-                    [src]="studentData.profilePictureFilePath ? studentData.profilePictureFilePath : '../../../assets/images/default-profile/image.png'"
-                    alt="Profile Picture"
-                />
-                <button class="upload-btn" *ngIf="isEditing">Upload New Picture</button>
+                <!-- Profile Picture Preview -->
+                <img [src]="previewImage || studentData.profilePictureFilePath || '../../../assets/images/default-profile/image.png'"
+                    alt="Profile Picture" width="150" />
+
+                <!-- Hidden File Input -->
+                <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput hidden />
+
+                <button class="upload-btn" *ngIf="isEditing" (click)="fileInput.click()">
+                    Select New Picture
+                </button>
+
+                <button class="upload-btn" *ngIf="isEditing && selectedFile" (click)="uploadProfilePicture()">
+                    Upload Picture
+                </button>
+
             </div>
+
 
             <!-- Profile Form -->
             <form class="profile-form">
                 <!-- Personal Information -->
+                <h3>Personal Information</h3>
                 <div class="full-width">
                     <label for="userName">Full Name</label>
-                    <input id="userName" type="text" [(ngModel)]="studentData.userName" name="userName" [readonly]="!isEditing" />
+                    <input id="userName" type="text" [(ngModel)]="studentData.userName" name="userName"
+                        [readonly]="!isEditing" />
                 </div>
 
                 <div class="full-width">
@@ -28,70 +41,146 @@
 
                 <div>
                     <label for="phoneNumber">Phone Number</label>
-                    <input id="phoneNumber" type="text" [(ngModel)]="studentData.phoneNumber" name="phoneNumber" [readonly]="!isEditing" />
+                    <input id="phoneNumber" type="text" [(ngModel)]="studentData.phoneNumber" name="phoneNumber"
+                        [readonly]="!isEditing" />
                 </div>
 
                 <!-- Secondary Education -->
                 <h3>Secondary Education</h3>
                 <div>
                     <label for="secondarySchoolName">School Name</label>
-                    <input id="secondarySchoolName" type="text" [(ngModel)]="studentData.secondarySchoolName" name="secondarySchoolName" [readonly]="!isEditing" />
+                    <input id="secondarySchoolName" type="text" [(ngModel)]="studentData.secondarySchoolName"
+                        name="secondarySchoolName" [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="secondaryBoardName">Board Name</label>
-                    <input id="secondaryBoardName" type="text" [(ngModel)]="studentData.secondaryBoardName" name="secondaryBoardName" [readonly]="!isEditing" />
+                    <input id="secondaryBoardName" type="text" [(ngModel)]="studentData.secondaryBoardName"
+                        name="secondaryBoardName" [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="secondaryPassingYear">Passing Year</label>
-                    <input id="secondaryPassingYear" type="number" [(ngModel)]="studentData.secondaryPassingYear" name="secondaryPassingYear" [readonly]="!isEditing" />
+                    <input id="secondaryPassingYear" type="number" [(ngModel)]="studentData.secondaryPassingYear"
+                        name="secondaryPassingYear" [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="secondaryPassingPercentage">Percentage</label>
-                    <input id="secondaryPassingPercentage" type="number" [(ngModel)]="studentData.secondaryPassingPercentage" name="secondaryPassingPercentage" [readonly]="!isEditing" />
+                    <input id="secondaryPassingPercentage" type="number"
+                        [(ngModel)]="studentData.secondaryPassingPercentage" name="secondaryPassingPercentage"
+                        [readonly]="!isEditing" />
                 </div>
 
                 <!-- Higher Secondary Education -->
                 <h3>Higher Secondary Education</h3>
                 <div>
                     <label for="higherSecondarySchoolName">School Name</label>
-                    <input id="higherSecondarySchoolName" type="text" [(ngModel)]="studentData.higherSecondarySchoolName" name="higherSecondarySchoolName" [readonly]="!isEditing" />
+                    <input id="higherSecondarySchoolName" type="text"
+                        [(ngModel)]="studentData.higherSecondarySchoolName" name="higherSecondarySchoolName"
+                        [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="higherSecondaryBoardName">Board Name</label>
-                    <input id="higherSecondaryBoardName" type="text" [(ngModel)]="studentData.higherSecondaryBoardName" name="higherSecondaryBoardName" [readonly]="!isEditing" />
+                    <input id="higherSecondaryBoardName" type="text" [(ngModel)]="studentData.higherSecondaryBoardName"
+                        name="higherSecondaryBoardName" [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="higherSecondaryPassingYear">Passing Year</label>
-                    <input id="higherSecondaryPassingYear" type="number" [(ngModel)]="studentData.higherSecondaryPassingYear" name="higherSecondaryPassingYear" [readonly]="!isEditing" />
+                    <input id="higherSecondaryPassingYear" type="number"
+                        [(ngModel)]="studentData.higherSecondaryPassingYear" name="higherSecondaryPassingYear"
+                        [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="higherSecondaryPassingPercentage">Percentage</label>
-                    <input id="higherSecondaryPassingPercentage" type="number" [(ngModel)]="studentData.higherSecondaryPassingPercentage" name="higherSecondaryPassingPercentage" [readonly]="!isEditing" />
+                    <input id="higherSecondaryPassingPercentage" type="number"
+                        [(ngModel)]="studentData.higherSecondaryPassingPercentage"
+                        name="higherSecondaryPassingPercentage" [readonly]="!isEditing" />
                 </div>
 
                 <div>
                     <label for="higherSecondaryStream">Stream</label>
-                    <input id="higherSecondaryStream" type="text" [(ngModel)]="studentData.higherSecondaryStream" name="higherSecondaryStream" [readonly]="!isEditing" />
+                    <input id="higherSecondaryStream" type="text" [(ngModel)]="studentData.higherSecondaryStream"
+                        name="higherSecondaryStream" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Diploma Education -->
+                <h3>Diploma Education</h3>
+                <div>
+                    <label for="diplomaCollegeName">College Name</label>
+                    <input id="diplomaCollegeName" type="text" [(ngModel)]="studentData.diplomaCollegeName"
+                        name="diplomaCollegeName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="diplomaCourseName">Course Name</label>
+                    <input id="diplomaCourseName" type="text" [(ngModel)]="studentData.diplomaCourseName"
+                        name="diplomaCourseName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="diplomaPassingYear">Passing Year</label>
+                    <input id="diplomaPassingYear" type="number" [(ngModel)]="studentData.diplomaPassingYear"
+                        name="diplomaPassingYear" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Bachelor's Education -->
+                <h3>Bachelor's Education</h3>
+                <div>
+                    <label for="bachelorsCollegeName">College Name</label>
+                    <input id="bachelorsCollegeName" type="text" [(ngModel)]="studentData.bachelorsCollegeName"
+                        name="bachelorsCollegeName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="bachelorsCourseName">Course Name</label>
+                    <input id="bachelorsCourseName" type="text" [(ngModel)]="studentData.bachelorsCourseName"
+                        name="bachelorsCourseName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="bachelorsPassingYear">Passing Year</label>
+                    <input id="bachelorsPassingYear" type="number" [(ngModel)]="studentData.bachelorsPassingYear"
+                        name="bachelorsPassingYear" [readonly]="!isEditing" />
+                </div>
+
+                <!-- Master's Education -->
+                <h3>Master's Education</h3>
+                <div>
+                    <label for="mastersCollegeName">College Name</label>
+                    <input id="mastersCollegeName" type="text" [(ngModel)]="studentData.mastersCollegeName"
+                        name="mastersCollegeName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="mastersCourseName">Course Name</label>
+                    <input id="mastersCourseName" type="text" [(ngModel)]="studentData.mastersCourseName"
+                        name="mastersCourseName" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="mastersPassingYear">Passing Year</label>
+                    <input id="mastersPassingYear" type="number" [(ngModel)]="studentData.mastersPassingYear"
+                        name="mastersPassingYear" [readonly]="!isEditing" />
                 </div>
 
                 <!-- Skills -->
                 <h3>Skills</h3>
                 <div>
-                    <label for="skills">Skills</label>
-                    <input id="skills" type="text" [(ngModel)]="studentData.skills" name="skills" [readonly]="!isEditing" />
+                    <label for="skills">Skills (Comma separated)</label>
+                    <input id="skills" type="text" [(ngModel)]="studentData.skills" name="skills"
+                        [readonly]="!isEditing" />
                 </div>
 
-                <!-- Resume -->
+                <!-- Resume Upload -->
                 <h3>Resume</h3>
                 <div>
                     <label for="resume">Resume</label>
-                    <input id="resume" type="text" [(ngModel)]="studentData.resumeFilePath" name="resume" [readonly]="!isEditing" />
+                    <input id="resume" type="text" [(ngModel)]="studentData.resumeFilePath" name="resume" disabled />
+                    <button class="upload-btn" *ngIf="isEditing">Upload Resume</button>
                 </div>
 
                 <!-- Profile Completeness -->
@@ -102,14 +191,12 @@
                 </div>
 
                 <!-- Action Buttons -->
-                <!-- <div class="button-group">
+                <div class="button-group">
                     <button *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
                     <button *ngIf="isEditing" (click)="updateProfile()">Save</button>
                     <button *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
-                </div> -->
+                </div>
             </form>
         </div>
     </main>
 </body>
-
-

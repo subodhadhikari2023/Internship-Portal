@@ -9,22 +9,21 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
 
 /**
  * The type Student controller.
  */
+
 @Slf4j
 @RestController
 @CrossOrigin
@@ -142,31 +141,52 @@ public class StudentController {
 
             Resource resource = new UrlResource(file.toURI());
 
+            // Determine content type dynamically
+            String contentType = Files.probeContentType(file.toPath());
+            if (contentType == null) {
+                contentType = "application/octet-stream"; // Fallback
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+
+            // If it's an image, allow inline display
+            if (contentType.startsWith("image/")) {
+                headers.setContentType(MediaType.parseMediaType(contentType));
+            } else {
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                headers.setContentDisposition(ContentDisposition.attachment().filename(file.getName()).build());
+            }
+
             return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)  // Change based on file type
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
+                    .headers(headers)
                     .body(resource);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
+
     @PostMapping("upload-project")
     public ResponseEntity<?> uploadProject(@RequestParam Long projectId, @RequestBody MultipartFile file) {
-        log.info("Uploading project");
         ProjectWrapper projectWrapper = projectService.saveProjectFile(projectId, file);
         return new ResponseEntity<>(new Response<>(projectWrapper), HttpStatus.OK);
     }
 
     @GetMapping("get-profile-details")
     public ResponseEntity<?> getProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
-        Users user = usersRepository.findByUserEmail(userDetails.getUsername());
-        StudentWrapper userWrapper = new StudentWrapper(user);
-        return new ResponseEntity<>(new Response<>(userWrapper), HttpStatus.OK);
+        Users user = userService.findByUserEmail(userDetails.getUsername());
+//        Users user = usersRepository.findByUserEmail(userDetails.getUsername());
+        return new ResponseEntity<>(new Response<>(new StudentWrapper(user)), HttpStatus.OK);
     }
 
-    @PostMapping("update-profile")
+    @PutMapping("update-profile")
     public ResponseEntity<?> updateProfile(@RequestBody StudentWrapper userWrapper, @AuthenticationPrincipal UserDetails userDetails) {
         return new ResponseEntity<>(new Response<>(userService.updateStudent(userDetails, userWrapper)), HttpStatus.OK);
+    }
+
+    @PostMapping("update-profile-picture")
+    public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+        log.info("update-profile-picture");
+        return new ResponseEntity<>(userService.updateProfilePicture(userDetails,file),HttpStatus.CREATED);
     }
 }

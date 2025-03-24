@@ -13,20 +13,20 @@ public class Education {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "education")
     private Users users;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private SecondaryEducation secondaryEducation;
 
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private HigherSecondaryEducation higherSecondaryEducation;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private DiplomaEducation diplomaEducation;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private BachelorsEducation bachelorsEducation;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private MastersEducation mastersEducation;
 
 
