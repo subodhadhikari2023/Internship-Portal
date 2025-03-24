@@ -96,6 +96,8 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
     }
 
     const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(filePath)}`;
+    console.log(apiUrl);
+    
 
 
     fetch(apiUrl, {

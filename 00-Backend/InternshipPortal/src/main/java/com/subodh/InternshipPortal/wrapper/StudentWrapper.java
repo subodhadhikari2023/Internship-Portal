@@ -111,10 +111,11 @@ public class StudentWrapper {
                 this.mastersPassingPercentage = mastEdu.getPassingPercentage();
             }
 
-            this.skills = user.getStudentSkills();
-            this.resumeFilePath = user.getResumeFilePath();
-            this.profilePictureFilePath = user.getProfilePhotoFilePath();
+
         }
+        this.skills = user.getStudentSkills();
+        this.resumeFilePath = user.getResumeFilePath();
+        this.profilePictureFilePath = user.getProfilePhotoFilePath();
 
         profileCompleteness = this.calculateProfileCompleteness();
     }

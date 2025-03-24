@@ -9,8 +9,10 @@ import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.utils.JwtUtils;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,7 +20,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -26,6 +31,7 @@ import java.util.function.Consumer;
 /**
  * The type User service implementation.
  */
+@Slf4j
 @Service
 public class UserServiceImplementation implements UserService {
 
@@ -34,6 +40,9 @@ public class UserServiceImplementation implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final RegistrationService registrationService;
+
+    @Value("${file.storage.path}")
+    private String rootFolderPath;
 
 
     /**
@@ -117,6 +126,7 @@ public class UserServiceImplementation implements UserService {
         return new StudentWrapper(userRepository.save(user));
     }
 
+
     private void updateEducationDetails(Users user, StudentWrapper userWrapper) {
         // Initialize education objects if null
         Education education = user.getEducation();
@@ -168,5 +178,48 @@ public class UserServiceImplementation implements UserService {
             setter.accept(value);
         }
     }
+
+
+    @Override
+    @Transactional
+    public StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file) {
+        Users user = findByUserEmail(userDetails.getUsername());
+
+
+        File profilePicFile = getFile(file, user);
+
+        try {
+            file.transferTo(profilePicFile);
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving profile picture: " + e.getMessage(), e);
+        }
+
+        // Convert absolute path to a relative path for database storage
+        String relativePath = profilePicFile.getAbsolutePath().replaceFirst("^" + rootFolderPath, "/storage/Internship-Portal");
+        user.setProfilePhotoFilePath(relativePath);
+        userRepository.save(user);
+
+        return new StudentWrapper(user);
+    }
+
+
+    private File getFile(MultipartFile file, Users user) {
+        String userFolderPath = String.format("%s/%s/profile/profile-picture", rootFolderPath, user.getUserEmail());
+
+        File profileFolder = new File(userFolderPath);
+        if (!profileFolder.exists()) {
+            profileFolder.mkdirs();
+        }
+
+        // Extract file extension
+        String originalFilename = file.getOriginalFilename();
+        assert originalFilename != null;
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        // Define new file name
+        String newFilename = "profile-pic" + fileExtension;
+        return new File(profileFolder, newFilename);
+    }
+
 
 }
