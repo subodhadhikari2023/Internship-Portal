@@ -184,7 +184,19 @@ public class UserServiceImplementation implements UserService {
     @Transactional
     public StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file) {
         Users user = findByUserEmail(userDetails.getUsername());
+        String oldFilePath = user.getProfilePhotoFilePath(); // Get the old file path
 
+        // Check if the old file exists and delete it
+        if (oldFilePath != null && !oldFilePath.isEmpty()) {
+            String oldAbsolutePath = rootFolderPath + oldFilePath.replaceFirst("^/storage/Internship-Portal", "");
+            File oldFile = new File(oldAbsolutePath);
+            if (oldFile.exists() && oldFile.isFile()) {
+                boolean deleted = oldFile.delete();
+                if (!deleted) {
+                    throw new RuntimeException("Failed to delete old profile picture");
+                }
+            }
+        }
 
         File profilePicFile = getFile(file, user);
 

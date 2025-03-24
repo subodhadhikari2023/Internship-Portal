@@ -9,10 +9,10 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
 export class UserService {
 
 
-  constructor(private http: HttpClient,private sanitizer:DomSanitizer ) { }
+  constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
- 
-  
+
+
 
   fetchStudentDetails() {
     return this.http.get<any>(`${BASE_URL}students/get-profile-details`).pipe(
@@ -25,7 +25,7 @@ export class UserService {
     return this.http.put<any>(`${BASE_URL}students/update-profile`, studentData);
   }
 
-  
+
   loadProfilePicture(filePath: string): Observable<SafeUrl> {
     if (!filePath) {
       return throwError(() => new Error("No file path provided!"));
@@ -52,5 +52,16 @@ export class UserService {
         })
       );
   }
-  
+
+
+
+  uploadProfilePicture(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('file', file);  // Append the file to FormData
+    
+    return this.http.post(`${BASE_URL}students/update-profile-picture`, formData);
+}
+
+
+
 }

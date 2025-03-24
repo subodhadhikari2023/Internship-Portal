@@ -186,6 +186,7 @@ public class StudentController {
 
     @PostMapping("update-profile-picture")
     public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+        log.info("update-profile-picture");
         return new ResponseEntity<>(userService.updateProfilePicture(userDetails,file),HttpStatus.CREATED);
     }
 }

@@ -88,4 +88,46 @@ export class UpdateProfileStudentComponent implements OnInit {
       .catch((error) => console.error("Image fetch error:", error));
   }
 
+
+
+
+
+
+  selectedFile: File | null = null;
+  previewImage: string | ArrayBuffer | null = null;
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.selectedFile = input.files[0];
+
+      // Preview the selected image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewImage = reader.result;
+      };
+      reader.readAsDataURL(this.selectedFile);
+    }
+  }
+  uploadProfilePicture(): void {
+    if (!this.selectedFile) {
+        console.warn("No file selected!");
+        return;
+    }
+
+    this.userService.uploadProfilePicture(this.selectedFile).subscribe({
+        next: (response) => {
+            console.log("Upload successful:", response);
+            this.isEditing = false; // Set to read-only
+            this.fetchStudentDetails(); // Fetch updated details and reload profile picture
+        },
+        error: (error) => {
+            console.error("Error uploading profile picture:", error);
+        }
+    });
+}
+
+
+
+
 }
