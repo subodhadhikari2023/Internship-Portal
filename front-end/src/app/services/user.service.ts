@@ -7,13 +7,8 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
   providedIn: 'root'
 })
 export class UserService {
-  
-
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
-
-
-
 
   fetchStudentDetails() {
     return this.http.get<any>(`${BASE_URL}students/get-profile-details`).pipe(
@@ -74,9 +69,17 @@ export class UserService {
       responseType: 'blob'
     });
   }
-  fetchStudentDetailsForInstructor(studentId:any) {
+  fetchStudentDetailsForInstructor(studentId: any) {
     return this.http.get<any>(`${BASE_URL}instructors/get-student-details?studentId=${studentId}`).pipe(
-      map(res=>res.entity)
+      map(res => res.entity)
+    );
+  }
+
+  uploadResume(selectedResume: File) {
+    const formData = new FormData();
+    formData.append("file",selectedResume);
+    return this.http.post<any>(`${BASE_URL}students/upload-resume`, formData).pipe(
+      map(res => res.entity)
     );
   }
 

@@ -12,8 +12,9 @@ export class UpdateProfileStudentComponent implements OnInit {
 
   studentData: any = {};
   isEditing: boolean = false;
+  profilePictureSafeUrl: any; 
 
-  constructor(private userService: UserService, private sanitizer: DomSanitizer) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
     this.fetchStudentDetails();
@@ -47,13 +48,14 @@ export class UpdateProfileStudentComponent implements OnInit {
     if (typeof (this.studentData.skills) == 'string') {
       this.studentData.skills = this.studentData.skills.split(",");
     }
+   console.log(this.studentData);
+   
+
+    
     this.userService.updateStudentProfile(this.studentData).subscribe({
       next: (res) => {
         this.isEditing = false;
         this.fetchStudentDetails();
-
-
-
       },
       error: (err) => {
         console.error(err);
@@ -63,7 +65,7 @@ export class UpdateProfileStudentComponent implements OnInit {
 
   loadProfilePicture(filePath: string) {
     this.userService.loadProfilePicture(filePath).subscribe((safeUrl) => {
-      this.studentData.profilePictureFilePath = safeUrl;
+      this.profilePictureSafeUrl = safeUrl;
     });
   }
 
@@ -117,12 +119,30 @@ export class UpdateProfileStudentComponent implements OnInit {
     });
   }
 
+  selectedResume: File | null = null;
+  onResumeSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedResume = input.files[0];
+    }
+  }
 
+  uploadResume() {
+    if (!this.selectedResume) {
+      console.log("No file selected.");
+      return;
+    }
 
+    this.userService.uploadResume(this.selectedResume).subscribe({
+      next: (res) => {
+        console.log(res);
+        this.fetchStudentDetails()
+
+      }, error: (err) => {
+        console.log(err);
+
+      }
+    });
+
+  }
 }
-
-
-
-
-
-

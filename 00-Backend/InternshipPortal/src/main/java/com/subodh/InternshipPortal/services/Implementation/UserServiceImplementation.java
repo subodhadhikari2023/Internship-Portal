@@ -113,7 +113,7 @@ public class UserServiceImplementation implements UserService {
     @Transactional
     public StudentWrapper updateStudent(UserDetails userDetails, StudentWrapper userWrapper) {
         Users user = userRepository.findByUserEmail(userDetails.getUsername());
-
+log.info("Updating user {}", user.getUserEmail());
         // Ensure education object exists
         user.setEducation(Optional.ofNullable(user.getEducation()).orElse(new Education()));
 
