@@ -2,11 +2,11 @@ package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.modals.Application;
 import com.subodh.InternshipPortal.modals.Users;
-import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.*;
@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +39,6 @@ public class StudentController {
     private final DepartmentService departmentService;
     private final InternshipStudentsService internshipStudentsService;
     private final ProjectService projectService;
-    private final UsersRepository usersRepository;
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
@@ -46,14 +48,13 @@ public class StudentController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService, UsersRepository usersRepository) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
         this.departmentService = departmentService;
         this.internshipStudentsService = internshipStudentsService;
         this.projectService = projectService;
-        this.usersRepository = usersRepository;
     }
 
     /**
@@ -131,6 +132,7 @@ public class StudentController {
 
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
+        log.info("Downloading file {}", filePath);
         try {
             String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
@@ -189,4 +191,31 @@ public class StudentController {
         log.info("update-profile-picture");
         return new ResponseEntity<>(userService.updateProfilePicture(userDetails,file),HttpStatus.CREATED);
     }
+
+
+    @PostMapping("upload-resume")
+    public ResponseEntity<?> uploadResume(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+        log.info("uploading resume");
+        return new ResponseEntity<>(new Response<>(userService.uploadResume(userDetails,file)),HttpStatus.CREATED);
+    }
+
+    @GetMapping("/resume")
+    public ResponseEntity<Resource> getResume(@RequestParam String filePath) {
+        log.info("Downloading file: {}", filePath);
+        String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
+
+        try {
+            Resource resource = userService.downloadResume(absolutePath);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + new File(filePath).getName())
+                    .body(resource);
+        } catch (IOException e) {
+            throw new RuntimeException("Error downloading file", e);
+        }
+    }
+
+
+
+
 }

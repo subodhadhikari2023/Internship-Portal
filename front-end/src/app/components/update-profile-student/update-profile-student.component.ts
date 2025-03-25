@@ -111,23 +111,64 @@ export class UpdateProfileStudentComponent implements OnInit {
   }
   uploadProfilePicture(): void {
     if (!this.selectedFile) {
-        console.warn("No file selected!");
-        return;
+      console.warn("No file selected!");
+      return;
     }
 
     this.userService.uploadProfilePicture(this.selectedFile).subscribe({
-        next: (response) => {
-            console.log("Upload successful:", response);
-            this.isEditing = false; // Set to read-only
-            this.fetchStudentDetails(); // Fetch updated details and reload profile picture
-        },
-        error: (error) => {
-            console.error("Error uploading profile picture:", error);
-        }
+      next: (response) => {
+        console.log("Upload successful:", response);
+        this.isEditing = false; // Set to read-only
+        this.fetchStudentDetails(); // Fetch updated details and reload profile picture
+      },
+      error: (error) => {
+        console.error("Error uploading profile picture:", error);
+      }
     });
+  }
+  downloadResume() {
+    const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(this.studentData.resumeFilePath)}`;
+
+    fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to fetch file");
+        }
+        const contentDisposition = response.headers.get("Content-Disposition");
+        let filename = "downloaded-file";
+
+        if (contentDisposition) {
+          const match = contentDisposition.match(/filename="(.+)"/);
+          if (match) {
+            filename = match[1];
+          }
+        }
+
+        return response.blob().then((blob) => ({ blob, filename }));
+      })
+      .then(({ blob, filename }) => {
+        const objectURL = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = objectURL;
+        a.download = filename; // Set the filename from response
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(objectURL);
+      })
+      .catch((error) => console.error("File download error:", error));
+  }
+
+
 }
 
 
 
 
-}
+
+
