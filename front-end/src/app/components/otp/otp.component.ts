@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { IntegrationService } from 'src/app/services/integration.service';
 import { RegistrationService } from 'src/app/services/registration.service';
 
 @Component({
@@ -18,8 +19,9 @@ export class OtpComponent implements OnInit {
     private fb: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private registrationService: RegistrationService
-  ) {}
+    private registrationService: RegistrationService,
+    private authService: IntegrationService
+  ) { }
 
   ngOnInit(): void {
     // Initialize the form with validation
@@ -39,7 +41,6 @@ export class OtpComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Validate the form before submission
     if (this.otpForm.invalid) {
       this.otpForm.markAllAsTouched();
       return;
@@ -47,17 +48,16 @@ export class OtpComponent implements OnInit {
 
     const otp = this.otpForm.value.otp;
 
-    // Call the API to verify the OTP
-    this.http.post(`http://localhost:8080/internship-portal/api/v1/register/verify?email=${this.userEmail}&otp=${otp}`, {})
-      .subscribe({
-        next: () => {
-          console.log('OTP verified successfully');
-          this.router.navigate(['/login']);  
-        },
-        error: (error: any) => {
-          console.error('Error verifying OTP:', error);
-          this.errorMessage = "OTP verification failed. Please try again.";
-        }
-      });
+    this.authService.verifyOtp(this.userEmail, otp).subscribe({
+      next: () => {
+        console.log('OTP verified successfully');
+        this.router.navigate(['/login']);
+      },
+      error: (error: any) => {
+        console.error('Error verifying OTP:', error);
+        this.errorMessage = "OTP verification failed. Please try again.";
+      }
+    });
   }
+
 }

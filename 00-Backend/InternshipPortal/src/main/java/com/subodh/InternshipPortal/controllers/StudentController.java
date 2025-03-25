@@ -130,42 +130,6 @@ public class StudentController {
         return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
 
-    @GetMapping("download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
-        log.info("Downloading file {}", filePath);
-        try {
-            String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
-
-            File file = new File(absolutePath);
-            if (!file.exists()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-
-            Resource resource = new UrlResource(file.toURI());
-
-            // Determine content type dynamically
-            String contentType = Files.probeContentType(file.toPath());
-            if (contentType == null) {
-                contentType = "application/octet-stream"; // Fallback
-            }
-
-            HttpHeaders headers = new HttpHeaders();
-
-            // If it's an image, allow inline display
-            if (contentType.startsWith("image/")) {
-                headers.setContentType(MediaType.parseMediaType(contentType));
-            } else {
-                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-                headers.setContentDisposition(ContentDisposition.attachment().filename(file.getName()).build());
-            }
-
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(resource);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
 
 
     @PostMapping("upload-project")
@@ -199,21 +163,7 @@ public class StudentController {
         return new ResponseEntity<>(new Response<>(userService.uploadResume(userDetails,file)),HttpStatus.CREATED);
     }
 
-    @GetMapping("/resume")
-    public ResponseEntity<Resource> getResume(@RequestParam String filePath) {
-        log.info("Downloading file: {}", filePath);
-        String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
-        try {
-            Resource resource = userService.downloadResume(absolutePath);
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + new File(filePath).getName())
-                    .body(resource);
-        } catch (IOException e) {
-            throw new RuntimeException("Error downloading file", e);
-        }
-    }
 
 
 

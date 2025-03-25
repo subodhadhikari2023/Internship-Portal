@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../modals/login-request';
 import { Observable } from 'rxjs';
 import { LoginResponse } from '../modals/login-response';
-const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
+const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/public/";
 @Injectable({
   providedIn: 'root'
 })
@@ -13,9 +13,14 @@ export class IntegrationService {
 
   }
   doLogin(request: LoginRequest): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${BASE_URL}public/login`, request);
+    return this.http.post<LoginResponse>(`${BASE_URL}login`, request);
   }
   accessMessage() {
     return this.http.get<LoginResponse>(`${BASE_URL}students/hello`);
+  }
+
+
+  verifyOtp(email: string, otp: string): Observable<any> {
+    return this.http.post<any>(`${BASE_URL}register/verify?email=${email}&otp=${otp}`, {});
   }
 }

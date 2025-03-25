@@ -58,41 +58,30 @@ export class ProjectDetailsComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   downloadFile(filePath: string) {
-    if (!filePath) {
-      console.error("No file path provided!");
-      return;
-    }
-  
-    // Extract filename from filePath
-    const fileName = filePath.split('/').pop() || "downloaded_file"; // Default name fallback
-  
-    const apiUrl = `http://localhost:8080/internship-portal/api/v1/instructors/download?filePath=${encodeURIComponent(filePath)}`;
-  
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`, // Include JWT if needed
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to download file");
+    this.internshipService.downloadFile(filePath).subscribe({
+      next: (blob) => {
+        if (!blob) {
+          console.error("Empty file response!");
+          return;
         }
-        return response.blob();
-      })
-      .then((blob) => {
+
+        const fileName = filePath.split('/').pop() || "downloaded_file";
         const blobUrl = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = blobUrl;
-        link.setAttribute("download", fileName); // Use extracted filename
+        link.setAttribute("download", fileName);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl); // Clean up
-      })
-      .catch((error) => console.error("Download error:", error));
+        window.URL.revokeObjectURL(blobUrl);
+      },
+      error: (error) => {
+        console.error("Download error:", error);
+      }
+    });
   }
-  
+
+
   markProjectAsComplete(): void {
     if (!this.projectDetails || !this.projectId) return;
 

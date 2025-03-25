@@ -145,29 +145,6 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
     }
 
-    @GetMapping("download")
-    public ResponseEntity<Resource> downloadFile(@RequestParam String filePath) {
-        log.info("File download initiated");
-        try {
-            // 🔹 Convert relative path back to absolute
-            String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
-
-            File file = new File(absolutePath);
-            if (!file.exists()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            }
-
-            Resource resource = new UrlResource(file.toURI());
-
-            return ResponseEntity.ok()
-                    .contentType(MediaType.APPLICATION_PDF)  // Change based on file type
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + file.getName())
-                    .body(resource);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
-
     @PostMapping("change-project-status/{projectId}")
     public ResponseEntity<?> changeProjectStatus(@PathVariable Long projectId, @RequestBody String status) {
         log.info("Change project status initiated");

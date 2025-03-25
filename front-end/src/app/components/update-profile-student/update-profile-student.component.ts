@@ -62,35 +62,10 @@ export class UpdateProfileStudentComponent implements OnInit {
   }
 
   loadProfilePicture(filePath: string) {
-    if (!filePath) {
-      console.error("No file path provided!");
-      return;
-    }
-
-    const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(filePath)}`;
-
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch image");
-        }
-        return response.blob();
-      })
-      .then((blob) => {
-        const objectURL = URL.createObjectURL(blob);
-        this.studentData.profilePictureFilePath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      })
-      .catch((error) => console.error("Image fetch error:", error));
+    this.userService.loadProfilePicture(filePath).subscribe((safeUrl) => {
+      this.studentData.profilePictureFilePath = safeUrl;
+    });
   }
-
-
-
-
 
 
   selectedFile: File | null = null;
@@ -127,42 +102,21 @@ export class UpdateProfileStudentComponent implements OnInit {
     });
   }
   downloadResume() {
-    const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(this.studentData.resumeFilePath)}`;
-
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch file");
-        }
-        const contentDisposition = response.headers.get("Content-Disposition");
-        let filename = "downloaded-file";
-
-        if (contentDisposition) {
-          const match = contentDisposition.match(/filename="(.+)"/);
-          if (match) {
-            filename = match[1];
-          }
-        }
-
-        return response.blob().then((blob) => ({ blob, filename }));
-      })
-      .then(({ blob, filename }) => {
+    this.userService.downloadResume(this.studentData.resumeFilePath).subscribe({
+      next: (blob) => {
         const objectURL = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = objectURL;
-        a.download = filename; // Set the filename from response
+        a.download = "resume.pdf";
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(objectURL);
-      })
-      .catch((error) => console.error("File download error:", error));
+      },
+      error: (error) => console.error("File download error:", error)
+    });
   }
+
 
 
 }
