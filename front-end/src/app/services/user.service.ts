@@ -7,6 +7,7 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
   providedIn: 'root'
 })
 export class UserService {
+  
 
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
@@ -36,7 +37,7 @@ export class UserService {
     });
 
     return this.http
-      .get(`${BASE_URL}students/download`, {
+      .get(`${BASE_URL}public/download`, {
         headers,
         params: { filePath },
         responseType: "blob",
@@ -58,10 +59,25 @@ export class UserService {
   uploadProfilePicture(file: File): Observable<any> {
     const formData = new FormData();
     formData.append('file', file);  // Append the file to FormData
-    
+
     return this.http.post(`${BASE_URL}students/update-profile-picture`, formData);
-}
+  }
 
+  downloadResume(filePath: string): Observable<Blob> {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    });
 
+    return this.http.get(`${BASE_URL}public/download`, {
+      headers,
+      params: { filePath },
+      responseType: 'blob'
+    });
+  }
+  fetchStudentDetailsForInstructor(studentId:any) {
+    return this.http.get<any>(`${BASE_URL}instructors/get-student-details?studentId=${studentId}`).pipe(
+      map(res=>res.entity)
+    );
+  }
 
 }

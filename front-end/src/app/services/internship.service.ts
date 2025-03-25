@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { InternshipCreationRequest } from '../modals/internship-creation-request';
 import { map, Observable } from 'rxjs';
@@ -78,5 +78,32 @@ export class InternshipService {
 
   markProjectAsComplete(updateData: { projectId: number; status: string; }) {
     return this.http.post<any>(`${BASE_URL}instructors/change-project-status/${updateData.projectId}`, updateData.status);
+  }
+
+  downloadFile(filePath: string): Observable<Blob> {  
+    if (!filePath) {
+      console.error("No file path provided!");
+      throw new Error("File path is required");
+    }
+
+    const apiUrl = `${BASE_URL}public/download?filePath=${encodeURIComponent(filePath)}`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem("token")}` 
+    });
+
+    return this.http.get(apiUrl, { headers, responseType: 'blob' });
+  }
+  downloadFileForStudents(filePath: string): Observable<Blob> {  
+    if (!filePath) {
+      console.error("No file path provided!");
+      throw new Error("File path is required");
+    }
+
+    const apiUrl = `${BASE_URL}public/download?filePath=${encodeURIComponent(filePath)}`;
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${localStorage.getItem("token")}` 
+    });
+
+    return this.http.get(apiUrl, { headers, responseType: 'blob' });
   }
 }

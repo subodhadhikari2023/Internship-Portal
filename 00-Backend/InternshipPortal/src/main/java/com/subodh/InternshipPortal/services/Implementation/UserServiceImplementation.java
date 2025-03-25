@@ -9,10 +9,13 @@ import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.utils.JwtUtils;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -22,8 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -79,7 +81,7 @@ public class UserServiceImplementation implements UserService {
 
     @Override
 
-    public String verifyUserCredentials(Users user) throws Exception {
+    public String verifyUserCredentials(Users user) {
         Authentication authenticate = auth.authenticate(new UsernamePasswordAuthenticationToken(user.getUserEmail(), user.getUserPassword()));
         boolean authenticated = authenticate.isAuthenticated();
         if (authenticated)
@@ -187,16 +189,7 @@ public class UserServiceImplementation implements UserService {
         String oldFilePath = user.getProfilePhotoFilePath(); // Get the old file path
 
         // Check if the old file exists and delete it
-        if (oldFilePath != null && !oldFilePath.isEmpty()) {
-            String oldAbsolutePath = rootFolderPath + oldFilePath.replaceFirst("^/storage/Internship-Portal", "");
-            File oldFile = new File(oldAbsolutePath);
-            if (oldFile.exists() && oldFile.isFile()) {
-                boolean deleted = oldFile.delete();
-                if (!deleted) {
-                    throw new RuntimeException("Failed to delete old profile picture");
-                }
-            }
-        }
+        getOldFileAndDelete(oldFilePath);
 
         File profilePicFile = getFile(file, user);
 
@@ -233,5 +226,61 @@ public class UserServiceImplementation implements UserService {
         return new File(profileFolder, newFilename);
     }
 
+    @Override
+    public StudentWrapper uploadResume(UserDetails userDetails, MultipartFile file) {
+        Users user = findByUserEmail(userDetails.getUsername());
+        String oldFilePath = user.getResumeFilePath(); // Get the old file path
+        // Check if the old file exists and delete it
+        getOldFileAndDelete(oldFilePath);
+        File resumeFile = getResumeFile(file, user);
+        try {
+            file.transferTo(resumeFile);
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving profile picture: " + e.getMessage(), e);
+        }
+
+        String relativePath = resumeFile.getAbsolutePath().replaceFirst("^" + rootFolderPath, "/storage/Internship-Portal");
+        user.setResumeFilePath(relativePath);
+        userRepository.save(user);
+        return new StudentWrapper(user);
+    }
+
+    @Override
+    public Resource downloadResume(String filePath) throws IOException {
+        return new InputStreamResource(new FileInputStream(new File(filePath)));
+    }
+
+    @Override
+    public StudentWrapper findStudentByStudentId(Long studentId) {
+        Users user = userRepository.findByUserId(studentId);
+        return new StudentWrapper(user);
+    }
+
+
+    private void getOldFileAndDelete(String oldFilePath) {
+        if (oldFilePath != null && !oldFilePath.isEmpty()) {
+            String oldAbsolutePath = rootFolderPath + oldFilePath.replaceFirst("^/storage/Internship-Portal", "");
+            File oldFile = new File(oldAbsolutePath);
+            if (oldFile.exists() && oldFile.isFile()) {
+                boolean deleted = oldFile.delete();
+                if (!deleted) {
+                    throw new RuntimeException("Failed to delete old profile picture");
+                }
+            }
+        }
+    }
+
+    private File getResumeFile(MultipartFile file, Users user) {
+        String userFolderPath = String.format("%s/%s/profile/resume", rootFolderPath, user.getUserEmail());
+        File resumeFolder = new File(userFolderPath);
+        if (!resumeFolder.exists()) {
+            resumeFolder.mkdirs();
+        }
+        String originalFilename = file.getOriginalFilename();
+        assert originalFilename != null;
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        String newFilename = user.getUserEmail()+"_resume" + fileExtension;
+        return new File(resumeFolder, newFilename);
+    }
 
 }

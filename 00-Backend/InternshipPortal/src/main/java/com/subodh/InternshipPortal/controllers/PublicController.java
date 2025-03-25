@@ -1,7 +1,6 @@
 package com.subodh.InternshipPortal.controllers;
 
 
-import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.wrapper.LoginResponse;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.wrapper.RegistrationResponse;
@@ -11,11 +10,15 @@ import com.subodh.InternshipPortal.services.OTPService;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.File;
+import java.nio.file.Files;
 
 /**
  * The type Public controller.
@@ -31,24 +34,22 @@ public class PublicController {
     private final OTPService otpService;
     private final MailService mailService;
     private final RegistrationService registrationService;
-    private final UsersRepository usersRepository;
-
+    @Value("${file.storage.path}")
+    private String rootFolderPath;
 
     /**
      * Instantiates a new Public controller.
      *
      * @param userService         the user service
      * @param otpService          the otp service
-     * @param mailSender          the mail sender
      * @param mailService         the mail service
      * @param registrationService the registration service
      */
-    public PublicController(UserService userService, OTPService otpService, JavaMailSenderImpl mailSender, MailService mailService, RegistrationService registrationService, UsersRepository usersRepository) {
+    public PublicController(UserService userService, OTPService otpService, MailService mailService, RegistrationService registrationService) {
         this.userService = userService;
         this.otpService = otpService;
         this.mailService = mailService;
         this.registrationService = registrationService;
-        this.usersRepository = usersRepository;
     }
 
 
@@ -150,6 +151,41 @@ public class PublicController {
     public ResponseEntity<?> admin() {
         log.info("Endpoint for admin");
         return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the admin"), HttpStatus.OK);
+    }
+
+
+    @GetMapping("download")
+    public ResponseEntity<Resource> downloadFile(String filePath) {
+        log.info("Downloading file {}", filePath);
+        try {
+            String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
+
+            File file = new File(absolutePath);
+            if (!file.exists()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            Resource resource = new UrlResource(file.toURI());
+
+            String contentType = Files.probeContentType(file.toPath());
+            if (contentType == null) {
+                contentType = "application/octet-stream";
+            }
+
+            HttpHeaders headers = new HttpHeaders();
+            if (contentType.startsWith("image/")) {
+                headers.setContentType(MediaType.parseMediaType(contentType));
+            } else {
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+                headers.setContentDisposition(ContentDisposition.attachment().filename(file.getName()).build());
+            }
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
 

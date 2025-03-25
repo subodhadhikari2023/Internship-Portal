@@ -2,9 +2,12 @@ package com.subodh.InternshipPortal.services;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
+
+import org.springframework.core.io.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -59,4 +62,10 @@ public interface UserService {
     StudentWrapper updateStudent(UserDetails userDetails, StudentWrapper userWrapper);
 
     StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file);
+
+    StudentWrapper uploadResume(UserDetails userDetails, MultipartFile file);
+
+    Resource downloadResume(String filePath) throws IOException;
+
+    StudentWrapper findStudentByStudentId(Long studentId);
 }

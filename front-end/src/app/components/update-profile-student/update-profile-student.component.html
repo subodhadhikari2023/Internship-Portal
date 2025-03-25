@@ -176,12 +176,25 @@
                 </div>
 
                 <!-- Resume Upload -->
-                <h3>Resume</h3>
+                <!-- <h3>Resume</h3>
                 <div>
                     <label for="resume">Resume</label>
+
                     <input id="resume" type="text" [(ngModel)]="studentData.resumeFilePath" name="resume" disabled />
                     <button class="upload-btn" *ngIf="isEditing">Upload Resume</button>
+                </div> -->
+                <h3>Resume</h3>
+                <div>
+                    <!-- <label for="resume">Download Resume</label> -->
+                    <!-- [href]="getResumeUrl()" -->
+                    <!-- <a *ngIf="studentData.resumeFilePath"  target="_blank">View Resume</a> -->
+                    <button class="download-btn"
+                        *ngIf="studentData.resumeFilePath && studentData.resumeFilePath.trim() !== ''"
+                        (click)="downloadResume()">
+                        Download Resume
+                    </button>
                 </div>
+
 
                 <!-- Profile Completeness -->
                 <h3>Profile Completeness</h3>

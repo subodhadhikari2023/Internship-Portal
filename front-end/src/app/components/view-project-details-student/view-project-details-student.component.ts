@@ -31,12 +31,12 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
 
   uploadProjectFile(): void {
     if (!this.selectedFile || !this.projectId) return;
-  
+
     this.isUploading = true;
     this.internshipService.uploadProjectFile(this.projectId, this.selectedFile).subscribe({
       next: (response) => {
-        this.fetchProjectDetails(); 
-  
+        this.fetchProjectDetails();
+
         this.selectedFile = null;
         this.isUploading = false;
       },
@@ -46,7 +46,7 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
       },
     });
   }
-  
+
   onFileSelected(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
@@ -59,17 +59,17 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
     this.internshipService.getSelectedInternshipsForStudents().subscribe({
       next: (internships) => {
         let foundProject = null;
-      
-       
+
+
         for (let internship of internships) {
           foundProject = internship.projects?.find(
             (project: any) => project.projectId === this.projectId
-            
+
           );
 
           if (foundProject) {
             console.log(foundProject);
-            break; 
+            break;
           }
         }
 
@@ -79,7 +79,7 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
       },
       error: (err) => {
         console.error("Error fetching project details:", err);
-        this.projectDetails = { projectFile: null }; 
+        this.projectDetails = { projectFile: null };
       },
     });
   }
@@ -90,40 +90,29 @@ export class ViewProjectDetailsStudentComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
   downloadFile(filePath: string) {
-    if (!filePath) {
-      console.error("No file path provided!");
-      return;
-    }
-
-    const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(filePath)}`;
-    console.log(apiUrl);
-    
-
-
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`, 
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to download file");
+    this.internshipService.downloadFileForStudents(filePath).subscribe({
+      next: (blob) => {
+        if (!blob) {
+          console.error("Empty file response!");
+          return;
         }
-        return response.blob();
-      })
-      .then((blob) => {
+  
+        const fileName = filePath.split('/').pop() || "Project_Description.pdf"; 
         const blobUrl = window.URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = blobUrl;
-        link.setAttribute("download", "Project_Description.pdf"); 
+        link.setAttribute("download", fileName);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        window.URL.revokeObjectURL(blobUrl); 
-      })
-      .catch((error) => console.error("Download error:", error));
+        window.URL.revokeObjectURL(blobUrl);
+      },
+      error: (error) => {
+        console.error("Download error:", error);
+      }
+    });
   }
+  
 
 
 }

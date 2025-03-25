@@ -62,35 +62,10 @@ export class UpdateProfileStudentComponent implements OnInit {
   }
 
   loadProfilePicture(filePath: string) {
-    if (!filePath) {
-      console.error("No file path provided!");
-      return;
-    }
-
-    const apiUrl = `http://localhost:8080/internship-portal/api/v1/students/download?filePath=${encodeURIComponent(filePath)}`;
-
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch image");
-        }
-        return response.blob();
-      })
-      .then((blob) => {
-        const objectURL = URL.createObjectURL(blob);
-        this.studentData.profilePictureFilePath = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-      })
-      .catch((error) => console.error("Image fetch error:", error));
+    this.userService.loadProfilePicture(filePath).subscribe((safeUrl) => {
+      this.studentData.profilePictureFilePath = safeUrl;
+    });
   }
-
-
-
-
 
 
   selectedFile: File | null = null;
@@ -111,23 +86,43 @@ export class UpdateProfileStudentComponent implements OnInit {
   }
   uploadProfilePicture(): void {
     if (!this.selectedFile) {
-        console.warn("No file selected!");
-        return;
+      console.warn("No file selected!");
+      return;
     }
 
     this.userService.uploadProfilePicture(this.selectedFile).subscribe({
-        next: (response) => {
-            console.log("Upload successful:", response);
-            this.isEditing = false; // Set to read-only
-            this.fetchStudentDetails(); // Fetch updated details and reload profile picture
-        },
-        error: (error) => {
-            console.error("Error uploading profile picture:", error);
-        }
+      next: (response) => {
+        console.log("Upload successful:", response);
+        this.isEditing = false; // Set to read-only
+        this.fetchStudentDetails(); // Fetch updated details and reload profile picture
+      },
+      error: (error) => {
+        console.error("Error uploading profile picture:", error);
+      }
     });
+  }
+  downloadResume() {
+    this.userService.downloadResume(this.studentData.resumeFilePath).subscribe({
+      next: (blob) => {
+        const objectURL = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = objectURL;
+        a.download = "resume.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(objectURL);
+      },
+      error: (error) => console.error("File download error:", error)
+    });
+  }
+
+
+
 }
 
 
 
 
-}
+
+
