@@ -26,7 +26,7 @@ export class ViewApplicationsComponent implements OnInit {
     })
   }
   viewDetails(_t23: any) {
-    this.http.navigate(['/instructor']);
+    this.http.navigate(['/instructor/student-details/:id']);
   }
 
   updateApplicationStatus(request: any, appStatus: any) {

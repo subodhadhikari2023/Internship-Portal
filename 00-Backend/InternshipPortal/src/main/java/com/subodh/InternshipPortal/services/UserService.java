@@ -66,4 +66,6 @@ public interface UserService {
     StudentWrapper uploadResume(UserDetails userDetails, MultipartFile file);
 
     Resource downloadResume(String filePath) throws IOException;
+
+    StudentWrapper findStudentByStudentId(Long studentId);
 }

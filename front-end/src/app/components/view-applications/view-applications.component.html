@@ -26,8 +26,8 @@
                             <td>{{ app.applicantEmail }}</td>
                             <td>{{ app.status }}</td>
                             <td>
-                                <button class="btn-view" (click)="viewDetails(app)">View Student Details</button>
-                                <!-- <a routerLink="" target="_blank" >View Student Details</a> -->
+                                <!-- <button class="btn-view" (click)="viewDetails(app)">View Student Details</button> -->
+                                <a [routerLink]= "['/instructor/student-details/',app.studentId]" target="_blank" >View Student Details</a>
                                 <button class="btn-approve" (click)="updateApplicationStatus(app,'ACCEPTED')" >Approve
                                 </button>
 

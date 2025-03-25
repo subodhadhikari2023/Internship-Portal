@@ -141,7 +141,6 @@ public class StudentController {
     @GetMapping("get-profile-details")
     public ResponseEntity<?> getProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
         Users user = userService.findByUserEmail(userDetails.getUsername());
-//        Users user = usersRepository.findByUserEmail(userDetails.getUsername());
         return new ResponseEntity<>(new Response<>(new StudentWrapper(user)), HttpStatus.OK);
     }
 

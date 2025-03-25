@@ -28,6 +28,7 @@ import { ViewEnrolledStudentsComponent } from './components/view-enrolled-studen
 import { ProjectDetailsComponent } from './components/project-details/project-details.component';
 import { ViewProjectDetailsStudentComponent } from './components/view-project-details-student/view-project-details-student.component';
 import { UpdateProfileStudentComponent } from './components/update-profile-student/update-profile-student.component';
+import { ViewStudentDetailsForInstructorComponent } from './components/view-student-details-for-instructor/view-student-details-for-instructor.component';
 
 
 
@@ -56,7 +57,8 @@ import { UpdateProfileStudentComponent } from './components/update-profile-stude
     ViewEnrolledStudentsComponent,
     ProjectDetailsComponent,
     ViewProjectDetailsStudentComponent,
-    UpdateProfileStudentComponent
+    UpdateProfileStudentComponent,
+    ViewStudentDetailsForInstructorComponent
   ],
   imports: [
     BrowserModule,

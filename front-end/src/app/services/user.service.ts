@@ -7,6 +7,7 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
   providedIn: 'root'
 })
 export class UserService {
+  
 
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
@@ -73,6 +74,10 @@ export class UserService {
       responseType: 'blob'
     });
   }
-
+  fetchStudentDetailsForInstructor(studentId:any) {
+    return this.http.get<any>(`${BASE_URL}instructors/get-student-details?studentId=${studentId}`).pipe(
+      map(res=>res.entity)
+    );
+  }
 
 }

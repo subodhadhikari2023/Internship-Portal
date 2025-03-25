@@ -250,6 +250,11 @@ public class UserServiceImplementation implements UserService {
         return new InputStreamResource(new FileInputStream(new File(filePath)));
     }
 
+    @Override
+    public StudentWrapper findStudentByStudentId(Long studentId) {
+        Users user = userRepository.findByUserId(studentId);
+        return new StudentWrapper(user);
+    }
 
 
     private void getOldFileAndDelete(String oldFilePath) {

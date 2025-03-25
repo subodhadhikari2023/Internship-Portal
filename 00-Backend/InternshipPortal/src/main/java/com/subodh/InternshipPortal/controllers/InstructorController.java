@@ -33,6 +33,7 @@ public class InstructorController {
     private final InternshipStudentsService internshipStudentsService;
     private final ProjectService projectService;
     private final CertificateService certificateService;
+    private final UserService userService;
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
@@ -43,12 +44,13 @@ public class InstructorController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectService projectService, CertificateService certificateService) {
+    public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectService projectService, CertificateService certificateService, UserService userService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.internshipStudentsService = internshipStudentsService;
         this.projectService = projectService;
         this.certificateService = certificateService;
+        this.userService = userService;
     }
 
 
@@ -149,6 +151,13 @@ public class InstructorController {
     public ResponseEntity<?> changeProjectStatus(@PathVariable Long projectId, @RequestBody String status) {
         log.info("Change project status initiated");
         return new ResponseEntity<>(new Response<>(projectService.changeProjectStatus(projectId, status)), HttpStatus.OK);
+    }
+
+
+    @GetMapping("get-student-details")
+    public ResponseEntity<?> getStudentDetails(@RequestParam Long studentId) {
+        return new ResponseEntity<>(new Response<>(userService.findStudentByStudentId(studentId)),HttpStatus.OK);
+
     }
 
     @PostMapping("generate-certificate")

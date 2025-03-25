@@ -1,0 +1,63 @@
+<body>
+    <nav><app-navbar></app-navbar></nav>
+    <main>
+        <div class="profile-container">
+            <!-- Profile Picture -->
+            <div class="profile-picture">
+                <img [src]="previewImage || student.profilePictureFilePath || '../../../assets/images/default-profile/image.png'"
+                    alt="Profile Picture" width="150" />
+                <span *ngIf="!student.profilePictureFilePath">No Profile Picture</span>
+            </div>
+
+            <h2>{{ student.userName }}</h2>
+            <p>Email: {{ student.userEmail }}</p>
+            <p>Phone: {{ student.phoneNumber }}</p>
+            <p>Profile Completeness: {{ student.profileCompleteness | number: '1.0-2' }}%</p>
+
+            <h3>Secondary Education</h3>
+            <p>School Name: {{ student.secondarySchoolName }}</p>
+            <p>Board Name: {{ student.secondaryBoardName }}</p>
+            <p>Passing Year: {{ student.secondaryPassingYear }}</p>
+            <p>Percentage: {{ student.secondaryPassingPercentage }}%</p>
+
+            <h3>Higher Secondary Education</h3>
+            <p>School Name: {{ student.higherSecondarySchoolName }}</p>
+            <p>Board Name: {{ student.higherSecondaryBoardName }}</p>
+            <p>Passing Year: {{ student.higherSecondaryPassingYear }}</p>
+            <p>Percentage: {{ student.higherSecondaryPassingPercentage }}%</p>
+            <p>Stream: {{ student.higherSecondaryStream }}</p>
+
+            <h3>Diploma Education</h3>
+            <p>College Name: {{ student.diplomaCollegeName }}</p>
+            <p>Course Name: {{ student.diplomaCourseName }}</p>
+            <p>Start Year: {{ student.diplomaStartYear }}</p>
+            <p>Passing Year: {{ student.diplomaPassingYear }}</p>
+            <p>Percentage: {{ student.diplomaPassingPercentage }}%</p>
+
+            <h3>Bachelor's Education</h3>
+            <p>College Name: {{ student.bachelorsCollegeName }}</p>
+            <p>Course Name: {{ student.bachelorsCourseName }}</p>
+            <p>Start Year: {{ student.bachelorsStartYear }}</p>
+            <p>Passing Year: {{ student.bachelorsPassingYear }}</p>
+            <p>Percentage: {{ student.bachelorsPassingPercentage }}%</p>
+
+            <h3>Master's Education</h3>
+            <p>College Name: {{ student.mastersCollegeName }}</p>
+            <p>Course Name: {{ student.mastersCourseName }}</p>
+            <p>Start Year: {{ student.mastersStartYear }}</p>
+            <p>Passing Year: {{ student.mastersPassingYear }}</p>
+            <p>Percentage: {{ student.mastersPassingPercentage }}%</p>
+
+            <h3>Other Information</h3>
+            <p>Skills: {{ student.skills?.join(', ') }}</p>
+
+            <h3>Resume</h3>
+            <button class="download-btn" *ngIf="student.resumeFilePath && student.resumeFilePath.trim() !== ''"
+                (click)="downloadResume()">
+                Download Resume
+            </button>
+            <span *ngIf="!student.resumeFilePath">No Resume Uploaded</span>
+        </div>
+
+    </main>
+</body>

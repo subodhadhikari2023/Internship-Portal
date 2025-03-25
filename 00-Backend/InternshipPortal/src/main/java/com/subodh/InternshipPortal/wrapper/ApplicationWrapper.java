@@ -28,6 +28,7 @@ public class ApplicationWrapper {
         this.contactPerson = application.getInternship().getCreatedBy().getUserEmail();
         this.applicationId = application.getApplicationId();
         this.applicantName = application.getStudent().getUserName();
+        this.studentId = application.getStudent().getUserId();
         this.applicantEmail = application.getStudent().getUserEmail();
         this.studentSkills = application.getStudent().getStudentSkills();
     }
@@ -40,6 +41,7 @@ public class ApplicationWrapper {
         this.applicantName = application.getStudent().getUserName();
         this.applicantEmail = application.getStudent().getUserEmail();
         this.studentSkills = application.getStudent().getStudentSkills();
+        this.studentId=application.getStudent().getUserId();
     }
 
     private String internshipTitle;
@@ -48,6 +50,7 @@ public class ApplicationWrapper {
     private Long applicationId;
     private String applicantName;
     private String applicantEmail;
+    private Long studentId;
     Set<String> studentSkills;
 
 }
