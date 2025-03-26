@@ -156,14 +156,25 @@ public class InstructorController {
 
     @GetMapping("get-student-details")
     public ResponseEntity<?> getStudentDetails(@RequestParam Long studentId) {
-        return new ResponseEntity<>(new Response<>(userService.findStudentByStudentId(studentId)),HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(userService.findStudentByStudentId(studentId)), HttpStatus.OK);
 
+    }
+
+    @GetMapping("get-profile-details")
+    public ResponseEntity<?> getProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(userService.getProfileDetails(userDetails)), HttpStatus.OK);
+    }
+
+    @PostMapping("update-profile-picture")
+    public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+        log.info("update-profile-picture");
+        return new ResponseEntity<>(userService.updateProfilePictureOfInstructors(userDetails, file), HttpStatus.CREATED);
     }
 
     @PostMapping("generate-certificate")
     public ResponseEntity<?> generateCertificate(@RequestParam Long internshipStudentId) {
         CertificateWrapper certificate = certificateService.createCertificate(internshipStudentId);
-        return new ResponseEntity<>(new Response<>(certificate),HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(certificate), HttpStatus.OK);
     }
 
 

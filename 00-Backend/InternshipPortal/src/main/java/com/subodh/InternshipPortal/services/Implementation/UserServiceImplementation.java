@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.services.Implementation;
 
 
 import com.subodh.InternshipPortal.modals.*;
+import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 
@@ -113,7 +114,7 @@ public class UserServiceImplementation implements UserService {
     @Transactional
     public StudentWrapper updateStudent(UserDetails userDetails, StudentWrapper userWrapper) {
         Users user = userRepository.findByUserEmail(userDetails.getUsername());
-log.info("Updating user {}", user.getUserEmail());
+        log.info("Updating user {}", user.getUserEmail());
         // Ensure education object exists
         user.setEducation(Optional.ofNullable(user.getEducation()).orElse(new Education()));
 
@@ -256,6 +257,18 @@ log.info("Updating user {}", user.getUserEmail());
         return new StudentWrapper(user);
     }
 
+    @Override
+    public InstructorWrapper getProfileDetails(UserDetails userDetails) {
+        Users user = userRepository.findByUserEmail(userDetails.getUsername());
+        return new InstructorWrapper(user);
+    }
+
+    @Override
+    public InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file) {
+
+        return new InstructorWrapper(updateProfileImage(userDetails, file));
+    }
+
 
     private void getOldFileAndDelete(String oldFilePath) {
         if (oldFilePath != null && !oldFilePath.isEmpty()) {
@@ -279,8 +292,29 @@ log.info("Updating user {}", user.getUserEmail());
         String originalFilename = file.getOriginalFilename();
         assert originalFilename != null;
         String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-        String newFilename = user.getUserEmail()+"_resume" + fileExtension;
+        String newFilename = user.getUserEmail() + "_resume" + fileExtension;
         return new File(resumeFolder, newFilename);
+    }
+
+    private Users updateProfileImage(UserDetails userDetails, MultipartFile file) {
+        Users user = findByUserEmail(userDetails.getUsername());
+        String oldFilePath = user.getProfilePhotoFilePath(); // Get the old file path
+
+        // Check if the old file exists and delete it
+        getOldFileAndDelete(oldFilePath);
+
+        File profilePicFile = getFile(file, user);
+
+        try {
+            file.transferTo(profilePicFile);
+        } catch (IOException e) {
+            throw new RuntimeException("Error saving profile picture: " + e.getMessage(), e);
+        }
+
+        // Convert absolute path to a relative path for database storage
+        String relativePath = profilePicFile.getAbsolutePath().replaceFirst("^" + rootFolderPath, "/storage/Internship-Portal");
+        user.setProfilePhotoFilePath(relativePath);
+        return userRepository.save(user);
     }
 
 }

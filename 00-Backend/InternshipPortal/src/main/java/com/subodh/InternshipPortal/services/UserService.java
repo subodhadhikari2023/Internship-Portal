@@ -1,4 +1,5 @@
 package com.subodh.InternshipPortal.services;
+import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
@@ -68,4 +69,9 @@ public interface UserService {
     Resource downloadResume(String filePath) throws IOException;
 
     StudentWrapper findStudentByStudentId(Long studentId);
+
+    InstructorWrapper getProfileDetails(UserDetails userDetails);
+
+    InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file);
+
 }
