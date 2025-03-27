@@ -186,7 +186,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     @Transactional
     public StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file) {
-        return new StudentWrapper(updateProfileImage(userDetails,file));
+        return new StudentWrapper(updateProfileImage(userDetails, file));
 
     }
 
@@ -248,6 +248,16 @@ public class UserServiceImplementation implements UserService {
     @Override
     public InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file) {
         return new InstructorWrapper(updateProfileImage(userDetails, file));
+    }
+
+    @Override
+    public InstructorWrapper updateInstructor(UserDetails userDetails, InstructorWrapper instructorWrapper) {
+        log.info("Update Instructor");
+        Users instructor = userRepository.findByUserEmail(userDetails.getUsername());
+        updateIfNotNull(instructorWrapper.getUserName(), instructor::setUserName);
+        updateIfNotNull(instructorWrapper.getPhoneNumber(), instructor::setUserPhoneNumber);
+        return new InstructorWrapper(userRepository.save(instructor));
+
     }
 
 

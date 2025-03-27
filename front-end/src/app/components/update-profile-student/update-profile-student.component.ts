@@ -23,7 +23,7 @@ export class UpdateProfileStudentComponent implements OnInit {
   fetchStudentDetails() {
     this.userService.fetchStudentDetails().subscribe({
       next: (res) => {
-        console.log(res);
+        // console.log(res);
         this.studentData = res;
         this.loadProfilePicture(this.studentData.profilePictureFilePath)
       },

@@ -5,7 +5,6 @@ import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,9 +28,6 @@ public class InstructorController {
     private final ProjectService projectService;
     private final CertificateService certificateService;
     private final UserService userService;
-
-    @Value("${file.storage.path}")
-    private String rootFolderPath;
 
     /**
      * Instantiates a new Instructor controller.
@@ -164,6 +160,10 @@ public class InstructorController {
     public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
         log.info("update-profile-picture");
         return new ResponseEntity<>(userService.updateProfilePictureOfInstructors(userDetails, file), HttpStatus.CREATED);
+    }
+    @PutMapping("update-profile")
+    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails,@RequestBody InstructorWrapper instructorWrapper){
+        return new ResponseEntity<>(new Response<>(userService.updateInstructor(userDetails,instructorWrapper)),HttpStatus.OK);
     }
 
     @PostMapping("generate-certificate")
