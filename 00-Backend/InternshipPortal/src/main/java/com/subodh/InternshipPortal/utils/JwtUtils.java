@@ -40,7 +40,7 @@ public class JwtUtils {
 //                .add(claims)
                 .subject(authentication.getName())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 60))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
 //                .and()
                 .signWith(getKey())
                 .compact();
