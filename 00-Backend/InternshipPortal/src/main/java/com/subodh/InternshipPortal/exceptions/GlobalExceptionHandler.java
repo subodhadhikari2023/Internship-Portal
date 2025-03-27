@@ -41,5 +41,10 @@ public class GlobalExceptionHandler {
         ExceptionResponse errorResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(InvalidJWTTokenException.class)
+    public ResponseEntity<?> invalidJwtToken(InvalidJWTTokenException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
 }

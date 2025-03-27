@@ -5,19 +5,13 @@ import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.util.List;
 
 /**
@@ -34,9 +28,6 @@ public class InstructorController {
     private final ProjectService projectService;
     private final CertificateService certificateService;
     private final UserService userService;
-
-    @Value("${file.storage.path}")
-    private String rootFolderPath;
 
     /**
      * Instantiates a new Instructor controller.
@@ -156,14 +147,29 @@ public class InstructorController {
 
     @GetMapping("get-student-details")
     public ResponseEntity<?> getStudentDetails(@RequestParam Long studentId) {
-        return new ResponseEntity<>(new Response<>(userService.findStudentByStudentId(studentId)),HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(userService.findStudentByStudentId(studentId)), HttpStatus.OK);
 
+    }
+
+    @GetMapping("get-profile-details")
+    public ResponseEntity<?> getProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(userService.getProfileDetails(userDetails)), HttpStatus.OK);
+    }
+
+    @PostMapping("update-profile-picture")
+    public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+        log.info("update-profile-picture");
+        return new ResponseEntity<>(userService.updateProfilePictureOfInstructors(userDetails, file), HttpStatus.CREATED);
+    }
+    @PutMapping("update-profile")
+    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails,@RequestBody InstructorWrapper instructorWrapper){
+        return new ResponseEntity<>(new Response<>(userService.updateInstructor(userDetails,instructorWrapper)),HttpStatus.OK);
     }
 
     @PostMapping("generate-certificate")
     public ResponseEntity<?> generateCertificate(@RequestParam Long internshipStudentId) {
         CertificateWrapper certificate = certificateService.createCertificate(internshipStudentId);
-        return new ResponseEntity<>(new Response<>(certificate),HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(certificate), HttpStatus.OK);
     }
 
 

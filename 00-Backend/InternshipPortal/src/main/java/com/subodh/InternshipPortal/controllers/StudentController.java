@@ -146,11 +146,13 @@ public class StudentController {
 
     @PutMapping("update-profile")
     public ResponseEntity<?> updateProfile(@RequestBody StudentWrapper userWrapper, @AuthenticationPrincipal UserDetails userDetails) {
+        log.info("Updating user {}", userWrapper);
         return new ResponseEntity<>(new Response<>(userService.updateStudent(userDetails, userWrapper)), HttpStatus.OK);
     }
 
     @PostMapping("update-profile-picture")
     public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+
         log.info("update-profile-picture");
         return new ResponseEntity<>(userService.updateProfilePicture(userDetails,file),HttpStatus.CREATED);
     }

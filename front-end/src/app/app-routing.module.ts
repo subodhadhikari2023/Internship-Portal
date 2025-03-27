@@ -20,6 +20,7 @@ import { ProjectDetailsComponent } from './components/project-details/project-de
 import { ViewProjectDetailsStudentComponent } from './components/view-project-details-student/view-project-details-student.component';
 import { UpdateProfileStudentComponent } from './components/update-profile-student/update-profile-student.component';
 import { ViewStudentDetailsForInstructorComponent } from './components/view-student-details-for-instructor/view-student-details-for-instructor.component';
+import { UpdateProfileInstructorComponent } from './components/update-profile-instructor/update-profile-instructor.component';
 
 
 
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'instructor', component: InstructorsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/create-internship', component: CreateInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' }, pathMatch: 'full' },
   { path: 'instructor/view-internships', component: ViewInternshipsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+  { path: 'instructor/update-profile', component: UpdateProfileInstructorComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/manage-internships', component: EditInternshipComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/applications', component: ViewApplicationsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/create-project', component: CreateProjectComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },

@@ -2,12 +2,12 @@
     <nav><app-student-nav></app-student-nav></nav>
     <main>
         <div class="update-profile-container">
-            <h2>Update Your Profile</h2>
+            <h2 style="text-align: center;">Update Profile</h2>
 
             <!-- Profile Picture -->
             <div class="profile-picture-container">
                 <!-- Profile Picture Preview -->
-                <img [src]="previewImage || studentData.profilePictureFilePath || '../../../assets/images/default-profile/image.png'"
+                <img [src]="previewImage || profilePictureSafeUrl || '../../../assets/images/default-profile/image.png'"
                     alt="Profile Picture" width="150" />
 
                 <!-- Hidden File Input -->
@@ -122,9 +122,22 @@
                 </div>
 
                 <div>
+                    <label for="diplomaStartYear">Start Year</label>
+                    <input id="diplomaStartYear" type="number" [(ngModel)]="studentData.diplomaStartYear"
+                        name="diplomaStartYear" [readonly]="!isEditing" />
+                </div>
+
+                <div>
                     <label for="diplomaPassingYear">Passing Year</label>
                     <input id="diplomaPassingYear" type="number" [(ngModel)]="studentData.diplomaPassingYear"
                         name="diplomaPassingYear" [readonly]="!isEditing" />
+                </div>
+
+                <div>
+                    <label for="diplomaPassingPercentage">Percentage</label>
+                    <input id="diplomaPassingPercentage" type="number"
+                        [(ngModel)]="studentData.diplomaPassingPercentage" name="diplomaPassingPercentage"
+                        [readonly]="!isEditing" />
                 </div>
 
                 <!-- Bachelor's Education -->
@@ -162,11 +175,23 @@
                 </div>
 
                 <div>
+                    <label for="mastersStartYear">Start Year</label>
+                    <input id="mastersStartYear" type="number" [(ngModel)]="studentData.mastersStartYear"
+                        name="mastersStartYear" [readonly]="!isEditing" />
+                </div>
+
+                <div>
                     <label for="mastersPassingYear">Passing Year</label>
                     <input id="mastersPassingYear" type="number" [(ngModel)]="studentData.mastersPassingYear"
                         name="mastersPassingYear" [readonly]="!isEditing" />
                 </div>
 
+                <div>
+                    <label for="mastersPassingPercentage">Percentage</label>
+                    <input id="mastersPassingPercentage" type="number"
+                        [(ngModel)]="studentData.mastersPassingPercentage" name="mastersPassingPercentage"
+                        [readonly]="!isEditing" />
+                </div>
                 <!-- Skills -->
                 <h3>Skills</h3>
                 <div>
@@ -175,20 +200,22 @@
                         [readonly]="!isEditing" />
                 </div>
 
-                <!-- Resume Upload -->
-                <!-- <h3>Resume</h3>
+                
+                <h3>Upload Resume</h3>
                 <div>
                     <label for="resume">Resume</label>
 
-                    <input id="resume" type="text" [(ngModel)]="studentData.resumeFilePath" name="resume" disabled />
-                    <button class="upload-btn" *ngIf="isEditing">Upload Resume</button>
-                </div> -->
-                <h3>Resume</h3>
+                    <input id="resume" type="file" accept=".pdf" name="resume" (change)="onResumeSelected($event)"
+                        [disabled]="!isEditing" />
+
+                    <button class="upload-btn" *ngIf="isEditing && selectedResume" (click)="uploadResume()">Upload
+                        Resume</button>
+                </div>
+
+                <h3>Download Uploaded Resume</h3>
                 <div>
-                    <!-- <label for="resume">Download Resume</label> -->
-                    <!-- [href]="getResumeUrl()" -->
-                    <!-- <a *ngIf="studentData.resumeFilePath"  target="_blank">View Resume</a> -->
-                    <button class="download-btn"
+
+                    <button class=" upload-btn"
                         *ngIf="studentData.resumeFilePath && studentData.resumeFilePath.trim() !== ''"
                         (click)="downloadResume()">
                         Download Resume

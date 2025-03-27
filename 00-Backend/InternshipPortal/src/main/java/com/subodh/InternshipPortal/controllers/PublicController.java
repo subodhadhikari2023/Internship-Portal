@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.controllers;
 
 
+import com.subodh.InternshipPortal.exceptions.InvalidJWTTokenException;
 import com.subodh.InternshipPortal.wrapper.LoginResponse;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.wrapper.RegistrationResponse;
@@ -9,7 +10,6 @@ import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -25,7 +25,6 @@ import java.nio.file.Files;
  */
 @CrossOrigin
 @RestController
-@Slf4j
 @RequestMapping("api/v1/public")
 public class PublicController {
 
@@ -63,7 +62,6 @@ public class PublicController {
     @Transactional
     public ResponseEntity<?> registerV2(@RequestBody RegistrationEntity user) {
         if (!userService.emailExists(user.getUserEmail())) {
-            log.info("{}", registrationService.findAllByEmail(user.getUserEmail()));
             if (registrationService.findByEmail(user.getUserEmail()) != null) {
                 registrationService.delete(user);
             }
@@ -71,7 +69,6 @@ public class PublicController {
             OneTimePassword otp = otpService.generateOTP(user);
             mailService.sendMail(user.getUserEmail(), "OTP for Internship Portal", "Dear " + user.getUserEmail() + ",\n your OTP for Internship Portal-Government of Sikkim is \n" + otp.getOneTimePassword());
             String response = "OTP sent: " + otp.getOneTimePassword();
-            log.info(response);
             return new ResponseEntity<>(new RegistrationResponse(response), HttpStatus.OK);
         }
         return new ResponseEntity<>(new RegistrationResponse("User already exists"), HttpStatus.CONFLICT);
@@ -110,10 +107,9 @@ public class PublicController {
         String verify = null;
         try {
             verify = userService.verifyUserCredentials(user);
-            log.info("Login endpoint hit for the user {}", user);
             return new ResponseEntity<>(new LoginResponse(verify), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+           throw new InvalidJWTTokenException("Invalid JWT token");
         }
 
 
@@ -149,14 +145,12 @@ public class PublicController {
      */
     @GetMapping("admin")
     public ResponseEntity<?> admin() {
-        log.info("Endpoint for admin");
         return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the admin"), HttpStatus.OK);
     }
 
 
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(String filePath) {
-        log.info("Downloading file {}", filePath);
         try {
             String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
