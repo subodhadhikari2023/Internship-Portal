@@ -186,26 +186,8 @@ public class UserServiceImplementation implements UserService {
     @Override
     @Transactional
     public StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file) {
-        Users user = findByUserEmail(userDetails.getUsername());
-        String oldFilePath = user.getProfilePhotoFilePath(); // Get the old file path
+        return new StudentWrapper(updateProfileImage(userDetails,file));
 
-        // Check if the old file exists and delete it
-        getOldFileAndDelete(oldFilePath);
-
-        File profilePicFile = getFile(file, user);
-
-        try {
-            file.transferTo(profilePicFile);
-        } catch (IOException e) {
-            throw new RuntimeException("Error saving profile picture: " + e.getMessage(), e);
-        }
-
-        // Convert absolute path to a relative path for database storage
-        String relativePath = profilePicFile.getAbsolutePath().replaceFirst("^" + rootFolderPath, "/storage/Internship-Portal");
-        user.setProfilePhotoFilePath(relativePath);
-        userRepository.save(user);
-
-        return new StudentWrapper(user);
     }
 
 
@@ -265,7 +247,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file) {
-
         return new InstructorWrapper(updateProfileImage(userDetails, file));
     }
 
