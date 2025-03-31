@@ -80,7 +80,7 @@ export class InternshipService {
     return this.http.post<any>(`${BASE_URL}instructors/change-project-status/${updateData.projectId}`, updateData.status);
   }
 
-  downloadFile(filePath: string): Observable<Blob> {  
+  downloadFile(filePath: string): Observable<Blob> {
     if (!filePath) {
       console.error("No file path provided!");
       throw new Error("File path is required");
@@ -88,12 +88,12 @@ export class InternshipService {
 
     const apiUrl = `${BASE_URL}public/download?filePath=${encodeURIComponent(filePath)}`;
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem("token")}` 
+      Authorization: `Bearer ${localStorage.getItem("token")}`
     });
 
     return this.http.get(apiUrl, { headers, responseType: 'blob' });
   }
-  downloadFileForStudents(filePath: string): Observable<Blob> {  
+  downloadFileForStudents(filePath: string): Observable<Blob> {
     if (!filePath) {
       console.error("No file path provided!");
       throw new Error("File path is required");
@@ -101,9 +101,17 @@ export class InternshipService {
 
     const apiUrl = `${BASE_URL}public/download?filePath=${encodeURIComponent(filePath)}`;
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem("token")}` 
+      Authorization: `Bearer ${localStorage.getItem("token")}`
     });
 
     return this.http.get(apiUrl, { headers, responseType: 'blob' });
   }
+
+  claimCertificate(internshipStudentId: any) {
+    return this.http.post<any>(`${BASE_URL}students/generate-certificate?internshipStudentId=${internshipStudentId}`, {}).pipe(
+      map(res => res.entity)
+    )
+
+  }
+
 }

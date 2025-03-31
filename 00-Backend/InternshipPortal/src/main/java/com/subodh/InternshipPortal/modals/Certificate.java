@@ -16,7 +16,7 @@ public class Certificate {
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String certificateId;
 
-
+    @Column(nullable = false, columnDefinition = "LONGTEXT")
     private String certificateFilePath;
 
     private LocalDate issueDate;

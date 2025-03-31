@@ -94,33 +94,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
 
-        String descriptionFilePath = project.getProjectDescriptionFilePath();
-        if (descriptionFilePath == null || descriptionFilePath.isBlank()) {
-            throw new RuntimeException("Project description file path not found.");
-        }
-
-
-        String projectFolderPath = descriptionFilePath
-                .replace("/storage/Internship-Portal", "") // Convert to relative path
-                .replace("/description/description.pdf", ""); // Properly trim description file
-
-        File projectFolder = new File(rootFolderPath, projectFolderPath);
-
-        if (!projectFolder.exists()) {
-            throw new RuntimeException("Project folder does not exist.");
-        }
-
-        File projectFilesFolder = new File(projectFolder, "project-files");
-        if (!projectFilesFolder.exists()) {
-            projectFilesFolder.mkdirs();
-        }
-
-        String originalFilename = file.getOriginalFilename();
-        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-
-        String newFilename = "projectData" + fileExtension;
-
-        File submissionFile = new File(projectFilesFolder, newFilename);
+        File submissionFile = getSubmissionFile(file, project);
 
         try {
             file.transferTo(submissionFile);
@@ -143,6 +117,40 @@ public class ProjectServiceImpl implements ProjectService {
                 project.getProjectDescriptionFilePath(),
                 project.getProjectFile(),
                 String.valueOf(project.getStatus()));
+    }
+
+    private File getSubmissionFile(MultipartFile file, Project project) {
+        String descriptionFilePath = project.getProjectDescriptionFilePath();
+        if (descriptionFilePath == null || descriptionFilePath.isBlank()) {
+            throw new RuntimeException("Project description file path not found.");
+        }
+
+
+        String projectFolderPath = descriptionFilePath
+                .replace("/storage/Internship-Portal", "") // Convert to relative path
+                .replace("/description/description.pdf", ""); // Properly trim description file
+
+        return getSubmissionFile(file, projectFolderPath);
+    }
+
+    private File getSubmissionFile(MultipartFile file, String projectFolderPath) {
+        File projectFolder = new File(rootFolderPath, projectFolderPath);
+
+        if (!projectFolder.exists()) {
+            throw new RuntimeException("Project folder does not exist.");
+        }
+
+        File projectFilesFolder = new File(projectFolder, "project-files");
+        if (!projectFilesFolder.exists()) {
+            projectFilesFolder.mkdirs();
+        }
+
+        String originalFilename = file.getOriginalFilename();
+        String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+        String newFilename = "projectData" + fileExtension;
+
+        return new File(projectFilesFolder, newFilename);
     }
 
     @Override

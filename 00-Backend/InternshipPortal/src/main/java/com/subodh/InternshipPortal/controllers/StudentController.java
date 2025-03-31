@@ -39,6 +39,7 @@ public class StudentController {
     private final DepartmentService departmentService;
     private final InternshipStudentsService internshipStudentsService;
     private final ProjectService projectService;
+    private final CertificateService certificateService;
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
@@ -48,13 +49,14 @@ public class StudentController {
      * @param internshipService  the internship service
      * @param applicationService the application service
      */
-    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService) {
+    public StudentController(InternshipService internshipService, ApplicationService applicationService, UserService userService, DepartmentService departmentService, InternshipStudentsService internshipStudentsService, ProjectService projectService, CertificateService certificateService) {
         this.internshipService = internshipService;
         this.applicationService = applicationService;
         this.userService = userService;
         this.departmentService = departmentService;
         this.internshipStudentsService = internshipStudentsService;
         this.projectService = projectService;
+        this.certificateService = certificateService;
     }
 
     /**
@@ -164,7 +166,11 @@ public class StudentController {
         return new ResponseEntity<>(new Response<>(userService.uploadResume(userDetails,file)),HttpStatus.CREATED);
     }
 
-
+    @PostMapping("generate-certificate")
+    public ResponseEntity<?> generateCertificate(@RequestParam Long internshipStudentId) {
+        CertificateWrapper certificate = certificateService.createCertificate(internshipStudentId);
+        return new ResponseEntity<>(new Response<>(certificate), HttpStatus.OK);
+    }
 
 
 

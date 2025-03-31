@@ -10,6 +10,7 @@ import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,6 +24,7 @@ import java.nio.file.Files;
 /**
  * The type Public controller.
  */
+@Slf4j
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/public")
@@ -109,7 +111,7 @@ public class PublicController {
             verify = userService.verifyUserCredentials(user);
             return new ResponseEntity<>(new LoginResponse(verify), HttpStatus.OK);
         } catch (Exception e) {
-           throw new InvalidJWTTokenException("Invalid JWT token");
+            throw new InvalidJWTTokenException("Invalid JWT token");
         }
 
 
@@ -151,6 +153,8 @@ public class PublicController {
 
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(String filePath) {
+        assert filePath != null;
+        log.info("Downloading file: {}", filePath);
         try {
             String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
@@ -173,6 +177,7 @@ public class PublicController {
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
                 headers.setContentDisposition(ContentDisposition.attachment().filename(file.getName()).build());
             }
+            log.info(resource.getFilename());
 
             return ResponseEntity.ok()
                     .headers(headers)

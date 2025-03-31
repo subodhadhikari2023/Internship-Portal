@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class InternshipStudentsWrapper {
+    private Long internshipStudentId;
     private String internshipName;
     private String userEmail;
     private Set<ProjectWrapper> projects;
@@ -26,12 +27,12 @@ public class InternshipStudentsWrapper {
     private LocalDate startDate;
     private LocalDate endDate;
     private String workMode;
-
+    private String certificateFilePath;
 
 
     public InternshipStudentsWrapper(InternshipStudents internshipStudents) {
         Set<Project> projectsCopy = Set.copyOf(internshipStudents.getProjects());
-
+        this.internshipStudentId = internshipStudents.getStudentInternshipId();
         this.internshipName = internshipStudents.getInternship().getInternshipName();
         this.userEmail = internshipStudents.getStudent().getUserEmail();
         this.projects = projectsCopy.stream()
@@ -54,7 +55,8 @@ public class InternshipStudentsWrapper {
         this.startDate = internshipStudents.getInternship().getStartDate();
         this.endDate = internshipStudents.getInternship().getEndDate();
         this.workMode = String.valueOf(internshipStudents.getInternship().getWorkMode());
-
+        this.certificateFilePath =
+                (internshipStudents.getCertificate() != null) ? internshipStudents.getCertificate().getCertificateFilePath() : "";
 
     }
 }
