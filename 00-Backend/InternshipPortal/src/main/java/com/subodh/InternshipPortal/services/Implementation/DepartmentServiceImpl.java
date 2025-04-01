@@ -17,7 +17,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<String> findAll() {
+    public List<String> findAllDepartments() {
         List<DepartmentDetails> departmentDetails = departmentRepository.findAll();
         return departmentDetails.stream().map(DepartmentDetails::getDepartmentName).collect(Collectors.toList());
     }

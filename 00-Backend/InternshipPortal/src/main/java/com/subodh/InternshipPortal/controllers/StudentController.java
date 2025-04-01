@@ -6,20 +6,12 @@ import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,7 +115,7 @@ public class StudentController {
 
     @GetMapping("departments")
     public ResponseEntity<?> departments() {
-        return new ResponseEntity<>(new Response<>(departmentService.findAll()), HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(departmentService.findAllDepartments()), HttpStatus.OK);
     }
 
     @GetMapping("selected-internships")

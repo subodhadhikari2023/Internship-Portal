@@ -39,7 +39,7 @@ public interface UserService {
      *
      * @return the list
      */
-    List<Users> findAllUsers();
+    List<?> findAllUsers();
 
     /**
      * Verify otp boolean.

@@ -28,8 +28,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * The type User service implementation.
@@ -91,8 +93,25 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public List<Users> findAllUsers() {
-        return userRepository.findAll();
+    public List<?> findAllUsers() {
+
+
+        return userRepository.findAll().stream()
+                .map(user -> {
+                    boolean isInstructor = user.getRoles().stream()
+                            .anyMatch(role -> role.getRoleName().equalsIgnoreCase("ROLE_INSTRUCTOR"));
+                    boolean isStudent = user.getRoles().stream()
+                            .anyMatch(role -> role.getRoleName().equalsIgnoreCase("ROLE_STUDENT"));
+
+                    if (isInstructor) {
+                        return new InstructorWrapper(user);
+                    } else if (isStudent) {
+                        return new StudentWrapper(user);
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     @Override
