@@ -3,6 +3,7 @@ package com.subodh.InternshipPortal.controllers;
 import com.subodh.InternshipPortal.services.DepartmentService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.wrapper.APIRequest;
+import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
 import com.subodh.InternshipPortal.wrapper.Response;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +51,12 @@ public class AdminController {
     @GetMapping("users")
     public ResponseEntity<?> getAllUsers() {
         return new ResponseEntity<>(new Response<>(userService.findAllUsers()), HttpStatus.OK);
+    }
+
+    @PostMapping("users")
+    public ResponseEntity<?> addUser(@RequestBody InstructorWrapper instructor) {
+        return new ResponseEntity<>(new Response<>(userService.addInstructor(instructor)),HttpStatus.CREATED);
+
     }
 }
 

@@ -75,4 +75,6 @@ public interface UserService {
     InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file);
 
     InstructorWrapper updateInstructor(UserDetails userDetails, InstructorWrapper instructorWrapper);
+
+    InstructorWrapper addInstructor(InstructorWrapper instructor);
 }

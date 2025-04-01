@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.services.Implementation;
 
 
 import com.subodh.InternshipPortal.modals.*;
+import com.subodh.InternshipPortal.repositories.DepartmentRepository;
 import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
@@ -45,6 +46,8 @@ public class UserServiceImplementation implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final RegistrationService registrationService;
+    private final UsersRepository usersRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
@@ -60,12 +63,14 @@ public class UserServiceImplementation implements UserService {
      * @param registrationService the registration service
      */
     @Autowired
-    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService) {
+    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository) {
         this.userRepository = userRepository;
         this.auth = auth;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.registrationService = registrationService;
+        this.usersRepository = usersRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     @Override
@@ -276,6 +281,24 @@ public class UserServiceImplementation implements UserService {
         updateIfNotNull(instructorWrapper.getUserName(), instructor::setUserName);
         updateIfNotNull(instructorWrapper.getPhoneNumber(), instructor::setUserPhoneNumber);
         return new InstructorWrapper(userRepository.save(instructor));
+
+    }
+
+    @Override
+    public InstructorWrapper addInstructor(InstructorWrapper instructor) {
+        try {
+            Users user = new Users();
+            user.setUserName(instructor.getUserName());
+            user.setUserEmail(instructor.getUserEmail());
+            user.setUserPhoneNumber(instructor.getPhoneNumber());
+            user.setUserPassword(passwordEncoder.encode("Test@123"));
+            user.addRole("ROLE_INSTRUCTOR");
+            DepartmentDetails department = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElseThrow(() -> new RuntimeException("Please select a valid department"));
+            user.setDepartment(department);
+            return new InstructorWrapper(usersRepository.save(user));
+        } catch (Exception e) {
+            throw new RuntimeException("Error adding Instructor: " + e.getMessage(), e);
+        }
 
     }
 
