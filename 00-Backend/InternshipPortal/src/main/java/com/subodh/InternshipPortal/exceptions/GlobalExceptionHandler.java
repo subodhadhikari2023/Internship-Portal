@@ -47,4 +47,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(DuplicateDepartmentException.class)
+    public ResponseEntity<?> duplicateDepartment(DuplicateDepartmentException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
 }

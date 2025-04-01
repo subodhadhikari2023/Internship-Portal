@@ -1,8 +1,10 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
+import com.subodh.InternshipPortal.exceptions.DuplicateDepartmentException;
 import com.subodh.InternshipPortal.modals.DepartmentDetails;
 import com.subodh.InternshipPortal.repositories.DepartmentRepository;
 import com.subodh.InternshipPortal.services.DepartmentService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,15 +26,15 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public DepartmentDetails createDepartment(String departmentName) {
+
+        DepartmentDetails departmentDetails = new DepartmentDetails();
+        departmentDetails.setDepartmentName(departmentName);
         try {
-            DepartmentDetails departmentDetails = new DepartmentDetails();
-            departmentDetails.setDepartmentName(departmentName);
             return departmentRepository.save(departmentDetails);
+        } catch (DataIntegrityViolationException e) {
+            throw new DuplicateDepartmentException("Department already exists: " + departmentName);
         } catch (Exception e) {
-            if (e.getMessage().contains("Duplicate entry")) {
-                throw new RuntimeException("Department already exists " + departmentName);
-            }
-            throw new RuntimeException("Unable to create department " + departmentName);
+            throw new RuntimeException("Unable to create department: " + departmentName, e);
         }
     }
 }
