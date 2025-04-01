@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 
+import com.subodh.InternshipPortal.exceptions.UserCreationException;
 import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.repositories.DepartmentRepository;
 import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -286,20 +288,23 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public InstructorWrapper addInstructor(InstructorWrapper instructor) {
-        try {
-            Users user = new Users();
-            user.setUserName(instructor.getUserName());
-            user.setUserEmail(instructor.getUserEmail());
-            user.setUserPhoneNumber(instructor.getPhoneNumber());
-            user.setUserPassword(passwordEncoder.encode("Test@123"));
-            user.addRole("ROLE_INSTRUCTOR");
-            DepartmentDetails department = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElseThrow(() -> new RuntimeException("Please select a valid department"));
-            user.setDepartment(department);
-            return new InstructorWrapper(usersRepository.save(user));
-        } catch (Exception e) {
-            throw new RuntimeException("Error adding Instructor: " + e.getMessage(), e);
-        }
 
+        Users user = new Users();
+        user.setUserName(instructor.getUserName());
+        user.setUserEmail(instructor.getUserEmail());
+        user.setUserPhoneNumber(instructor.getPhoneNumber());
+        user.setUserPassword(passwordEncoder.encode("Test@123"));
+        user.addRole("ROLE_INSTRUCTOR");
+        DepartmentDetails department = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElseThrow(() -> new RuntimeException("Please select a valid department"));
+        user.setDepartment(department);
+        try {
+            return new InstructorWrapper(usersRepository.save(user));
+        } catch (DataIntegrityViolationException e) {
+            throw new UserCreationException("Error adding Instructor: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to add Instructor");
+
+        }
     }
 
 

@@ -52,5 +52,10 @@ public class GlobalExceptionHandler {
         ExceptionResponse errorResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(UserCreationException.class)
+    public ResponseEntity<?> unsuccessfulUserCreation(UserCreationException ex) {
+        ExceptionResponse errorResponse = new ExceptionResponse(ex.getMessage(), HttpStatus.CONFLICT.value());
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
 
 }

@@ -31,7 +31,7 @@ public class AdminController {
         return Optional.of(departmentService.findAllDepartments())
                 .filter(departments -> !departments.isEmpty())
                 .map(departments -> new ResponseEntity<>(new Response<>(departments), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(new Response<>(Collections.emptyList()), HttpStatus.FORBIDDEN));
+                .orElseGet(() -> new ResponseEntity<>(new Response<>(Collections.emptyList()), HttpStatus.NO_CONTENT));
 
     }
 
