@@ -19,6 +19,20 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<String> findAll() {
         List<DepartmentDetails> departmentDetails = departmentRepository.findAll();
-       return departmentDetails.stream().map(DepartmentDetails::getDepartmentName).collect(Collectors.toList());
+        return departmentDetails.stream().map(DepartmentDetails::getDepartmentName).collect(Collectors.toList());
+    }
+
+    @Override
+    public DepartmentDetails createDepartment(String departmentName) {
+        try {
+            DepartmentDetails departmentDetails = new DepartmentDetails();
+            departmentDetails.setDepartmentName(departmentName);
+            return departmentRepository.save(departmentDetails);
+        } catch (Exception e) {
+            if (e.getMessage().contains("Duplicate entry")) {
+                throw new RuntimeException("Department already exists " + departmentName);
+            }
+            throw new RuntimeException("Unable to create department " + departmentName);
+        }
     }
 }
