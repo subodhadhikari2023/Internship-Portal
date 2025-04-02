@@ -44,8 +44,12 @@ public class AdminController {
     public ResponseEntity<?> getAllUsers() {
         return new ResponseEntity<>(new Response<>(userService.findAllUsers()), HttpStatus.OK);
     }
+    @GetMapping("instructors")
+    public ResponseEntity<?> getAllInstructors() {
+        return new ResponseEntity<>(new Response<>(userService.findAllInstructors()), HttpStatus.OK);
+    }
 
-    @PostMapping("users")
+    @PostMapping("instructors")
     public ResponseEntity<?> addUser(@RequestBody InstructorWrapper instructor) {
         return new ResponseEntity<>(new Response<>(userService.addInstructor(instructor)), HttpStatus.CREATED);
 

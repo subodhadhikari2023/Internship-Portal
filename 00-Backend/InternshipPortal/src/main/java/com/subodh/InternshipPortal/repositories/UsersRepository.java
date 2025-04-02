@@ -5,6 +5,8 @@ package com.subodh.InternshipPortal.repositories;
 import com.subodh.InternshipPortal.modals.Roles;
 import com.subodh.InternshipPortal.modals.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.Collection;
@@ -35,4 +37,8 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     Users findByUserId(Long userId);
 
     List<Users> findAllByRolesIn(Collection<List<Roles>> roles);
+
+    @Query("SELECT u FROM Users u JOIN u.roles r WHERE r.roleName = :roleName")
+    List<Users> findAllByRoleName(@Param("roleName") String roleName);
+
 }

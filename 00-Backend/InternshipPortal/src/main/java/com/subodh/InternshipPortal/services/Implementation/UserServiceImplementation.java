@@ -312,17 +312,20 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public StudentWrapper findAllStudents() {
-        Optional<List<Roles>> roles = Optional.ofNullable(rolesRepository.findByRoleName("ROLE_STUDENT"));
-for (Roles role:roles.get()){
-    log.info("Role: {}", role.getRoleName());
-}
-    //        List<Users> students = roles
+    public List<StudentWrapper> findAllStudents() {
 
-//                .map(r -> usersRepository.findAllByRolesIn(Collections.singletonList(r)))
-//                .orElseThrow(() -> new RuntimeException("Please select a valid role"));
-//        return students.stream().map(StudentWrapper::new).findFirst().orElseThrow(() -> new RuntimeException("No students found"));
-        return null;
+        List<Users> students = usersRepository.findAllByRoleName("ROLE_STUDENT");
+
+        return students.stream()
+                .map(StudentWrapper::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InstructorWrapper> findAllInstructors() {
+        List<Users> instructors = usersRepository.findAllByRoleName("ROLE_INSTRUCTOR");
+
+        return instructors.stream().map(InstructorWrapper::new).collect(Collectors.toList());
     }
 
 
