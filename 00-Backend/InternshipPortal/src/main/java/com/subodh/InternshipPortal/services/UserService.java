@@ -77,4 +77,6 @@ public interface UserService {
     InstructorWrapper updateInstructor(UserDetails userDetails, InstructorWrapper instructorWrapper);
 
     InstructorWrapper addInstructor(InstructorWrapper instructor);
+
+    StudentWrapper findAllStudents();
 }

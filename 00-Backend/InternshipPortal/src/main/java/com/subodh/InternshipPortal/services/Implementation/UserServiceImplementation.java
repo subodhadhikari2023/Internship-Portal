@@ -4,6 +4,7 @@ package com.subodh.InternshipPortal.services.Implementation;
 import com.subodh.InternshipPortal.exceptions.UserCreationException;
 import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.repositories.DepartmentRepository;
+import com.subodh.InternshipPortal.repositories.RolesRepository;
 import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
@@ -30,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -50,6 +52,7 @@ public class UserServiceImplementation implements UserService {
     private final RegistrationService registrationService;
     private final UsersRepository usersRepository;
     private final DepartmentRepository departmentRepository;
+    private final RolesRepository rolesRepository;
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
@@ -65,7 +68,7 @@ public class UserServiceImplementation implements UserService {
      * @param registrationService the registration service
      */
     @Autowired
-    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository) {
+    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
         this.auth = auth;
         this.passwordEncoder = passwordEncoder;
@@ -73,6 +76,7 @@ public class UserServiceImplementation implements UserService {
         this.registrationService = registrationService;
         this.usersRepository = usersRepository;
         this.departmentRepository = departmentRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     @Override
@@ -305,6 +309,20 @@ public class UserServiceImplementation implements UserService {
             throw new RuntimeException("Unable to add Instructor");
 
         }
+    }
+
+    @Override
+    public StudentWrapper findAllStudents() {
+        Optional<List<Roles>> roles = Optional.ofNullable(rolesRepository.findByRoleName("ROLE_STUDENT"));
+for (Roles role:roles.get()){
+    log.info("Role: {}", role.getRoleName());
+}
+    //        List<Users> students = roles
+
+//                .map(r -> usersRepository.findAllByRolesIn(Collections.singletonList(r)))
+//                .orElseThrow(() -> new RuntimeException("Please select a valid role"));
+//        return students.stream().map(StudentWrapper::new).findFirst().orElseThrow(() -> new RuntimeException("No students found"));
+        return null;
     }
 
 

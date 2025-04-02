@@ -50,6 +50,10 @@ public class AdminController {
         return new ResponseEntity<>(new Response<>(userService.addInstructor(instructor)), HttpStatus.CREATED);
 
     }
+    @GetMapping("students")
+    public ResponseEntity<?> getAllStudents() {
+        return new ResponseEntity<>(new Response<>(userService.findAllStudents()),HttpStatus.OK);
+    }
 }
 
 

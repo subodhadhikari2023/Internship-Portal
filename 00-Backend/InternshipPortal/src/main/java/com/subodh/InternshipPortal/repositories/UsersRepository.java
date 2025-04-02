@@ -2,9 +2,13 @@ package com.subodh.InternshipPortal.repositories;
 
 
 
+import com.subodh.InternshipPortal.modals.Roles;
 import com.subodh.InternshipPortal.modals.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.Collection;
+import java.util.List;
 
 
 /**
@@ -29,4 +33,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
      * @return the users
      */
     Users findByUserId(Long userId);
+
+    List<Users> findAllByRolesIn(Collection<List<Roles>> roles);
 }
