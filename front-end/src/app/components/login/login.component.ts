@@ -49,6 +49,8 @@ export class LoginComponent {
           this.router.navigate(['/student'])
         } else if (role == 'ROLE_INSTRUCTOR') {
           this.router.navigate(['/instructor'])
+        }else if (role == 'ROLE_ADMIN') {
+          this.router.navigate(['/admin'])
         }
       },
       error: (err) => {

@@ -44,6 +44,7 @@ public class AdminController {
     public ResponseEntity<?> getAllUsers() {
         return new ResponseEntity<>(new Response<>(userService.findAllUsers()), HttpStatus.OK);
     }
+
     @GetMapping("instructors")
     public ResponseEntity<?> getAllInstructors() {
         return new ResponseEntity<>(new Response<>(userService.findAllInstructors()), HttpStatus.OK);
@@ -54,9 +55,10 @@ public class AdminController {
         return new ResponseEntity<>(new Response<>(userService.addInstructor(instructor)), HttpStatus.CREATED);
 
     }
+
     @GetMapping("students")
     public ResponseEntity<?> getAllStudents() {
-        return new ResponseEntity<>(new Response<>(userService.findAllStudents()),HttpStatus.OK);
+        return new ResponseEntity<>(new Response<>(userService.findAllStudents()), HttpStatus.OK);
     }
 }
 

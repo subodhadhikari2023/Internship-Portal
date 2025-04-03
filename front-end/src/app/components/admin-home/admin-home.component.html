@@ -1,0 +1,102 @@
+<body>
+  <nav><app-navbar></app-navbar></nav>
+  <main>
+    <div class="admin-dashboard">
+      <h2>Admin Dashboard</h2>
+
+      <!-- Departments Section -->
+      <section class="card">
+        <h3>Departments</h3>
+        <div class="input-container">
+          <input [(ngModel)]="newDepartment" #deptInput="ngModel" required placeholder="New Department Name" />
+          <button (click)="addDepartment()" [disabled]="!deptInput.valid">Add</button>
+          <p *ngIf="deptInput.invalid && deptInput.touched" class="error-msg">Department name is required.</p>
+        </div>
+        <ul>
+          <li *ngFor="let dept of departments">{{ dept }}</li>
+        </ul>
+      </section>
+
+      <!-- Users Section -->
+      <section class="card">
+        <h3>Users</h3>
+        <ul>
+          <li *ngFor="let user of users">{{ user.userName }} ({{ user.userEmail }})</li>
+        </ul>
+      </section>
+
+      <!-- Instructors Section -->
+      <section class="card">
+        <h3>Instructors</h3>
+        <ul>
+          <li *ngFor="let instructor of instructors">
+            {{ instructor.userName }} - {{ instructor.department }}
+          </li>
+        </ul>
+
+        <!-- Add Instructor Form -->
+        <form #instructorForm="ngForm">
+          <div class="input-container">
+            <input 
+              [(ngModel)]="newInstructor.userEmail" 
+              name="email"
+              #emailInput="ngModel"
+              required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+              placeholder="Email"
+            />
+            <p *ngIf="emailInput.invalid && emailInput.touched" class="error-msg">
+              Valid email is required.
+            </p>
+
+            <input 
+              [(ngModel)]="newInstructor.userName" 
+              name="name"
+              #nameInput="ngModel"
+              required 
+              placeholder="Name"
+            />
+            <p *ngIf="nameInput.invalid && nameInput.touched" class="error-msg">
+              Name is required.
+            </p>
+
+            <input 
+              [(ngModel)]="newInstructor.phoneNumber" 
+              name="phone"
+              #phoneInput="ngModel"
+              required 
+              pattern="^[0-9]{10}$"
+              placeholder="Phone (10 digits)"
+            />
+            <p *ngIf="phoneInput.invalid && phoneInput.touched" class="error-msg">
+              Phone number must be exactly 10 digits.
+            </p>
+
+            <!-- Dropdown for department selection -->
+            <select [(ngModel)]="newInstructor.department" name="department" #deptSelect="ngModel" required>
+              <option value="" disabled selected>Select Department</option>
+              <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+            </select>
+            <p *ngIf="deptSelect.invalid && deptSelect.touched" class="error-msg">
+              Please select a department.
+            </p>
+
+            <button (click)="addInstructor()" [disabled]="instructorForm.invalid">
+              Add Instructor
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Students Section -->
+      <section class="card">
+        <h3>Students</h3>
+        <ul>
+          <li *ngFor="let student of students">
+            {{ student.userName }} ({{ student.userEmail }})
+          </li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</body>

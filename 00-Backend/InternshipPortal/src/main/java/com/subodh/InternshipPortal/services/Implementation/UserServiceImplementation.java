@@ -12,6 +12,7 @@ import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.utils.JwtUtils;
+import com.subodh.InternshipPortal.wrapper.Response;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -326,6 +328,15 @@ public class UserServiceImplementation implements UserService {
         List<Users> instructors = usersRepository.findAllByRoleName("ROLE_INSTRUCTOR");
 
         return instructors.stream().map(InstructorWrapper::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public ResponseEntity<?> forgetPassword(String email) {
+        Users users = userRepository.findByUserEmail(email);
+        if (users == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(new Response<>(users), HttpStatus.OK);
     }
 
 
