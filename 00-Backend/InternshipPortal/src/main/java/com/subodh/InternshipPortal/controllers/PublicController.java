@@ -2,9 +2,7 @@ package com.subodh.InternshipPortal.controllers;
 
 
 import com.subodh.InternshipPortal.exceptions.InvalidJWTTokenException;
-import com.subodh.InternshipPortal.wrapper.LoginResponse;
-import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
-import com.subodh.InternshipPortal.wrapper.RegistrationResponse;
+import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
@@ -37,6 +35,7 @@ public class PublicController {
     private final RegistrationService registrationService;
     @Value("${file.storage.path}")
     private String rootFolderPath;
+
 
     /**
      * Instantiates a new Public controller.
@@ -129,28 +128,6 @@ public class PublicController {
     }
 
 
-    /**
-     * Message after jwt validation string.
-     *
-     * @return the string
-     */
-    @GetMapping("message")
-    public ResponseEntity<?> messageAfterJwtValidation() {
-        return new ResponseEntity<>(new LoginResponse("Valid request"), HttpStatus.OK);
-    }
-
-
-    /**
-     * Admin string.
-     *
-     * @return the string
-     */
-    @GetMapping("admin")
-    public ResponseEntity<?> admin() {
-        return new ResponseEntity<>(new LoginResponse("Bearer passed in the header for the admin"), HttpStatus.OK);
-    }
-
-
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(String filePath) {
         assert filePath != null;
@@ -179,13 +156,37 @@ public class PublicController {
             }
             log.info(resource.getFilename());
 
-            return ResponseEntity.ok()
-                    .headers(headers)
-                    .body(resource);
+            return ResponseEntity.ok().headers(headers).body(resource);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
+    @GetMapping("forget-password")
+    public ResponseEntity<?> forgetPassword(@RequestParam String email) {
+        return new ResponseEntity<>(new Response<>(userService.forgetPassword(email)), HttpStatus.OK);
+    }
+
+    @GetMapping("get-password-change-otp")
+    public ResponseEntity<?> getPasswordChangeOtp(@RequestParam String email) {
+        OneTimePassword oneTimePassword = otpService.generateOTPForPasswordReset(email);
+        log.info("OTP: {}", oneTimePassword.getOneTimePassword());
+        return new ResponseEntity<>(new Response<>(oneTimePassword), HttpStatus.OK);
+    }
+
+    @PostMapping("validate-otp")
+    public ResponseEntity<?> resetPassword(@RequestBody OneTimePassword oneTimePassword) {
+        return otpService.verifyOTP(oneTimePassword.getUserEmail(), oneTimePassword.getOneTimePassword()) ? new ResponseEntity<>(new Response<>("OTP verified successfully"), HttpStatus.OK) : new ResponseEntity<>(new Response<>("Invalid OTP"), HttpStatus.UNAUTHORIZED);
+    }
+
+    @PostMapping("reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String email, @RequestParam String password) {
+        UserWrapper userWrapper = userService.resetPasswordUserFoundByEmail(email, password);
+        if (userWrapper != null) {
+            return new ResponseEntity<>(new Response<>(userWrapper), HttpStatus.ACCEPTED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
+    }
 
 }

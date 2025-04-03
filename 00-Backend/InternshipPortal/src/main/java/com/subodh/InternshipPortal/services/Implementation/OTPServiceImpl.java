@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.modals.OneTimePassword;
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.OTPRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
@@ -37,13 +38,17 @@ public class OTPServiceImpl implements OTPService {
     @Override
     @Transactional
     public OneTimePassword generateOTP(RegistrationEntity user) {
-        otpRepository.deleteAllByUserEmail(user.getUserEmail());
+        return getOneTimePassword(user.getUserEmail());
+    }
+
+    private OneTimePassword getOneTimePassword(String userEmail) {
+        otpRepository.deleteAllByUserEmail(userEmail);
         String otp = String.format("%06d", random.nextInt(1000000)); // Ensures 6-digit OTP
 
         OneTimePassword oneTimePassword = new OneTimePassword();
         oneTimePassword.setOneTimePassword(otp);
         oneTimePassword.setExpiryTime(LocalDateTime.now().plusMinutes(5));
-        oneTimePassword.setUserEmail(user.getUserEmail());
+        oneTimePassword.setUserEmail(userEmail);
 
         otpRepository.save(oneTimePassword);
         return oneTimePassword;
@@ -72,5 +77,12 @@ public class OTPServiceImpl implements OTPService {
         }
 
         return isValid;
+    }
+
+    @Override
+    @Transactional
+    public OneTimePassword generateOTPForPasswordReset(String email) {
+        Users user = usersRepository.findByUserEmail(email);
+        return getOneTimePassword(user.getUserEmail());
     }
 }

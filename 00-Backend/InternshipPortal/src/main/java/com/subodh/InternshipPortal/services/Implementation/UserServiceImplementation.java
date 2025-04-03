@@ -5,15 +5,12 @@ import com.subodh.InternshipPortal.exceptions.UserCreationException;
 import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.repositories.DepartmentRepository;
 import com.subodh.InternshipPortal.repositories.RolesRepository;
-import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
-import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
+import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.utils.JwtUtils;
-import com.subodh.InternshipPortal.wrapper.Response;
-import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -331,12 +328,17 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public ResponseEntity<?> forgetPassword(String email) {
+    public UserWrapper forgetPassword(String email) {
         Users users = userRepository.findByUserEmail(email);
-        if (users == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(new Response<>(users), HttpStatus.OK);
+        return users == null ? null : new UserWrapper(users);
+    }
+
+    @Override
+    public UserWrapper resetPasswordUserFoundByEmail(String email, String password) {
+        Users users = userRepository.findByUserEmail(email);
+        log.info("Reset Password User Found: {}",users.getUserEmail());
+        users.setUserPassword(passwordEncoder.encode(password));
+        return new UserWrapper(userRepository.save(users));
     }
 
 

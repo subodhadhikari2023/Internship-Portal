@@ -4,8 +4,8 @@ import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 
+import com.subodh.InternshipPortal.wrapper.UserWrapper;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -83,5 +83,7 @@ public interface UserService {
 
     List<InstructorWrapper> findAllInstructors();
 
-    ResponseEntity<?> forgetPassword(String email);
+    UserWrapper forgetPassword(String email);
+
+    UserWrapper resetPasswordUserFoundByEmail(String email, String password);
 }
