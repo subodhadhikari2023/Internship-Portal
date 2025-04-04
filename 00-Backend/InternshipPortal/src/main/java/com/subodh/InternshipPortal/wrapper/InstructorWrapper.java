@@ -16,6 +16,7 @@ public class InstructorWrapper {
         this.profilePictureFilePath = user.getProfilePhotoFilePath();
         this.department = user.getDepartment().getDepartmentName();
         this.profileCompleteness = calculateProfileCompleteness();
+        this.role=user.getRoles().get(0).getRoleName();
 
 
     }
@@ -26,6 +27,7 @@ public class InstructorWrapper {
     private String department;
     private String profilePictureFilePath;
     private double profileCompleteness;
+    private String role;
 
 
     public double calculateProfileCompleteness() {

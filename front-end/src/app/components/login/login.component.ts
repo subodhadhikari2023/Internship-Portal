@@ -40,7 +40,7 @@ export class LoginComponent {
       next: (response: LoginResponse) => {
         console.log("Received Response:", response); // Log the full response
         const token = response.token; // Extract the token from the response
-        console.log("Received Token:", token);
+        // console.log("Received Token:", token);
         // Store the token in localStorage or sessionStorage
         localStorage.setItem('token', token);
         // Example of storing token
@@ -49,10 +49,12 @@ export class LoginComponent {
           this.router.navigate(['/student'])
         } else if (role == 'ROLE_INSTRUCTOR') {
           this.router.navigate(['/instructor'])
+        }else if (role == 'ROLE_ADMIN') {
+          this.router.navigate(['/admin'])
         }
       },
       error: (err) => {
-        if (err.status == 401) {
+        if (err.status == 401||409) {
           this.errorMessage = "Invalid Credentials. Please try again!";
         }
         console.error("Error message received", err);

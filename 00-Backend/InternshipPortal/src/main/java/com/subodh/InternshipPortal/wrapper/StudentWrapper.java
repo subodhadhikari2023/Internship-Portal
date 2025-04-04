@@ -56,12 +56,15 @@ public class StudentWrapper {
     private Set<String> skills;
     private String profilePictureFilePath;
     private String resumeFilePath;
+    private String role;
 
     // Constructor to fetch user data
     public StudentWrapper(Users user) {
         this.userEmail = user.getUserEmail();
         this.userName = user.getUserName();
         this.phoneNumber = user.getUserPhoneNumber();
+        this.role=user.getRoles().get(0).getRoleName();
+
 
         // Handling Education Fields
         if (user.getEducation() != null) {

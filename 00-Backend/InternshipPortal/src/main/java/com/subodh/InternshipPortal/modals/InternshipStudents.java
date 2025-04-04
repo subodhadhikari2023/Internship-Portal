@@ -39,10 +39,11 @@ public class InternshipStudents {
             inverseJoinColumns = @JoinColumn(name = "project_id")
     )
     private Set<Project> projects;
-
+    @OneToOne(mappedBy = "internshipStudents")
+    private Certificate certificate;
 
     public void addProject(Project project) {
-        if(projects==null){
+        if (projects == null) {
             projects = new HashSet<>();
             projects.add(project);
         }

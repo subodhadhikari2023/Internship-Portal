@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommonController {
 
 
-    public CommonController() {
-    }
+
 
 
 }

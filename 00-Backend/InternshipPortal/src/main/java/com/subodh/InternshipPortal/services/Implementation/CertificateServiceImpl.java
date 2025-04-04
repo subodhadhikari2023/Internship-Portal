@@ -4,6 +4,7 @@ package com.subodh.InternshipPortal.services.Implementation;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import com.subodh.InternshipPortal.exceptions.DuplicateCertificateClaimException;
 import com.subodh.InternshipPortal.modals.Certificate;
 import com.subodh.InternshipPortal.modals.InternshipStudents;
@@ -67,11 +68,15 @@ public class CertificateServiceImpl implements CertificateService {
             throw new DuplicateCertificateClaimException("Certificate already claimed for this internship.");
         }
 
+        assert internshipStudents != null;
+        if (internshipStudents.getStatus()!= StudentInternshipStatus.COMPLETED){
+            throw new DuplicateCertificateClaimException("Internship hasn't been completed yet.");
+        }
+
         Certificate certificate = new Certificate();
         certificate.setCertificateFilePath("Certificate of Completion");
         certificate.setIssueDate(LocalDate.now());
         certificate.setInternshipStudents(internshipStudents);
-        assert internshipStudents != null;
         certificate.setStudent(internshipStudents.getStudent());
 
         try {
@@ -109,11 +114,11 @@ public class CertificateServiceImpl implements CertificateService {
 
             // Generate the PDF certificate
             createPDFCertificate(certificateWrapper, outputPath);
+            String relativePath = outputPath.replaceFirst("^" + rootFolderPath, "/storage/Internship-Portal");
+            certificate.setCertificateFilePath(relativePath);
 
-            certificate.setCertificateFilePath(outputPath);
-            certificateRepository.save(certificate); // Save updated certificate file path
 
-            return certificateWrapper;
+            return new CertificateWrapper(certificateRepository.save(certificate),organizationLogoPath,officialSealPath,instructorSignaturePath,directorSignaturePath,urlPrefix);
         }
         return null;
     }

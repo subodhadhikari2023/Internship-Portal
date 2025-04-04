@@ -24,6 +24,10 @@
                                 </a>
                             </ng-container>
                         </ng-container>
+                        <button *ngIf="internship.certificateFilePath " class="btn btn-success"
+                            (click)="downloadCertificate(internship.certificateFilePath)">
+                            Download Certificate
+                        </button>
                         <ng-template #noProject>
                             No projects assigned
                         </ng-template>

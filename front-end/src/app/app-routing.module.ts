@@ -21,6 +21,8 @@ import { ViewProjectDetailsStudentComponent } from './components/view-project-de
 import { UpdateProfileStudentComponent } from './components/update-profile-student/update-profile-student.component';
 import { ViewStudentDetailsForInstructorComponent } from './components/view-student-details-for-instructor/view-student-details-for-instructor.component';
 import { UpdateProfileInstructorComponent } from './components/update-profile-instructor/update-profile-instructor.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 
 
 
@@ -29,6 +31,7 @@ const routes: Routes = [
   { path: '', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'student', component: StudentsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
+  { path: 'admin', component: AdminHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'student/view-applications', component: ViewApplicationComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'student/update-profile', component: UpdateProfileStudentComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'student/view-internships', component: ViewInternshipStudentComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
@@ -46,6 +49,8 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
   { path: 'verify', component: VerifyComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
+  
 ];
 
 

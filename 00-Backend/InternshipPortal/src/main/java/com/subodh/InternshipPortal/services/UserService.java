@@ -4,6 +4,7 @@ import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 
+import com.subodh.InternshipPortal.wrapper.UserWrapper;
 import org.springframework.core.io.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
@@ -39,7 +40,7 @@ public interface UserService {
      *
      * @return the list
      */
-    List<Users> findAllUsers();
+    List<?> findAllUsers();
 
     /**
      * Verify otp boolean.
@@ -75,4 +76,14 @@ public interface UserService {
     InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file);
 
     InstructorWrapper updateInstructor(UserDetails userDetails, InstructorWrapper instructorWrapper);
+
+    InstructorWrapper addInstructor(InstructorWrapper instructor);
+
+    List<StudentWrapper> findAllStudents();
+
+    List<InstructorWrapper> findAllInstructors();
+
+    UserWrapper forgetPassword(String email);
+
+    UserWrapper resetPasswordUserFoundByEmail(String email, String password);
 }

@@ -30,6 +30,8 @@ import { ViewProjectDetailsStudentComponent } from './components/view-project-de
 import { UpdateProfileStudentComponent } from './components/update-profile-student/update-profile-student.component';
 import { ViewStudentDetailsForInstructorComponent } from './components/view-student-details-for-instructor/view-student-details-for-instructor.component';
 import { UpdateProfileInstructorComponent } from './components/update-profile-instructor/update-profile-instructor.component';
+import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 
 
 
@@ -60,7 +62,10 @@ import { UpdateProfileInstructorComponent } from './components/update-profile-in
     ViewProjectDetailsStudentComponent,
     UpdateProfileStudentComponent,
     ViewStudentDetailsForInstructorComponent,
-    UpdateProfileInstructorComponent
+    UpdateProfileInstructorComponent,
+    AdminHomeComponent,
+    ForgetPasswordComponent,
+    
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,8 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.modals.OneTimePassword;
+import com.subodh.InternshipPortal.modals.Users;
+import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.OTPRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
@@ -21,6 +23,7 @@ public class OTPServiceImpl implements OTPService {
     private final OTPRepository otpRepository;
     private final UsersRepository usersRepository;
     private final Random random = new Random();
+    private final MailService mailService;
 
     /**
      * Instantiates a new Otp service.
@@ -29,21 +32,26 @@ public class OTPServiceImpl implements OTPService {
      * @param usersRepository the users repository
      */
     @Autowired
-    public OTPServiceImpl(OTPRepository otpRepository, UsersRepository usersRepository) {
+    public OTPServiceImpl(OTPRepository otpRepository, UsersRepository usersRepository, MailService mailService) {
         this.otpRepository = otpRepository;
         this.usersRepository = usersRepository;
+        this.mailService = mailService;
     }
 
     @Override
     @Transactional
     public OneTimePassword generateOTP(RegistrationEntity user) {
-        otpRepository.deleteAllByUserEmail(user.getUserEmail());
+        return getOneTimePassword(user.getUserEmail());
+    }
+
+    private OneTimePassword getOneTimePassword(String userEmail) {
+        otpRepository.deleteAllByUserEmail(userEmail);
         String otp = String.format("%06d", random.nextInt(1000000)); // Ensures 6-digit OTP
 
         OneTimePassword oneTimePassword = new OneTimePassword();
         oneTimePassword.setOneTimePassword(otp);
         oneTimePassword.setExpiryTime(LocalDateTime.now().plusMinutes(5));
-        oneTimePassword.setUserEmail(user.getUserEmail());
+        oneTimePassword.setUserEmail(userEmail);
 
         otpRepository.save(oneTimePassword);
         return oneTimePassword;
@@ -72,5 +80,14 @@ public class OTPServiceImpl implements OTPService {
         }
 
         return isValid;
+    }
+
+    @Override
+    @Transactional
+    public OneTimePassword generateOTPForPasswordReset(String email) {
+        Users user = usersRepository.findByUserEmail(email);
+        OneTimePassword oneTimePassword = getOneTimePassword(user.getUserEmail());
+        mailService.sendPasswordResetMail(user.getUserEmail(), oneTimePassword.getOneTimePassword());
+        return oneTimePassword;
     }
 }

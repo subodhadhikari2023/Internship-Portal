@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Digits;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +37,13 @@ public class Users {
     @Digits(integer = 15, fraction = 0, message = "Phone number must be a valid number with at most 15 digits")
     private Long userPhoneNumber;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+        @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Roles> roles;
+//    @ManyToOne
+//    @JsonManagedReference
+//    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+//    Roles role;
 
 
     @ElementCollection

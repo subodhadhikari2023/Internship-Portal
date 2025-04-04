@@ -1,15 +1,16 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 
+import com.subodh.InternshipPortal.exceptions.UserCreationException;
 import com.subodh.InternshipPortal.modals.*;
-import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
-import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
+import com.subodh.InternshipPortal.repositories.DepartmentRepository;
+import com.subodh.InternshipPortal.repositories.RolesRepository;
+import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
 import com.subodh.InternshipPortal.utils.JwtUtils;
-import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -28,8 +32,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * The type User service implementation.
@@ -43,6 +49,9 @@ public class UserServiceImplementation implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
     private final RegistrationService registrationService;
+    private final UsersRepository usersRepository;
+    private final DepartmentRepository departmentRepository;
+    private final RolesRepository rolesRepository;
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
@@ -58,12 +67,15 @@ public class UserServiceImplementation implements UserService {
      * @param registrationService the registration service
      */
     @Autowired
-    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService) {
+    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
         this.auth = auth;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
         this.registrationService = registrationService;
+        this.usersRepository = usersRepository;
+        this.departmentRepository = departmentRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     @Override
@@ -91,8 +103,25 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public List<Users> findAllUsers() {
-        return userRepository.findAll();
+    public List<?> findAllUsers() {
+
+
+        return userRepository.findAll().stream()
+                .map(user -> {
+                    boolean isInstructor = user.getRoles().stream()
+                            .anyMatch(role -> role.getRoleName().equalsIgnoreCase("ROLE_INSTRUCTOR"));
+                    boolean isStudent = user.getRoles().stream()
+                            .anyMatch(role -> role.getRoleName().equalsIgnoreCase("ROLE_STUDENT"));
+
+                    if (isInstructor) {
+                        return new InstructorWrapper(user);
+                    } else if (isStudent) {
+                        return new StudentWrapper(user);
+                    }
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -258,6 +287,58 @@ public class UserServiceImplementation implements UserService {
         updateIfNotNull(instructorWrapper.getPhoneNumber(), instructor::setUserPhoneNumber);
         return new InstructorWrapper(userRepository.save(instructor));
 
+    }
+
+    @Override
+    public InstructorWrapper addInstructor(InstructorWrapper instructor) {
+
+        Users user = new Users();
+        user.setUserName(instructor.getUserName());
+        user.setUserEmail(instructor.getUserEmail());
+        user.setUserPhoneNumber(instructor.getPhoneNumber());
+        user.setUserPassword(passwordEncoder.encode("Test@123"));
+        user.addRole("ROLE_INSTRUCTOR");
+        DepartmentDetails department = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElseThrow(() -> new RuntimeException("Please select a valid department"));
+        user.setDepartment(department);
+        try {
+            return new InstructorWrapper(usersRepository.save(user));
+        } catch (DataIntegrityViolationException e) {
+            throw new UserCreationException("Error adding Instructor: " + e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Unable to add Instructor");
+
+        }
+    }
+
+    @Override
+    public List<StudentWrapper> findAllStudents() {
+
+        List<Users> students = usersRepository.findAllByRoleName("ROLE_STUDENT");
+
+        return students.stream()
+                .map(StudentWrapper::new)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<InstructorWrapper> findAllInstructors() {
+        List<Users> instructors = usersRepository.findAllByRoleName("ROLE_INSTRUCTOR");
+
+        return instructors.stream().map(InstructorWrapper::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public UserWrapper forgetPassword(String email) {
+        Users users = userRepository.findByUserEmail(email);
+        return users == null ? null : new UserWrapper(users);
+    }
+
+    @Override
+    public UserWrapper resetPasswordUserFoundByEmail(String email, String password) {
+        Users users = userRepository.findByUserEmail(email);
+        log.info("Reset Password User Found: {}",users.getUserEmail());
+        users.setUserPassword(passwordEncoder.encode(password));
+        return new UserWrapper(userRepository.save(users));
     }
 
 

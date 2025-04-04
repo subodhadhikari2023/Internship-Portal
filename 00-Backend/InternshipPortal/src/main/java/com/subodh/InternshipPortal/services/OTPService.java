@@ -23,4 +23,6 @@ public interface OTPService {
      * @return the boolean
      */
     boolean verifyOTP(String userEmail,String otp);
+
+    OneTimePassword generateOTPForPasswordReset(String email);
 }
