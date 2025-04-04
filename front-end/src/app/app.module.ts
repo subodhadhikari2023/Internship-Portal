@@ -64,7 +64,8 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
     ViewStudentDetailsForInstructorComponent,
     UpdateProfileInstructorComponent,
     AdminHomeComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    
   ],
   imports: [
     BrowserModule,

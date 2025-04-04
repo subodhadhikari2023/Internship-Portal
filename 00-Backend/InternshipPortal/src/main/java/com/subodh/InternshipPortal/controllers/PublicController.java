@@ -170,12 +170,12 @@ public class PublicController {
     @GetMapping("get-password-change-otp")
     public ResponseEntity<?> getPasswordChangeOtp(@RequestParam String email) {
         OneTimePassword oneTimePassword = otpService.generateOTPForPasswordReset(email);
-        log.info("OTP: {}", oneTimePassword.getOneTimePassword());
         return new ResponseEntity<>(new Response<>(oneTimePassword), HttpStatus.OK);
     }
 
     @PostMapping("validate-otp")
     public ResponseEntity<?> resetPassword(@RequestBody OneTimePassword oneTimePassword) {
+        log.info("OTP: {}", oneTimePassword.getOneTimePassword());
         return otpService.verifyOTP(oneTimePassword.getUserEmail(), oneTimePassword.getOneTimePassword()) ? new ResponseEntity<>(new Response<>("OTP verified successfully"), HttpStatus.OK) : new ResponseEntity<>(new Response<>("Invalid OTP"), HttpStatus.UNAUTHORIZED);
     }
 

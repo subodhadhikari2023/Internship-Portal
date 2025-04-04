@@ -22,6 +22,7 @@ import { UpdateProfileStudentComponent } from './components/update-profile-stude
 import { ViewStudentDetailsForInstructorComponent } from './components/view-student-details-for-instructor/view-student-details-for-instructor.component';
 import { UpdateProfileInstructorComponent } from './components/update-profile-instructor/update-profile-instructor.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 
 
 
@@ -48,6 +49,7 @@ const routes: Routes = [
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
   { path: 'verify', component: VerifyComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
   
 ];
 

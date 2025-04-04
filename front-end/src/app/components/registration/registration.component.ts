@@ -23,7 +23,8 @@ export class RegistrationComponent implements OnInit {
         Validators.required,
         Validators.minLength(8),
         Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/)
-      ]],
+      ]]
+      ,
       userName: ['', Validators.required],
       userPhoneNumber: ['', [
         Validators.required,
@@ -48,7 +49,7 @@ export class RegistrationComponent implements OnInit {
       next: () => {
         this.registrationService.setRegisteredEmail(this.registrationRequest.userEmail);
         this.router.navigate(['/verifyOTP']);
-        
+
       },
       error: (err) => {
         console.error("Error message received", err);
