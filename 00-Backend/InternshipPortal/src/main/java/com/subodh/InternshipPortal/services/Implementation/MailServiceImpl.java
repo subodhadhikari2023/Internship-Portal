@@ -45,13 +45,28 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendApplicationStatusMail(String toEmail, String studentName, String internshipTitle, StudentApplicationStatus status,String sender, String department) {
+    public void sendApplicationStatusMail(String toEmail, String studentName, String internshipTitle, StudentApplicationStatus status, String sender, String department) {
         String subject = "Update on Your Internship Application";
-        String body = prepareMailBody(studentName, internshipTitle, status,sender,department);
+        String body = prepareMailBody(studentName, internshipTitle, status, sender, department);
         sendMail(toEmail, subject, body);
     }
 
-    private String prepareMailBody(String studentName, String internshipTitle, StudentApplicationStatus status,String sender, String department) {
+    @Override
+    public void sendPasswordResetMail(String userEmail, String oneTimePassword) {
+        String subject = "Password Reset";
+        String body = preparePasswordResetMail(userEmail, oneTimePassword);
+        sendMail(userEmail, subject, body);
+    }
+
+
+    private String preparePasswordResetMail(String userEmail, String oneTimePassword) {
+        return String.format(
+                "Dear %s,\n\nWe hope this email finds you well.\n\nThe following is the One Time Password to change the password for the account associated with %s! \n\n %s \n\n Regards, \nGovernment of Sikkim\n",
+                userEmail, userEmail,oneTimePassword
+        );
+    }
+
+    private String prepareMailBody(String studentName, String internshipTitle, StudentApplicationStatus status, String sender, String department) {
         String message = switch (status) {
             case ACCEPTED ->
                     "Congratulations! You have been selected for the internship. Further details will be shared soon.";
@@ -62,7 +77,7 @@ public class MailServiceImpl implements MailService {
 
         return String.format(
                 "Dear %s,\n\nWe hope this email finds you well. We would like to inform you about the status of your application for the internship: \n%s.\n\nStatus: %s\n\n%s\n\nBest regards,\n%s\nGovernment of Sikkim\n Department of %s",
-                studentName, internshipTitle, status, message,sender,department
+                studentName, internshipTitle, status, message, sender, department
         );
     }
 }

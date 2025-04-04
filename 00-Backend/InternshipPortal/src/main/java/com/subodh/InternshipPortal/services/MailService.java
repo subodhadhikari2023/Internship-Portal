@@ -18,4 +18,5 @@ public interface MailService {
     void sendApplicationStatusMail(String toEmail, String studentName, String internshipTitle, StudentApplicationStatus status,String sender, String department);
 
 
+    void sendPasswordResetMail(String userEmail, String oneTimePassword);
 }

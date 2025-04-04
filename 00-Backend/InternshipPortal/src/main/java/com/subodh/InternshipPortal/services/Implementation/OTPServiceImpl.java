@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.modals.OneTimePassword;
 import com.subodh.InternshipPortal.modals.Users;
+import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
 import com.subodh.InternshipPortal.repositories.OTPRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
@@ -22,6 +23,7 @@ public class OTPServiceImpl implements OTPService {
     private final OTPRepository otpRepository;
     private final UsersRepository usersRepository;
     private final Random random = new Random();
+    private final MailService mailService;
 
     /**
      * Instantiates a new Otp service.
@@ -30,9 +32,10 @@ public class OTPServiceImpl implements OTPService {
      * @param usersRepository the users repository
      */
     @Autowired
-    public OTPServiceImpl(OTPRepository otpRepository, UsersRepository usersRepository) {
+    public OTPServiceImpl(OTPRepository otpRepository, UsersRepository usersRepository, MailService mailService) {
         this.otpRepository = otpRepository;
         this.usersRepository = usersRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -83,6 +86,8 @@ public class OTPServiceImpl implements OTPService {
     @Transactional
     public OneTimePassword generateOTPForPasswordReset(String email) {
         Users user = usersRepository.findByUserEmail(email);
-        return getOneTimePassword(user.getUserEmail());
+        OneTimePassword oneTimePassword = getOneTimePassword(user.getUserEmail());
+        mailService.sendPasswordResetMail(user.getUserEmail(), oneTimePassword.getOneTimePassword());
+        return oneTimePassword;
     }
 }
