@@ -8,6 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Year;
 import java.util.Set;
 
+/**
+ * The type Student wrapper.
+ */
 @Slf4j
 @Data
 @NoArgsConstructor
@@ -58,7 +61,12 @@ public class StudentWrapper {
     private String resumeFilePath;
     private String role;
 
-    // Constructor to fetch user data
+    /**
+     * Instantiates a new Student wrapper.
+     *
+     * @param user the user
+     */
+// Constructor to fetch user data
     public StudentWrapper(Users user) {
         this.userEmail = user.getUserEmail();
         this.userName = user.getUserName();
@@ -123,7 +131,12 @@ public class StudentWrapper {
         profileCompleteness = this.calculateProfileCompleteness();
     }
 
-    // Calculate profile completeness based on filled fields
+    /**
+     * Calculate profile completeness double.
+     *
+     * @return the double
+     */
+// Calculate profile completeness based on filled fields
     public double calculateProfileCompleteness() {
         int totalFields = 0;
         int filledFields = 0;

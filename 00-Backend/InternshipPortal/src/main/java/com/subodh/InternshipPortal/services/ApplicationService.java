@@ -38,9 +38,28 @@ public interface ApplicationService {
      */
     ApplicationWrapper reviewApplications(StudentApplicationStatus status, Long applicationId);
 
+    /**
+     * Exists by internship and student optional.
+     *
+     * @param internshipId the internship id
+     * @param userId       the user id
+     * @return the optional
+     */
     Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long userId);
 
+    /**
+     * Findby application by application id application wrapper.
+     *
+     * @param applicationId the application id
+     * @return the application wrapper
+     */
     ApplicationWrapper findbyApplicationByApplicationId(Long applicationId);
 
+    /**
+     * Find all applications by user email list.
+     *
+     * @param username the username
+     * @return the list
+     */
     List<ApplicationWrapper> findAllApplicationsByUserEmail(String username);
 }

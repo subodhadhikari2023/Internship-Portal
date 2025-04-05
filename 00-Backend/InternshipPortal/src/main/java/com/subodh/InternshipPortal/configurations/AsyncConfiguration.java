@@ -29,6 +29,11 @@ public class AsyncConfiguration {
         return executor;
     }
 
+    /**
+     * Project executor executor.
+     *
+     * @return the executor
+     */
     @Bean(name = "projectExecutor")
     public Executor projectExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();

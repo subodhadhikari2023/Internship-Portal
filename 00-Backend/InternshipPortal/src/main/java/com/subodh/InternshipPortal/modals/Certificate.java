@@ -7,6 +7,9 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
 
+/**
+ * The type Certificate.
+ */
 @Entity
 @Data
 public class Certificate {

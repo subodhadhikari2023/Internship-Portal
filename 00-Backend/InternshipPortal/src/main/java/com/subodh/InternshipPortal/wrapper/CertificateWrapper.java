@@ -7,6 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * The type Certificate wrapper.
+ */
 @Slf4j
 @Data
 public class CertificateWrapper {
@@ -29,6 +32,16 @@ public class CertificateWrapper {
 
     private String directorSignaturePath;
 
+    /**
+     * Instantiates a new Certificate wrapper.
+     *
+     * @param certificate             the certificate
+     * @param organizationLogoPath    the organization logo path
+     * @param officialSealPath        the official seal path
+     * @param instructorSignaturePath the instructor signature path
+     * @param directorSignaturePath   the director signature path
+     * @param urlPrefix               the url prefix
+     */
     public CertificateWrapper(
             Certificate certificate,
             String organizationLogoPath,
@@ -55,14 +68,29 @@ public class CertificateWrapper {
 
     }
 
+    /**
+     * Gets start date.
+     *
+     * @return the start date
+     */
     public String getStartDate() {
         return formatDate(startDate);
     }
 
+    /**
+     * Gets completion date.
+     *
+     * @return the completion date
+     */
     public String getCompletionDate() {
         return formatDate(completionDate);
     }
 
+    /**
+     * Gets issued date.
+     *
+     * @return the issued date
+     */
     public String getIssuedDate() {
         return formatDate(issuedDate);
     }

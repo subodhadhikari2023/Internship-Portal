@@ -60,11 +60,14 @@ public class UserServiceImplementation implements UserService {
     /**
      * Instantiates a new User service implementation.
      *
-     * @param userRepository      the user repository
-     * @param auth                the auth
-     * @param passwordEncoder     the password encoder
-     * @param jwtUtils            the jwt utils
-     * @param registrationService the registration service
+     * @param userRepository       the user repository
+     * @param auth                 the auth
+     * @param passwordEncoder      the password encoder
+     * @param jwtUtils             the jwt utils
+     * @param registrationService  the registration service
+     * @param usersRepository      the users repository
+     * @param departmentRepository the department repository
+     * @param rolesRepository      the roles repository
      */
     @Autowired
     public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository, RolesRepository rolesRepository) {

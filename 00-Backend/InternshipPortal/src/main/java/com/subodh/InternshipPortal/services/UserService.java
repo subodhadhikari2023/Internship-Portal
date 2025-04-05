@@ -59,31 +59,120 @@ public interface UserService {
      */
     boolean emailExists(String userEmail);
 
+    /**
+     * Find by user email users.
+     *
+     * @param username the username
+     * @return the users
+     */
     Users findByUserEmail(String username);
 
+    /**
+     * Update student student wrapper.
+     *
+     * @param userDetails the user details
+     * @param userWrapper the user wrapper
+     * @return the student wrapper
+     */
     StudentWrapper updateStudent(UserDetails userDetails, StudentWrapper userWrapper);
 
+    /**
+     * Update profile picture student wrapper.
+     *
+     * @param userDetails the user details
+     * @param file        the file
+     * @return the student wrapper
+     */
     StudentWrapper updateProfilePicture(UserDetails userDetails, MultipartFile file);
 
+    /**
+     * Upload resume student wrapper.
+     *
+     * @param userDetails the user details
+     * @param file        the file
+     * @return the student wrapper
+     */
     StudentWrapper uploadResume(UserDetails userDetails, MultipartFile file);
 
+    /**
+     * Download resume resource.
+     *
+     * @param filePath the file path
+     * @return the resource
+     * @throws IOException the io exception
+     */
     Resource downloadResume(String filePath) throws IOException;
 
+    /**
+     * Find student by student id student wrapper.
+     *
+     * @param studentId the student id
+     * @return the student wrapper
+     */
     StudentWrapper findStudentByStudentId(Long studentId);
 
+    /**
+     * Gets profile details.
+     *
+     * @param userDetails the user details
+     * @return the profile details
+     */
     InstructorWrapper getProfileDetails(UserDetails userDetails);
 
+    /**
+     * Update profile picture of instructors instructor wrapper.
+     *
+     * @param userDetails the user details
+     * @param file        the file
+     * @return the instructor wrapper
+     */
     InstructorWrapper updateProfilePictureOfInstructors(UserDetails userDetails, MultipartFile file);
 
+    /**
+     * Update instructor instructor wrapper.
+     *
+     * @param userDetails       the user details
+     * @param instructorWrapper the instructor wrapper
+     * @return the instructor wrapper
+     */
     InstructorWrapper updateInstructor(UserDetails userDetails, InstructorWrapper instructorWrapper);
 
+    /**
+     * Add instructor instructor wrapper.
+     *
+     * @param instructor the instructor
+     * @return the instructor wrapper
+     */
     InstructorWrapper addInstructor(InstructorWrapper instructor);
 
+    /**
+     * Find all students list.
+     *
+     * @return the list
+     */
     List<StudentWrapper> findAllStudents();
 
+    /**
+     * Find all instructors list.
+     *
+     * @return the list
+     */
     List<InstructorWrapper> findAllInstructors();
 
+    /**
+     * Forget password user wrapper.
+     *
+     * @param email the email
+     * @return the user wrapper
+     */
     UserWrapper forgetPassword(String email);
 
+    /**
+     * Reset password user found by email user wrapper.
+     *
+     * @param email    the email
+     * @param password the password
+     * @return the user wrapper
+     */
     UserWrapper resetPasswordUserFoundByEmail(String email, String password);
 }

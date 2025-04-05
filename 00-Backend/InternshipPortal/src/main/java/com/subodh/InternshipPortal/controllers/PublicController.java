@@ -128,6 +128,12 @@ public class PublicController {
     }
 
 
+    /**
+     * Download file response entity.
+     *
+     * @param filePath the file path
+     * @return the response entity
+     */
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(String filePath) {
         assert filePath != null;
@@ -162,23 +168,48 @@ public class PublicController {
         }
     }
 
+    /**
+     * Forget password response entity.
+     *
+     * @param email the email
+     * @return the response entity
+     */
     @GetMapping("forget-password")
     public ResponseEntity<?> forgetPassword(@RequestParam String email) {
         return new ResponseEntity<>(new Response<>(userService.forgetPassword(email)), HttpStatus.OK);
     }
 
+    /**
+     * Gets password change otp.
+     *
+     * @param email the email
+     * @return the password change otp
+     */
     @GetMapping("get-password-change-otp")
     public ResponseEntity<?> getPasswordChangeOtp(@RequestParam String email) {
         OneTimePassword oneTimePassword = otpService.generateOTPForPasswordReset(email);
         return new ResponseEntity<>(new Response<>(oneTimePassword), HttpStatus.OK);
     }
 
+    /**
+     * Reset password response entity.
+     *
+     * @param oneTimePassword the one time password
+     * @return the response entity
+     */
     @PostMapping("validate-otp")
     public ResponseEntity<?> resetPassword(@RequestBody OneTimePassword oneTimePassword) {
         log.info("OTP: {}", oneTimePassword.getOneTimePassword());
         return otpService.verifyOTP(oneTimePassword.getUserEmail(), oneTimePassword.getOneTimePassword()) ? new ResponseEntity<>(new Response<>("OTP verified successfully"), HttpStatus.OK) : new ResponseEntity<>(new Response<>("Invalid OTP"), HttpStatus.UNAUTHORIZED);
     }
 
+    /**
+     * Reset password response entity.
+     *
+     * @param email    the email
+     * @param password the password
+     * @return the response entity
+     */
     @PostMapping("reset-password")
     public ResponseEntity<?> resetPassword(@RequestParam String email, @RequestParam String password) {
         UserWrapper userWrapper = userService.resetPasswordUserFoundByEmail(email, password);

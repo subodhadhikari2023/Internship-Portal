@@ -32,8 +32,12 @@ public class InstructorController {
     /**
      * Instantiates a new Instructor controller.
      *
-     * @param internshipService  the internship service
-     * @param applicationService the application service
+     * @param internshipService         the internship service
+     * @param applicationService        the application service
+     * @param internshipStudentsService the internship students service
+     * @param projectService            the project service
+     * @param certificateService        the certificate service
+     * @param userService               the user service
      */
     public InstructorController(InternshipService internshipService, ApplicationService applicationService, InternshipStudentsService internshipStudentsService, ProjectService projectService, CertificateService certificateService, UserService userService) {
         this.internshipService = internshipService;
@@ -71,6 +75,20 @@ public class InstructorController {
         }
 
         return new ResponseEntity<>(new Response<>(internships), HttpStatus.OK);
+    }
+
+    /**
+     * Gets number of internship created.
+     *
+     * @return the number of internship created
+     */
+    @GetMapping("number-of-internships-created")
+    public ResponseEntity<?> getNumberOfInternshipCreated() {
+        List<InternshipWrapper> internships = internshipService.findAllByInstructor();
+        if (internships.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(new Response<>(internships.size()), HttpStatus.OK);
     }
 
     /**
@@ -125,12 +143,25 @@ public class InstructorController {
 
     }
 
+    /**
+     * Gets all internship students.
+     *
+     * @param userDetails the user details
+     * @return the all internship students
+     */
     @GetMapping("internship-students")
     public ResponseEntity<?> getAllInternshipStudents(@AuthenticationPrincipal UserDetails userDetails) {
         List<InternshipStudentsWrapper> all = internshipStudentsService.findAllStudentsOfInternshipsCreated(userDetails.getUsername());
         return new ResponseEntity<>(new Response<>(all), HttpStatus.OK);
     }
 
+    /**
+     * Create project response entity.
+     *
+     * @param project the project
+     * @param file    the file
+     * @return the response entity
+     */
     @PostMapping("create-project")
     public ResponseEntity<?> createProject(@RequestPart("project") ProjectWrapper project, @RequestPart("file") MultipartFile file) {
 
@@ -138,6 +169,13 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
     }
 
+    /**
+     * Change project status response entity.
+     *
+     * @param projectId the project id
+     * @param status    the status
+     * @return the response entity
+     */
     @PostMapping("change-project-status/{projectId}")
     public ResponseEntity<?> changeProjectStatus(@PathVariable Long projectId, @RequestBody String status) {
         log.info("Change project status initiated");
@@ -145,27 +183,60 @@ public class InstructorController {
     }
 
 
+    /**
+     * Gets student details.
+     *
+     * @param studentId the student id
+     * @return the student details
+     */
     @GetMapping("get-student-details")
     public ResponseEntity<?> getStudentDetails(@RequestParam Long studentId) {
         return new ResponseEntity<>(new Response<>(userService.findStudentByStudentId(studentId)), HttpStatus.OK);
 
     }
 
+    /**
+     * Gets profile details.
+     *
+     * @param userDetails the user details
+     * @return the profile details
+     */
     @GetMapping("get-profile-details")
     public ResponseEntity<?> getProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
         return new ResponseEntity<>(new Response<>(userService.getProfileDetails(userDetails)), HttpStatus.OK);
     }
 
+    /**
+     * Update profile picture response entity.
+     *
+     * @param userDetails the user details
+     * @param file        the file
+     * @return the response entity
+     */
     @PostMapping("update-profile-picture")
     public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
         log.info("update-profile-picture");
         return new ResponseEntity<>(userService.updateProfilePictureOfInstructors(userDetails, file), HttpStatus.CREATED);
     }
+
+    /**
+     * Update profile response entity.
+     *
+     * @param userDetails       the user details
+     * @param instructorWrapper the instructor wrapper
+     * @return the response entity
+     */
     @PutMapping("update-profile")
     public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails,@RequestBody InstructorWrapper instructorWrapper){
         return new ResponseEntity<>(new Response<>(userService.updateInstructor(userDetails,instructorWrapper)),HttpStatus.OK);
     }
 
+    /**
+     * Generate certificate response entity.
+     *
+     * @param internshipStudentId the internship student id
+     * @return the response entity
+     */
     @PostMapping("generate-certificate")
     public ResponseEntity<?> generateCertificate(@RequestParam Long internshipStudentId) {
         CertificateWrapper certificate = certificateService.createCertificate(internshipStudentId);

@@ -44,10 +44,14 @@ public class ApplicationServiceImpl implements ApplicationService {
     /**
      * Instantiates a new Application service.
      *
-     * @param applicationRepository the application repository
-     * @param usersRepository       the users repository
-     * @param internshipRepository  the internship repository
-     * @param internshipService     the internship service
+     * @param applicationRepository        the application repository
+     * @param usersRepository              the users repository
+     * @param internshipRepository         the internship repository
+     * @param internshipService            the internship service
+     * @param internshipStudentRepository  the internship student repository
+     * @param mailService                  the mail service
+     * @param studentApplicationRepository the student application repository
+     * @param projectService               the project service
      */
     @Autowired
     public ApplicationServiceImpl(ApplicationRepository applicationRepository, UsersRepository usersRepository, InternshipRepository internshipRepository, InternshipService internshipService, InternshipStudentRepository internshipStudentRepository, MailService mailService, StudentApplicationRepository studentApplicationRepository, ProjectService projectService) {

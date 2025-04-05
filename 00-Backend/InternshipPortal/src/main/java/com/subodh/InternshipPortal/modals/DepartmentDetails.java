@@ -3,6 +3,9 @@ package com.subodh.InternshipPortal.modals;
 import jakarta.persistence.*;
 import lombok.Data;
 
+/**
+ * The type Department details.
+ */
 @Data
 @Entity
 public class DepartmentDetails {

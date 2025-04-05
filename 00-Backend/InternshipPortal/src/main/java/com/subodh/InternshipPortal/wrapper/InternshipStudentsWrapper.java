@@ -12,6 +12,9 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * The type Internship students wrapper.
+ */
 @Data
 @Builder
 @AllArgsConstructor
@@ -30,6 +33,11 @@ public class InternshipStudentsWrapper {
     private String certificateFilePath;
 
 
+    /**
+     * Instantiates a new Internship students wrapper.
+     *
+     * @param internshipStudents the internship students
+     */
     public InternshipStudentsWrapper(InternshipStudents internshipStudents) {
         Set<Project> projectsCopy = Set.copyOf(internshipStudents.getProjects());
         this.internshipStudentId = internshipStudents.getStudentInternshipId();

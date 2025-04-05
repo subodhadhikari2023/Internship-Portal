@@ -42,6 +42,11 @@ public class StudentApplication {
     StudentApplicationStatus status;
 
 
+    /**
+     * Instantiates a new Student application.
+     *
+     * @param application the application
+     */
     public StudentApplication(Application application) {
         this.applicationId = application.getApplicationId();
         this.setInternship(application.getInternship());

@@ -20,6 +20,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * The type Project service.
+ */
 @Slf4j
 @Service
 
@@ -29,6 +32,12 @@ public class ProjectServiceImpl implements ProjectService {
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
+    /**
+     * Instantiates a new Project service.
+     *
+     * @param internshipStudentRepository the internship student repository
+     * @param projectRepository           the project repository
+     */
     public ProjectServiceImpl(InternshipStudentRepository internshipStudentRepository, ProjectRepository projectRepository) {
         this.internshipStudentRepository = internshipStudentRepository;
         this.projectRepository = projectRepository;

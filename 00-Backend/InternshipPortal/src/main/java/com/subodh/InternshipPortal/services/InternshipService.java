@@ -11,7 +11,7 @@ import java.util.List;
 public interface InternshipService {
 
     /**
-     * Save internship internship wrapper.
+     * Save  internship wrapper.
      *
      * @param internship the internship
      * @param username   the username

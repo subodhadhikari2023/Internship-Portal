@@ -8,6 +8,9 @@ import org.hibernate.annotations.Mutability;
 
 import java.time.LocalDate;
 
+/**
+ * The type Project.
+ */
 @Data
 @Entity
 public class Project {

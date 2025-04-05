@@ -42,6 +42,11 @@ public class InternshipStudents {
     @OneToOne(mappedBy = "internshipStudents")
     private Certificate certificate;
 
+    /**
+     * Add project.
+     *
+     * @param project the project
+     */
     public void addProject(Project project) {
         if (projects == null) {
             projects = new HashSet<>();

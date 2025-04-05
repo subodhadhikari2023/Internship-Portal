@@ -51,6 +51,9 @@ public class Users {
     @Column(name = "student_skills")
     private Set<String> studentSkills;
 
+    /**
+     * The Department.
+     */
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     DepartmentDetails department;
@@ -60,8 +63,14 @@ public class Users {
     @JsonBackReference
     private Education education;
 
+    /**
+     * The Resume file path.
+     */
     String resumeFilePath;
 
+    /**
+     * The Profile photo file path.
+     */
     @Column(columnDefinition = "VARCHAR(255) DEFAULT 'profile.png'")
     String profilePhotoFilePath;
 

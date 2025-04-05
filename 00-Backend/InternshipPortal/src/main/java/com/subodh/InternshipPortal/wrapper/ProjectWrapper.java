@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+/**
+ * The type Project wrapper.
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,6 +24,18 @@ public class ProjectWrapper {
     private String projectStatus;
 //    private transient MultipartFile projectDescriptionFile;
 
+    /**
+     * Instantiates a new Project wrapper.
+     *
+     * @param projectName            the project name
+     * @param projectDescription     the project description
+     * @param studentEmail           the student email
+     * @param submissionDate         the submission date
+     * @param projectId              the project id
+     * @param projectDescriptionFile the project description file
+     * @param projectFile            the project file
+     * @param projectStatus          the project status
+     */
     public ProjectWrapper(String projectName,
                           String projectDescription,
                           String studentEmail,

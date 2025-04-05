@@ -10,6 +10,9 @@ import lombok.Data;
 
 import java.time.Year;
 
+/**
+ * The type Higher secondary education.
+ */
 @Entity
 @Data
 public class HigherSecondaryEducation {
