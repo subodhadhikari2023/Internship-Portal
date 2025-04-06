@@ -45,4 +45,6 @@ public interface InternshipService {
     List<StudentApplication>  findAllApplicationsbyCreatedBy(String username);
 
     List<InternshipWrapper> findAllByInstructor_ACTIVE();
+
+    List<InternshipWrapper> findRecentFiveInternships(String username);
 }

@@ -264,4 +264,14 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(internshipService.findAllByInstructor_ACTIVE().size()), HttpStatus.OK);
     }
 
+    @GetMapping("recent-internships")
+    public ResponseEntity<?> getAllRecentInternships(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(internshipService.findRecentFiveInternships(userDetails.getUsername())), HttpStatus.OK);
+    }
+
+    @GetMapping("recent-applications")
+    public ResponseEntity<?> getAllRecentApplications(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(applicationService.getAllRecentApplications(userDetails.getUsername())), HttpStatus.OK);
+    }
+
 }

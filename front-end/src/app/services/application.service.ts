@@ -30,4 +30,9 @@ export class ApplicationService {
       map(res=>res.entity)
     )
   }
+  getRecentApplications(){
+    return this.http.get<any>(`${BASE_URL}instructors/recent-applications`).pipe(
+      map(res=>res.entity)
+    )
+  }
 }

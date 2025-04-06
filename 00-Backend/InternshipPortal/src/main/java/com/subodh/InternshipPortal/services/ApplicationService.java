@@ -62,4 +62,6 @@ public interface ApplicationService {
      * @return the list
      */
     List<ApplicationWrapper> findAllApplicationsByUserEmail(String username);
+
+    List<ApplicationWrapper> getAllRecentApplications(String userEmail);
 }

@@ -130,5 +130,11 @@ export class InternshipService {
       map(res => res.entity)
     )
   }
+  getFiveRecentInternships(){
+    return this.http.get<any>(`${BASE_URL}instructors/recent-internships`).pipe(
+      map(res => res.entity)
+
+    )
+  }
 
 }

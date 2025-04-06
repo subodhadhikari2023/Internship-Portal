@@ -116,5 +116,12 @@ public class InternshipServiceImpl implements InternshipService {
         }
         return Collections.emptyList();
     }
+
+    @Override
+    public List<InternshipWrapper> findRecentFiveInternships(String username) {
+        Users users = usersRepository.findByUserEmail(username);
+        List<Internship> top5ByCreatedByOrderByStartDateDesc = internshipRepository.findTop5ByCreatedByOrderByStartDateDesc(users);
+        return top5ByCreatedByOrderByStartDateDesc!=null?top5ByCreatedByOrderByStartDateDesc.stream().map(InternshipWrapper::new).collect(Collectors.toList()):Collections.emptyList();
+    }
 }
 
