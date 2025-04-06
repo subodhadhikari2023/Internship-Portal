@@ -36,8 +36,20 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
      */
     Users findByUserId(Long userId);
 
+    /**
+     * Find all by roles in list.
+     *
+     * @param roles the roles
+     * @return the list
+     */
     List<Users> findAllByRolesIn(Collection<List<Roles>> roles);
 
+    /**
+     * Find all by role name list.
+     *
+     * @param roleName the role name
+     * @return the list
+     */
     @Query("SELECT u FROM Users u JOIN u.roles r WHERE r.roleName = :roleName")
     List<Users> findAllByRoleName(@Param("roleName") String roleName);
 

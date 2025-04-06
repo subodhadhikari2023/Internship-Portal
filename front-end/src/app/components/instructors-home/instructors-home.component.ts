@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { InternshipService } from 'src/app/services/internship.service';
 
 @Component({
   selector: 'app-instructors-home',
@@ -6,11 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./instructors-home.component.css']
 })
 export class InstructorsHomeComponent implements OnInit {
-
-  
-  constructor() { }
+  internships: number = 0;
+  applications: number = 0;
+  constructor(private internshipService: InternshipService) { }
 
   ngOnInit(): void {
+    this.internshipService.totalInternships().subscribe({
+      next: (res) => {
+        this.internships = res;
+      }, error: (err) => {
+        console.error(err);
+
+      }
+    });
+
+    this.internshipService.totalApplications().subscribe({
+      next: (res) => {
+        this.applications = res;
+      }, error: (err) => {
+        console.error(err);
+
+      }
+    })
+
+
   }
 
 }

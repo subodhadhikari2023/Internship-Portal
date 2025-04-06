@@ -5,10 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * The type Instructor wrapper.
+ */
 @Data
 @Slf4j
 @NoArgsConstructor
 public class InstructorWrapper {
+    /**
+     * Instantiates a new Instructor wrapper.
+     *
+     * @param user the user
+     */
     public InstructorWrapper(Users user) {
         this.userEmail = user.getUserEmail();
         this.userName = user.getUserName();
@@ -30,6 +38,11 @@ public class InstructorWrapper {
     private String role;
 
 
+    /**
+     * Calculate profile completeness double.
+     *
+     * @return the double
+     */
     public double calculateProfileCompleteness() {
         int totalFields = 0;
         int filledFields = 0;

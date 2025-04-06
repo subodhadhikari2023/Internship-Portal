@@ -30,6 +30,7 @@ public class OTPServiceImpl implements OTPService {
      *
      * @param otpRepository   the otp repository
      * @param usersRepository the users repository
+     * @param mailService     the mail service
      */
     @Autowired
     public OTPServiceImpl(OTPRepository otpRepository, UsersRepository usersRepository, MailService mailService) {

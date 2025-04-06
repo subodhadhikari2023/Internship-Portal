@@ -35,8 +35,20 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
     List<Application> findByInternshipIds(@Param("internshipIds") List<Long> internshipIds);
 
 
+    /**
+     * Find by application id application wrapper.
+     *
+     * @param applicationId the application id
+     * @return the application wrapper
+     */
     ApplicationWrapper findByApplicationId(Long applicationId);
 
+    /**
+     * Find all by student list.
+     *
+     * @param student the student
+     * @return the list
+     */
     List<ApplicationWrapper> findAllByStudent(Users student);
 
 //    @Query("SELECT a FROM Application  a WHERE a.student.userId = :userId")

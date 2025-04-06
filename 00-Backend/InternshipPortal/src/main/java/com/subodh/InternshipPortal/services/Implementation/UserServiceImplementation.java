@@ -60,11 +60,14 @@ public class UserServiceImplementation implements UserService {
     /**
      * Instantiates a new User service implementation.
      *
-     * @param userRepository      the user repository
-     * @param auth                the auth
-     * @param passwordEncoder     the password encoder
-     * @param jwtUtils            the jwt utils
-     * @param registrationService the registration service
+     * @param userRepository       the user repository
+     * @param auth                 the auth
+     * @param passwordEncoder      the password encoder
+     * @param jwtUtils             the jwt utils
+     * @param registrationService  the registration service
+     * @param usersRepository      the users repository
+     * @param departmentRepository the department repository
+     * @param rolesRepository      the roles repository
      */
     @Autowired
     public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository, RolesRepository rolesRepository) {
@@ -281,7 +284,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public InstructorWrapper updateInstructor(UserDetails userDetails, InstructorWrapper instructorWrapper) {
-        log.info("Update Instructor");
         Users instructor = userRepository.findByUserEmail(userDetails.getUsername());
         updateIfNotNull(instructorWrapper.getUserName(), instructor::setUserName);
         updateIfNotNull(instructorWrapper.getPhoneNumber(), instructor::setUserPhoneNumber);
@@ -339,6 +341,19 @@ public class UserServiceImplementation implements UserService {
         log.info("Reset Password User Found: {}",users.getUserEmail());
         users.setUserPassword(passwordEncoder.encode(password));
         return new UserWrapper(userRepository.save(users));
+    }
+
+    @Override
+    public AdminWrapper updateAdminProfilePicture(UserDetails userDetails, MultipartFile file) {
+        return new AdminWrapper(updateProfileImage(userDetails, file));
+    }
+
+    @Override
+    public AdminWrapper updateAdmin(UserDetails userDetails, AdminWrapper adminWrapper) {
+        Users instructor = userRepository.findByUserEmail(userDetails.getUsername());
+        updateIfNotNull(adminWrapper.getUserName(), instructor::setUserName);
+        updateIfNotNull(adminWrapper.getPhoneNumber(), instructor::setUserPhoneNumber);
+        return new AdminWrapper(userRepository.save(instructor));
     }
 
 

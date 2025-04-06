@@ -10,6 +10,9 @@ import lombok.Data;
 
 import java.time.Year;
 
+/**
+ * The type Masters education.
+ */
 @Entity
 @Data
 public class MastersEducation {

@@ -25,6 +25,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * The type Certificate service.
+ */
 @Slf4j
 @Service
 public class CertificateServiceImpl implements CertificateService {
@@ -54,6 +57,13 @@ public class CertificateServiceImpl implements CertificateService {
     @Value("${url.prefix}")
     private String urlPrefix;
 
+    /**
+     * Instantiates a new Certificate service.
+     *
+     * @param internshipStudentRepository the internship student repository
+     * @param certificateRepository       the certificate repository
+     * @param projectService              the project service
+     */
     public CertificateServiceImpl(InternshipStudentRepository internshipStudentRepository, CertificateRepository certificateRepository, ProjectService projectService) {
         this.internshipStudentRepository = internshipStudentRepository;
         this.certificateRepository = certificateRepository;
@@ -124,6 +134,12 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
 
+    /**
+     * Create pdf certificate.
+     *
+     * @param certificateWrapper the certificate wrapper
+     * @param outputPath         the output path
+     */
     public static void createPDFCertificate(CertificateWrapper certificateWrapper, String outputPath) {
         Document document = new Document(PageSize.A4.rotate()); // Set landscape mode
         try {

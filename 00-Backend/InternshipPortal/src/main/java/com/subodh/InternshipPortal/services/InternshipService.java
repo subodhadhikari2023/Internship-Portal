@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services;
 
 import com.subodh.InternshipPortal.modals.Internship;
+import com.subodh.InternshipPortal.modals.StudentApplication;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
 
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface InternshipService {
 
     /**
-     * Save internship internship wrapper.
+     * Save  internship wrapper.
      *
      * @param internship the internship
      * @param username   the username
@@ -40,4 +41,6 @@ public interface InternshipService {
      * @return the internship
      */
     Internship findInternshipByInternshipId(Long internshipId);
+
+    List<StudentApplication>  findAllApplicationsbyCreatedBy(String username);
 }

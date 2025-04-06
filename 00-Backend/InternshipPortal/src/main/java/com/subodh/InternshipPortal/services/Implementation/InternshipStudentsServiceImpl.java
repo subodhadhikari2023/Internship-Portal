@@ -14,12 +14,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
+/**
+ * The type Internship students service.
+ */
 @Slf4j
 @Service
 public class InternshipStudentsServiceImpl implements InternshipStudentsService {
     private final InternshipStudentRepository internshipStudentRepository;
     private final UsersRepository usersRepository;
 
+    /**
+     * Instantiates a new Internship students service.
+     *
+     * @param internshipStudentRepository the internship student repository
+     * @param usersRepository             the users repository
+     */
     public InternshipStudentsServiceImpl(InternshipStudentRepository internshipStudentRepository, UsersRepository usersRepository) {
         this.internshipStudentRepository = internshipStudentRepository;
         this.usersRepository = usersRepository;

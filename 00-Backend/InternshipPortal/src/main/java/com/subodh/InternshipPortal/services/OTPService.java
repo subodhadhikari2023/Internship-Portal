@@ -24,5 +24,11 @@ public interface OTPService {
      */
     boolean verifyOTP(String userEmail,String otp);
 
+    /**
+     * Generate otp for password reset one time password.
+     *
+     * @param email the email
+     * @return the one time password
+     */
     OneTimePassword generateOTPForPasswordReset(String email);
 }

@@ -15,8 +15,25 @@ public interface MailService {
      * @param body    the body
      */
     void sendMail(String toEmail, String subject, String body);
+
+    /**
+     * Send application status mail.
+     *
+     * @param toEmail         the to email
+     * @param studentName     the student name
+     * @param internshipTitle the internship title
+     * @param status          the status
+     * @param sender          the sender
+     * @param department      the department
+     */
     void sendApplicationStatusMail(String toEmail, String studentName, String internshipTitle, StudentApplicationStatus status,String sender, String department);
 
 
+    /**
+     * Send password reset mail.
+     *
+     * @param userEmail       the user email
+     * @param oneTimePassword the one time password
+     */
     void sendPasswordResetMail(String userEmail, String oneTimePassword);
 }

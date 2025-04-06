@@ -10,6 +10,9 @@ import lombok.Data;
 
 import java.time.Year;
 
+/**
+ * The type Diploma education.
+ */
 @Entity
 @Data
 public class DiplomaEducation {

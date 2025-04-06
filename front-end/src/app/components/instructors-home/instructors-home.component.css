@@ -3,4 +3,5 @@
 }
 body{
     z-index: 0.3;
+    position: relative;
 }

@@ -33,6 +33,11 @@ public class ApplicationWrapper {
         this.studentSkills = application.getStudent().getStudentSkills();
     }
 
+    /**
+     * Instantiates a new Application wrapper.
+     *
+     * @param application the application
+     */
     public ApplicationWrapper(StudentApplication application) {
         this.internshipTitle = application.getInternship().getInternshipName();
         this.status = application.getStatus();
@@ -51,6 +56,9 @@ public class ApplicationWrapper {
     private String applicantName;
     private String applicantEmail;
     private Long studentId;
+    /**
+     * The Student skills.
+     */
     Set<String> studentSkills;
 
 }

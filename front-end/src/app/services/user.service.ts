@@ -7,9 +7,14 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
   providedIn: 'root'
 })
 export class UserService {
+  fetchAdminDetails() {
+    return this.http.get<any>(`${BASE_URL}administrator/fetch-profile-details`).pipe(
+      map(res=>res.entity)
+    )
+  }
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }
 
-  
+
   updateInstructorProfile(instructorData: any) {
     return this.http.put<any>(`${BASE_URL}instructors/update-profile`, instructorData).pipe(
       map(res => res.entity)
@@ -65,15 +70,25 @@ export class UserService {
 
   uploadProfilePicture(file: File): Observable<any> {
     const formData = new FormData();
-    formData.append('file', file); 
-
+    formData.append('file', file);
     return this.http.post(`${BASE_URL}students/update-profile-picture`, formData);
   }
   uploadInstructorProfilePicture(selectedProfilePicture: File) {
     const formData = new FormData();
     formData.append("file", selectedProfilePicture);
     return this.http.post(`${BASE_URL}instructors/update-profile-picture`, formData)
-    
+
+  }
+  uploadAdminProfilePicture(selectedProfilePicture: File) {
+    const formData = new FormData();
+    formData.append("file", selectedProfilePicture);
+    return this.http.post(`${BASE_URL}administrator/update-profile-picture`, formData)
+
+  }
+  updateAdmin(adminData: any) {
+    return this.http.put<any>(`${BASE_URL}administrator/update-profile`, adminData).pipe(
+      map(res => res.entity)
+    )
   }
 
   downloadResume(filePath: string): Observable<Blob> {

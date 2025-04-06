@@ -1,0 +1,58 @@
+<body style="margin-top: 10vh;">
+    <nav><app-admin-navbar></app-admin-navbar></nav>
+    <main>
+        <main class="update-profile-container">
+            <h2 style="text-align: center;">Update Profile</h2>
+
+            <!-- Profile Picture Section -->
+            <div class="profile-picture-container">
+                <img [src]="previewImage || profilePictureSafeUrl || '../../../assets/images/default-profile/image.png'"
+                    alt="Profile Picture" width="150" />
+
+                <input type="file" accept="image/*" (change)="onProfilePictureSelected($event)" #fileInput hidden />
+                <button class="upload-btn" *ngIf="isEditing" (click)="fileInput.click()">
+                    Select New Picture
+                </button>
+                <button class="upload-btn" *ngIf="isEditing && selectedProfilePicture" (click)="uploadProfilePicture()">
+                    Upload Profile Picture
+                </button>
+            </div>
+
+            <!-- Profile Information -->
+            <form class="profile-form">
+                <div class="form-section">
+                    <label for="userName">Name</label>
+                    <input id="userName" type="text" [(ngModel)]="adminData.userName" name="userName"
+                        [readonly]="!isEditing" />
+                </div>
+
+                <div class="form-section">
+                    <label for="userEmail">Email</label>
+                    <input id="userEmail" type="email" [(ngModel)]="adminData.email" name="userEmail" readonly />
+                </div>
+
+                <div class="form-section">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input id="phoneNumber" type="text" [(ngModel)]="adminData.phoneNumber" name="phoneNumber"
+                        [readonly]="!isEditing" />
+                </div>
+
+
+
+                <!-- Profile Completeness -->
+                <div class="profile-completeness">
+                    <label>Profile Completeness: </label>
+                    <span>{{ adminData.profileCompleteness }}%</span>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <button *ngIf="!isEditing" (click)="enableEditing()">Edit</button>
+                    <button *ngIf="isEditing" (click)="updateProfile()">Save</button>
+                    <button *ngIf="isEditing" (click)="cancelEditing()">Cancel</button>
+                </div>
+            </form>
+        </main>
+
+    </main>
+</body>
