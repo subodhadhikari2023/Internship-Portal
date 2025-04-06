@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApplicationService } from 'src/app/services/application.service';
 import { InternshipService } from 'src/app/services/internship.service';
 
 @Component({
@@ -9,7 +10,9 @@ import { InternshipService } from 'src/app/services/internship.service';
 export class InstructorsHomeComponent implements OnInit {
   internships: number = 0;
   applications: number = 0;
-  constructor(private internshipService: InternshipService) { }
+  pendingApplications: number = 0;
+  activeInternships: number = 0;
+  constructor(private internshipService: InternshipService, private applicationService: ApplicationService) { }
 
   ngOnInit(): void {
     this.internshipService.totalInternships().subscribe({
@@ -30,6 +33,25 @@ export class InstructorsHomeComponent implements OnInit {
       }
     })
 
+    this.applicationService.getNumberOfApplications().subscribe({
+      next: (res) => {
+        this.pendingApplications = res;
+
+      }, error: (err) => {
+        console.error(err);
+
+      }
+    })
+
+
+    this.internshipService.totalActiveInternships().subscribe({
+      next: (res) => {
+        this.activeInternships = res;
+      }, error: (err) => {
+        console.error(err);
+
+      }
+    })
 
   }
 

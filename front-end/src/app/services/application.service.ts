@@ -21,7 +21,13 @@ export class ApplicationService {
     )
   }
 
-  setApplicationStatus(app:any,appStatus:any){
-   return this.http.post<any>(`${BASE_URL}instructors/review-applications?applicationId=${app.applicationId}`,appStatus);
+  setApplicationStatus(app: any, appStatus: any) {
+    return this.http.post<any>(`${BASE_URL}instructors/review-applications?applicationId=${app.applicationId}`, appStatus);
+  }
+
+  getNumberOfApplications() {
+    return this.http.get<any>(`${BASE_URL}instructors/pending-applications`).pipe(
+      map(res=>res.entity)
+    )
   }
 }

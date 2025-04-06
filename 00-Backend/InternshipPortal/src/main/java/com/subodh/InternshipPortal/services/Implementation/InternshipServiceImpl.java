@@ -1,6 +1,7 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 
+import com.subodh.InternshipPortal.enums.InternshipStatus;
 import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.modals.StudentApplication;
 import com.subodh.InternshipPortal.modals.Users;
@@ -101,6 +102,19 @@ public class InternshipServiceImpl implements InternshipService {
             return null;
         }
         return applicationList;
+    }
+
+    @Override
+    public List<InternshipWrapper> findAllByInstructor_ACTIVE() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof UserDetails users) {
+            String email = users.getUsername();
+            Users instructor = usersRepository.findByUserEmail(email);
+
+            List<Internship> internshipList = internshipRepository.findAllByStatusAndCreatedBy(InternshipStatus.ACTIVE, instructor);
+            return internshipList.isEmpty() ? Collections.emptyList() : internshipList.stream().map(InternshipWrapper::new).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 }
 

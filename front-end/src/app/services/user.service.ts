@@ -9,7 +9,7 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
 export class UserService {
   fetchAdminDetails() {
     return this.http.get<any>(`${BASE_URL}administrator/fetch-profile-details`).pipe(
-      map(res=>res.entity)
+      map(res => res.entity)
     )
   }
   constructor(private http: HttpClient, private sanitizer: DomSanitizer) { }

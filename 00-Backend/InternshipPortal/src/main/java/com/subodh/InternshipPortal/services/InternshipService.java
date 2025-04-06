@@ -43,4 +43,6 @@ public interface InternshipService {
     Internship findInternshipByInternshipId(Long internshipId);
 
     List<StudentApplication>  findAllApplicationsbyCreatedBy(String username);
+
+    List<InternshipWrapper> findAllByInstructor_ACTIVE();
 }
