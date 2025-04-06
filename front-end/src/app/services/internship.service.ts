@@ -114,14 +114,26 @@ export class InternshipService {
 
   }
 
-  totalInternships(){
+  totalInternships() {
     return this.http.get<any>(`${BASE_URL}instructors/number-of-internships-created`).pipe(
-      map(res=>res.entity)
+      map(res => res.entity)
     )
   }
-  totalApplications(){
+  totalApplications() {
     return this.http.get<any>(`${BASE_URL}instructors/total-applications-of-internships-created`).pipe(
-      map(res=>res.entity)
+      map(res => res.entity)
+    )
+  }
+
+  totalActiveInternships() {
+    return this.http.get<any>(`${BASE_URL}instructors/active-internships`).pipe(
+      map(res => res.entity)
+    )
+  }
+  getFiveRecentInternships(){
+    return this.http.get<any>(`${BASE_URL}instructors/recent-internships`).pipe(
+      map(res => res.entity)
+
     )
   }
 

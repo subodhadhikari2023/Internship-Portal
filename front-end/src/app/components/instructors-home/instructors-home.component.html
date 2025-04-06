@@ -1,7 +1,7 @@
 <body class=" d-flex flex-column min-vh-100">
     <nav><app-navbar>
-         
-    </app-navbar></nav>
+
+        </app-navbar></nav>
     <hr>
     <main class="flex-fill">
         <div class="container ">
@@ -31,7 +31,7 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body text-center">
                             <h5 class="card-title ">Pending Applications</h5>
-                            <p class="card-text">78</p>
+                            <p class="card-text">{{pendingApplications}}</p>
                             <!-- <p class="card-text">Internship for Department of Food and Supplies</p> -->
                             <a class="btn btn-primary">View More</a>
                         </div>
@@ -41,7 +41,7 @@
                     <div class="card" style="width: 18rem;">
                         <div class="card-body text-center">
                             <h5 class="card-title ">Active Internships</h5>
-                            <p class="card-text">7</p>
+                            <p class="card-text">{{activeInternships}}</p>
                             <a class="btn btn-primary">View More</a>
                         </div>
                     </div>
@@ -68,21 +68,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Web Development Internship</td>
-                                <td>Active</td>
-                                <td>2024-02-15</td>
-                                <td>3 months</td>
-
+                            <tr *ngFor="let internship of recentInternships">
+                              <td>{{ internship.internshipName }}</td>
+                              <td>{{ internship.status }}</td>
+                              <td>{{ internship.startDate }}</td>
+                              <td>{{ internshipDuration(internship.startDate, internship.endDate) }}</td>
                             </tr>
-                            <tr>
-                                <td>Data Science Internship</td>
-                                <td>Closed</td>
-                                <td>2024-01-20</td>
-                                <td>3 months</td>
-
-                            </tr>
-                        </tbody>
+                          </tbody>
+                          
                     </table>
                 </div>
 
@@ -103,26 +96,19 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Alice Johnson</td>
-                                <td>Web Development Internship</td>
-                                <td>Pending</td>
-
-                            </tr>
-                            <tr>
-                                <td>Bob Smith</td>
-                                <td>Data Science Internship</td>
-                                <td>Accepted</td>
-
-                            </tr>
+                            <tr *ngFor="let applications of recentApplications">
+                                <td>{{ applications.applicantName }}</td>
+                                <td>{{ applications.internshipTitle }}</td>
+                                <td>{{ applications.status }}</td>
+                              </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
 
-        
+
     </main>
-    
-   
+
+
 </body>

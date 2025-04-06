@@ -41,4 +41,8 @@ public interface StudentApplicationRepository extends JpaRepository<StudentAppli
 
 
     List<StudentApplication> findAllByInternship_CreatedBy(Users internshipCreatedBy);
+
+    List<StudentApplication> findTop5ByInternship_CreatedByOrderByInternship_StartDateDesc(Users instructor);
+
+
 }

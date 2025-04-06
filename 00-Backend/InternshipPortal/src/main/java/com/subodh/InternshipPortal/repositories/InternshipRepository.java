@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.repositories;
 
+import com.subodh.InternshipPortal.enums.InternshipStatus;
 import com.subodh.InternshipPortal.modals.Internship;
 import com.subodh.InternshipPortal.modals.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -35,4 +36,8 @@ public interface InternshipRepository extends JpaRepository<Internship, Long> {
      * @return the list
      */
     List<Internship> findAllByCreatedBy(Users createdBy);
+
+    List<Internship> findAllByStatusAndCreatedBy(InternshipStatus status, Users createdBy);
+
+    List<Internship> findTop5ByCreatedByOrderByStartDateDesc(Users createdBy);
 }

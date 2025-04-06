@@ -94,7 +94,7 @@ public class InstructorController {
 
     @GetMapping("total-applications-of-internships-created")
     public ResponseEntity<?> getTotalApplicationsOfInternshipCreated(@AuthenticationPrincipal UserDetails userDetails) {
-        List<StudentApplication>  totalApplications = internshipService.findAllApplicationsbyCreatedBy(userDetails.getUsername());
+        List<StudentApplication> totalApplications = internshipService.findAllApplicationsbyCreatedBy(userDetails.getUsername());
         if (totalApplications == null) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -237,8 +237,8 @@ public class InstructorController {
      * @return the response entity
      */
     @PutMapping("update-profile")
-    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails,@RequestBody InstructorWrapper instructorWrapper){
-        return new ResponseEntity<>(new Response<>(userService.updateInstructor(userDetails,instructorWrapper)),HttpStatus.OK);
+    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails, @RequestBody InstructorWrapper instructorWrapper) {
+        return new ResponseEntity<>(new Response<>(userService.updateInstructor(userDetails, instructorWrapper)), HttpStatus.OK);
     }
 
     /**
@@ -253,5 +253,25 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(certificate), HttpStatus.OK);
     }
 
+    @GetMapping("pending-applications")
+    public ResponseEntity<?> getAllPendingApplications() {
+        List<ApplicationWrapper> applicationWrapperList = applicationService.findAllofUser();
+        return new ResponseEntity<>(new Response<>(applicationWrapperList.size()), HttpStatus.OK);
+    }
+
+    @GetMapping("active-internships")
+    public ResponseEntity<?> getAllActiveInternships() {
+        return new ResponseEntity<>(new Response<>(internshipService.findAllByInstructor_ACTIVE().size()), HttpStatus.OK);
+    }
+
+    @GetMapping("recent-internships")
+    public ResponseEntity<?> getAllRecentInternships(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(internshipService.findRecentFiveInternships(userDetails.getUsername())), HttpStatus.OK);
+    }
+
+    @GetMapping("recent-applications")
+    public ResponseEntity<?> getAllRecentApplications(@AuthenticationPrincipal UserDetails userDetails) {
+        return new ResponseEntity<>(new Response<>(applicationService.getAllRecentApplications(userDetails.getUsername())), HttpStatus.OK);
+    }
 
 }

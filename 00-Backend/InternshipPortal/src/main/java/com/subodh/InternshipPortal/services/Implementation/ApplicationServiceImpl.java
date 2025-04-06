@@ -18,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -138,6 +139,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     public List<ApplicationWrapper> findAllApplicationsByUserEmail(String username) {
         Users user = usersRepository.findByUserEmail(username);
         return studentApplicationRepository.findAllByStudent(user).stream().map(ApplicationWrapper::new).toList();
+    }
+
+    @Override
+    public List<ApplicationWrapper> getAllRecentApplications(String userEmail) {
+        Users instructor = usersRepository.findByUserEmail(userEmail);
+        List<StudentApplication> applications = studentApplicationRepository.findTop5ByInternship_CreatedByOrderByInternship_StartDateDesc( instructor);
+        return applications != null ? applications.stream().map(ApplicationWrapper::new).toList() : Collections.emptyList();
     }
 
 
