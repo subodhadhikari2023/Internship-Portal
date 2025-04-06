@@ -1,13 +1,15 @@
 package com.subodh.InternshipPortal.controllers;
 
+import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.services.DepartmentService;
 import com.subodh.InternshipPortal.services.UserService;
-import com.subodh.InternshipPortal.wrapper.APIRequest;
-import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
-import com.subodh.InternshipPortal.wrapper.Response;
+import com.subodh.InternshipPortal.wrapper.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 import java.util.Optional;
@@ -35,6 +37,25 @@ public class AdminController {
     }
 
 
+    /**
+     * @param userDetails
+     * @return
+     */
+    @GetMapping("fetch-profile-details")
+    public ResponseEntity<?> fetchProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
+        Users dbAdmin = userService.findByUserEmail(userDetails.getUsername());
+        return new ResponseEntity<>(new Response<>(new AdminWrapper(dbAdmin)), HttpStatus.OK);
+    }
+
+
+    @PostMapping("update-profile-picture")
+    public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
+        return new ResponseEntity<>(userService.updateAdminProfilePicture(userDetails,file),HttpStatus.CREATED);
+    }
+    @PutMapping("update-profile")
+    public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails,@RequestBody AdminWrapper adminWrapper){
+        return new ResponseEntity<>(new Response<>(userService.updateAdmin(userDetails,adminWrapper)),HttpStatus.OK);
+    }
     /**
      * Gets all department.
      *

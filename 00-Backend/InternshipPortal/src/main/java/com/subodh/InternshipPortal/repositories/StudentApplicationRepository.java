@@ -39,4 +39,6 @@ public interface StudentApplicationRepository extends JpaRepository<StudentAppli
     @Query("SELECT sa FROM StudentApplication sa WHERE sa.internship.internshipId = :internshipId AND sa.student.userId = :studentId")
     Optional<ApplicationWrapper> existsByInternshipAndStudent(Long internshipId, Long studentId);
 
+
+    List<StudentApplication> findAllByInternship_CreatedBy(Users internshipCreatedBy);
 }

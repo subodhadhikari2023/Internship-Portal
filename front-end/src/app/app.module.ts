@@ -32,6 +32,8 @@ import { ViewStudentDetailsForInstructorComponent } from './components/view-stud
 import { UpdateProfileInstructorComponent } from './components/update-profile-instructor/update-profile-instructor.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
+import { UpdateAdminComponent } from './components/update-admin/update-admin.component';
 
 
 
@@ -65,6 +67,8 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
     UpdateProfileInstructorComponent,
     AdminHomeComponent,
     ForgetPasswordComponent,
+    AdminNavbarComponent,
+    UpdateAdminComponent,
     
   ],
   imports: [

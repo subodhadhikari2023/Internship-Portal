@@ -23,6 +23,7 @@ import { ViewStudentDetailsForInstructorComponent } from './components/view-stud
 import { UpdateProfileInstructorComponent } from './components/update-profile-instructor/update-profile-instructor.component';
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { UpdateAdminComponent } from './components/update-admin/update-admin.component';
 
 
 
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'student', component: StudentsHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'admin', component: AdminHomeComponent, canActivate: [AuthGuard], data: { role: 'ROLE_ADMIN' } },
+  { path: 'admin/update-profile', component: UpdateAdminComponent, canActivate: [AuthGuard], data: { role: 'ROLE_ADMIN' } },
   { path: 'student/view-applications', component: ViewApplicationComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'student/update-profile', component: UpdateProfileStudentComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },
   { path: 'student/view-internships', component: ViewInternshipStudentComponent, canActivate: [AuthGuard], data: { role: 'ROLE_STUDENT' } },

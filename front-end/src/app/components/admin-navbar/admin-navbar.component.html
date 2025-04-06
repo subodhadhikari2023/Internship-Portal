@@ -1,0 +1,30 @@
+<main>
+    <div class="sticky-top">
+      <nav class="navbar">
+        <header class="header">
+          <div class="container-fluid">
+            <p class="title">Internship Portal - Government of Sikkim</p>
+          </div>
+        </header>
+  
+        <div class="container-fluid">
+          <a class="navbar-brand" routerLink="/admin">
+            <img src="../../../assets/images/Gove-of-Sikkim-logo.webp" alt="Home" class="logo">
+          </a>
+  
+          <div class="profile-dropdown">
+            <button class="profile-btn" (click)="toggleDropdown('profile')">
+              <img
+                [src]="adminData.profilePictureFilePath ? adminData.profilePictureFilePath : '../../../assets/images/default-profile/image.png'"
+                alt="Profile Picture" class="profile-img" />
+            </button>
+            <ul class="dropdown-menu" [class.show]="dropdowns['profile']">
+              <li><a class="dropdown-item" routerLink="/admin/update-profile">Edit Profile</a></li>
+              <li><button class="dropdown-item" (click)="logOut()">Logout</button></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </main>
+  

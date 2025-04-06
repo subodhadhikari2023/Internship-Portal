@@ -1,10 +1,7 @@
 package com.subodh.InternshipPortal.services;
-import com.subodh.InternshipPortal.wrapper.InstructorWrapper;
-import com.subodh.InternshipPortal.wrapper.RegistrationEntity;
+import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.modals.Users;
-import com.subodh.InternshipPortal.wrapper.StudentWrapper;
 
-import com.subodh.InternshipPortal.wrapper.UserWrapper;
 import org.springframework.core.io.Resource;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
@@ -175,4 +172,8 @@ public interface UserService {
      * @return the user wrapper
      */
     UserWrapper resetPasswordUserFoundByEmail(String email, String password);
+
+    AdminWrapper updateAdminProfilePicture(UserDetails userDetails, MultipartFile file);
+
+    AdminWrapper updateAdmin(UserDetails userDetails, AdminWrapper adminWrapper);
 }

@@ -1,0 +1,122 @@
+/* ========== Global Reset ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* ========== Navbar Layout ========== */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #029407;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* ========== Header Title ========== */
+  .header {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  /* ========== Logo ========== */
+  .navbar-brand .logo {
+    height: 50px;
+    width: auto;
+  }
+  
+  /* ========== Profile Dropdown ========== */
+  .profile-dropdown {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .profile-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .profile-img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+  }
+  
+  /* Dropdown Menu */
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 60px;
+    background-color: #029407;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    list-style: none;
+    padding: 5px 0;
+    min-width: 160px;
+    z-index: 10;
+  }
+  
+  .dropdown-menu.show {
+    display: block;
+  }
+  
+  .dropdown-item {
+    padding: 10px 15px;
+    color: #e0e0e0;
+    text-decoration: none;
+    display: block;
+    background-color: #029407 !important;
+  }
+  
+  .dropdown-item:hover {
+    background-color: #026c05 !important;
+    color: #ffffff !important;
+  }
+  
+  /* ========== Responsive ========== */
+  @media (max-width: 768px) {
+    .title {
+      font-size: 1.2rem;
+      padding-top: 5px;
+    }
+  
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .navbar-brand {
+      margin-bottom: 10px;
+    }
+  
+    .profile-dropdown {
+      align-self: flex-end;
+    }
+  
+    .dropdown-menu {
+      right: 10px;
+      top: 55px;
+    }
+  }
+  

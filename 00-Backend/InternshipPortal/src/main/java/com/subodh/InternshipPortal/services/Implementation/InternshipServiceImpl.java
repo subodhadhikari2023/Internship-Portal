@@ -2,9 +2,11 @@ package com.subodh.InternshipPortal.services.Implementation;
 
 
 import com.subodh.InternshipPortal.modals.Internship;
+import com.subodh.InternshipPortal.modals.StudentApplication;
 import com.subodh.InternshipPortal.modals.Users;
 import com.subodh.InternshipPortal.exceptions.InternshipCreationFailedException;
 import com.subodh.InternshipPortal.repositories.InternshipRepository;
+import com.subodh.InternshipPortal.repositories.StudentApplicationRepository;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 import com.subodh.InternshipPortal.services.InternshipService;
 import com.subodh.InternshipPortal.wrapper.InternshipWrapper;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 public class InternshipServiceImpl implements InternshipService {
     private final InternshipRepository internshipRepository;
     private final UsersRepository usersRepository;
+    private final StudentApplicationRepository studentApplicationRepository;
 
     /**
      * Instantiates a new Internship service.
@@ -32,9 +35,10 @@ public class InternshipServiceImpl implements InternshipService {
      * @param internshipRepository the internship repository
      * @param usersRepository      the users repository
      */
-    public InternshipServiceImpl(InternshipRepository internshipRepository, UsersRepository usersRepository) {
+    public InternshipServiceImpl(InternshipRepository internshipRepository, UsersRepository usersRepository, StudentApplicationRepository studentApplicationRepository) {
         this.internshipRepository = internshipRepository;
         this.usersRepository = usersRepository;
+        this.studentApplicationRepository = studentApplicationRepository;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class InternshipServiceImpl implements InternshipService {
             Set<String> requiredSkills = internship.getRequiredSkills().stream().map(String::trim).filter(skill -> !skill.isEmpty()).collect(Collectors.toSet());
             internship.setRequiredSkills(requiredSkills);
             internship.setDepartment(user.getDepartment());
-            log.info("{}",user.getDepartment());
+            log.info("{}", user.getDepartment());
             Internship saved = internshipRepository.save(internship);
             return new InternshipWrapper(saved);
 
@@ -87,6 +91,16 @@ public class InternshipServiceImpl implements InternshipService {
     @Override
     public Internship findInternshipByInternshipId(Long internshipId) {
         return internshipRepository.findById(internshipId).orElse(null);
+    }
+
+    @Override
+    public List<StudentApplication> findAllApplicationsbyCreatedBy(String username) {
+        Users user = usersRepository.findByUserEmail(username);
+        List<StudentApplication> applicationList = studentApplicationRepository.findAllByInternship_CreatedBy(user);
+        if (applicationList.isEmpty()) {
+            return null;
+        }
+        return applicationList;
     }
 }
 

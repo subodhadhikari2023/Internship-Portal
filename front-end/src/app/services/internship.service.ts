@@ -119,5 +119,10 @@ export class InternshipService {
       map(res=>res.entity)
     )
   }
+  totalApplications(){
+    return this.http.get<any>(`${BASE_URL}instructors/total-applications-of-internships-created`).pipe(
+      map(res=>res.entity)
+    )
+  }
 
 }

@@ -2,6 +2,7 @@ package com.subodh.InternshipPortal.controllers;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import com.subodh.InternshipPortal.modals.Internship;
+import com.subodh.InternshipPortal.modals.StudentApplication;
 import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import lombok.extern.slf4j.Slf4j;
@@ -89,6 +90,15 @@ public class InstructorController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(new Response<>(internships.size()), HttpStatus.OK);
+    }
+
+    @GetMapping("total-applications-of-internships-created")
+    public ResponseEntity<?> getTotalApplicationsOfInternshipCreated(@AuthenticationPrincipal UserDetails userDetails) {
+        List<StudentApplication>  totalApplications = internshipService.findAllApplicationsbyCreatedBy(userDetails.getUsername());
+        if (totalApplications == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(new Response<>(totalApplications.size()), HttpStatus.OK);
     }
 
     /**
