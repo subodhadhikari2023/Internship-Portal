@@ -40,7 +40,7 @@ public class JwtUtils {
 //                .add(claims)
                 .subject(authentication.getName())
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 ))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
 //                .and()
                 .signWith(getKey())
                 .compact();
@@ -114,8 +114,6 @@ public class JwtUtils {
                         .collect(Collectors.toList());
         return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
-
-
 
 
 }
