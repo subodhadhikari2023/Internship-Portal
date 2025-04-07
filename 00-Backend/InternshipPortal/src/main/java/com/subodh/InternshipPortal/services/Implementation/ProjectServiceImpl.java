@@ -5,6 +5,7 @@ import com.subodh.InternshipPortal.modals.InternshipStudents;
 import com.subodh.InternshipPortal.modals.Project;
 import com.subodh.InternshipPortal.repositories.InternshipStudentRepository;
 import com.subodh.InternshipPortal.repositories.ProjectRepository;
+import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.ProjectService;
 import com.subodh.InternshipPortal.wrapper.ProjectWrapper;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -29,6 +31,7 @@ import java.util.concurrent.CompletableFuture;
 public class ProjectServiceImpl implements ProjectService {
     private final InternshipStudentRepository internshipStudentRepository;
     private final ProjectRepository projectRepository;
+    private final MailService mailService;
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
@@ -38,9 +41,10 @@ public class ProjectServiceImpl implements ProjectService {
      * @param internshipStudentRepository the internship student repository
      * @param projectRepository           the project repository
      */
-    public ProjectServiceImpl(InternshipStudentRepository internshipStudentRepository, ProjectRepository projectRepository) {
+    public ProjectServiceImpl(InternshipStudentRepository internshipStudentRepository, ProjectRepository projectRepository, MailService mailService) {
         this.internshipStudentRepository = internshipStudentRepository;
         this.projectRepository = projectRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -91,7 +95,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         dbProject.setProjectDescriptionFilePath(relativePath);
         studentInternship.getProjects().add(dbProject);
-
+        mailService.sendProjectAllocationMail(studentInternship.getStudent().getUserName(),dbProject.getProjectName(),dbProject.getSubmissionDate());
         internshipStudentRepository.save(studentInternship);
 
         return new ProjectWrapper(dbProject.getProjectName(), dbProject.getProjectDescription(), studentInternship.getStudent().getUserEmail(), dbProject.getSubmissionDate(), dbProject.getProjectId(), dbProject.getProjectDescriptionFilePath(), dbProject.getProjectFile(), String.valueOf(dbProject.getStatus()));
@@ -174,12 +178,14 @@ public class ProjectServiceImpl implements ProjectService {
         List<InternshipStudents> internshipStudentsList = internshipStudentRepository.findAllByStudent_UserEmail(userEmail);
 
         for (InternshipStudents internshipStudents : internshipStudentsList) {
-           boolean allProjectsCompleted =internshipStudents.getProjects().stream().allMatch(p -> p.getStatus().equals(StudentInternshipStatus.COMPLETED));
-           if (allProjectsCompleted) {
-               internshipStudents.setStatus(StudentInternshipStatus.COMPLETED);
-               internshipStudentRepository.save(internshipStudents);
-           }
+            boolean allProjectsCompleted = internshipStudents.getProjects().stream().allMatch(p -> p.getStatus().equals(StudentInternshipStatus.COMPLETED));
+            if (allProjectsCompleted) {
+                internshipStudents.setStatus(StudentInternshipStatus.COMPLETED);
+                internshipStudentRepository.save(internshipStudents);
+            }
         }
+
+        mailService.sendProjectStatusChangeMail(userEmail,dbProject.getProjectName(),dbProject.getStatus(), LocalDate.now());
 
         return new ProjectWrapper(
                 dbProject.getProjectName(),

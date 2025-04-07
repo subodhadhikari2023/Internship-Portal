@@ -1,12 +1,15 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import com.subodh.InternshipPortal.services.MailService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 
 /**
  * The type Mail service.
@@ -58,11 +61,58 @@ public class MailServiceImpl implements MailService {
         sendMail(userEmail, subject, body);
     }
 
+    @Override
+    public void sendProjectAllocationMail(String userName, String projectName, LocalDate submissionDate) {
+        String subject = "Project Allocation";
+        String body = prepareProjectAllocationMail(userName, projectName, submissionDate);
+        sendMail(userName, subject, body);
+    }
+
+    @Override
+    public void sendProjectStatusChangeMail(String userEmail, String projectName, StudentInternshipStatus status, LocalDate now) {
+        String subject = "Project Status Change Notification";
+        String body = prepareProjectStatusChangeMail(userEmail, projectName, status, now);
+        sendMail(userEmail, subject, body);
+    }
+
+    private String prepareProjectStatusChangeMail(String userEmail, String projectName, StudentInternshipStatus status, LocalDate now) {
+        return String.format(
+                """
+                                 Dear %s,
+                        \s
+                                 This is to inform you that the status of your project titled "%s" has been updated to **%s** as of %s.
+                        \s
+                                 Please log in to the portal to view further details or next steps.
+                        \s
+                                 Regards, \s
+                                 Government of Sikkim
+                                \s""",
+                userEmail, projectName, status.name(), now
+        );
+    }
+
+
+    private String prepareProjectAllocationMail(String userName, String projectName, LocalDate submissionDate) {
+        return String.format(
+                """
+                        Dear %s,\s
+                        \s
+                        We are pleased to inform you that you have been allocated the project titled "%s".
+                        Please ensure that the project is submitted by %s.
+                        
+                        Wishing you all the best for a successful completion.
+                        
+                        Regards,
+                        Government of Sikkim""",
+                userName, projectName, submissionDate
+        );
+    }
+
 
     private String preparePasswordResetMail(String userEmail, String oneTimePassword) {
         return String.format(
                 "Dear %s,\n\nWe hope this email finds you well.\n\nThe following is the One Time Password to change the password for the account associated with %s! \n\n %s \n\n Regards, \nGovernment of Sikkim\n",
-                userEmail, userEmail,oneTimePassword
+                userEmail, userEmail, oneTimePassword
         );
     }
 

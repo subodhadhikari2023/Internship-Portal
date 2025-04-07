@@ -17,9 +17,9 @@ export class ForgetPasswordComponent implements OnInit {
   accountNotFound: boolean = false;
   accountFound: boolean = false;
   accountClaimed: boolean = false;
-  otpVerified: boolean = false;
   email: any = undefined;
   isOtpVerified: boolean = false;
+  otpInvalid: boolean = false;
   newPasswordForm: FormGroup;
   constructor(private fb: FormBuilder, private resetPasswordService: ForgetPasswordService, private router: Router) {
     this.forgetForm = this.fb.group({
@@ -83,21 +83,23 @@ export class ForgetPasswordComponent implements OnInit {
       oneTimePassword: this.otpForm.value.otp,
       userEmail: localStorage.getItem('email')
     };
-    console.log(request);
 
     this.resetPasswordService.submitOTP(request).subscribe({
       next: (res) => {
         if (res) {
-          this.otpVerified = true;
-          console.log("OTP verified");
+          this.otpInvalid = false; 
+          this.isOtpVerified=true;
+
 
         }
       }, error: (err) => {
         console.error(err);
+        this.isOtpVerified = false;
+        this.otpInvalid = true; 
+
 
       }
     })
-    this.isOtpVerified = true;
   }
 
   resetPassword() {
@@ -107,9 +109,9 @@ export class ForgetPasswordComponent implements OnInit {
         console.log("password reset success!");
         this.router.navigate(['login']);
 
-      },error:(err)=>{
+      }, error: (err) => {
         console.error(err);
-        
+
       }
     })
   }

@@ -10,6 +10,7 @@ import { ApplicationService } from "../../services/application.service";
 export class ViewApplicationComponent implements OnInit {
   applications: any[] = [];  
   filteredApplications: any[] = []; 
+  selectedStatus: string = 'ALL'; 
 
   constructor(private applicationService: ApplicationService) { }
 
@@ -32,10 +33,14 @@ export class ViewApplicationComponent implements OnInit {
 
   filterApplications(event: any) {
     const status = event.target.value.toUpperCase();
+    this.selectedStatus = status; // 🆕 Set current filter status
+
     if (status === 'ALL') {
       this.filteredApplications = this.applications;
     } else {
-      this.filteredApplications = this.applications.filter(applications => applications.status.toUpperCase() === status);
+      this.filteredApplications = this.applications.filter(
+        app => app.status.toUpperCase() === status
+      );
     }
   }
 }

@@ -18,18 +18,7 @@ export class ViewInternshipStudentComponent implements OnInit {
     this.viewSelectedInternships();
   }
 
-  // viewSelectedInternships() {
-  //   this.internshipService.getSelectedInternshipsForStudents().subscribe({
-  //     next: (response) => {
-  //       this.internships = response;
-
-  //     }, error: (err) => {
-  //       console.log(err);
-
-  //     }
-  //   })
-  // }
-
+ 
   viewSelectedInternships() {
     this.internshipService.getSelectedInternshipsForStudents().subscribe({
       next: (response) => {

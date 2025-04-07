@@ -1,35 +1,49 @@
 <body class="view-internship-page">
-    <app-navbar style="z-index: 2;" ></app-navbar>
-  
-    <section class="filter-section">
-      <div class="filter-container">
-        <label for="statusFilter">Filter by Status:</label>
-        <select id="statusFilter" (change)="filterInternships($event)">
-          <option value="ALL">All</option>
-          <option value="ACTIVE">Active</option>
-          <option value="INACTIVE">Closed</option>
-        </select>
-      </div>
-    </section>
-  
-    <main class="internships-container">
-      <article class="internship-card" *ngFor="let internship of filteredInternships">
-        <h3><strong>Role:</strong> {{ internship.internshipName }}</h3>
-        <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
-        <p><strong>End Date:</strong> {{ internship.endDate }}</p>
-        <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
-        <p><strong>Description:</strong> {{ internship.description }}</p>
-        <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
-        <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
-        <p><strong>Department:</strong> {{ internship.department }}</p>
-        <p>
-          <strong>Status:</strong>
-          <span [class.active]="internship.status === 'ACTIVE'">
-            {{ internship.status }}
-          </span>
-        </p>
-      </article>
-    </main>  
-    
-</body>
+  <app-navbar style="z-index: 2;"></app-navbar>
 
+  <section class="filter-section">
+    <div class="filter-container">
+      <label for="statusFilter">Filter by Status:</label>
+      <select id="statusFilter" (change)="filterInternships($event)">
+        <option value="ALL">All</option>
+        <option value="ACTIVE">Active</option>
+        <option value="INACTIVE">Closed</option>
+      </select>
+    </div>
+  </section>
+
+  <main class="internships-container">
+    <article class="internship-card" *ngFor="let internship of filteredInternships">
+      <h3><strong>Role:</strong> {{ internship.internshipName }}</h3>
+      <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
+      <p><strong>End Date:</strong> {{ internship.endDate }}</p>
+      <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
+      <p><strong>Description:</strong> {{ internship.description }}</p>
+      <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
+      <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
+      <p><strong>Department:</strong> {{ internship.department }}</p>
+      <p>
+        <strong>Status:</strong>
+        <span [class.active]="internship.status === 'ACTIVE'">
+          {{ internship.status }}
+        </span>
+      </p>
+    </article>
+    <article class="no-data" *ngIf="filteredInternships && filteredInternships.length === 0">
+      <div class="text-center text-muted p-4">
+        <h5>No internships found</h5>
+        <p>Try changing the filter or check back later.</p>
+      </div>
+    </article>
+    <style>
+      .no-data {
+        text-align: center;
+        color: #6c757d;
+        padding: 2rem;
+        font-size: 1.1rem;
+      }
+    </style>
+  </main>
+
+</body>
+<app-footer></app-footer>

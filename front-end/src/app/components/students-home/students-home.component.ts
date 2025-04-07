@@ -16,6 +16,8 @@ export class StudentsHomeComponent implements OnInit {
   filteredInternships: any[] = [];
   appliedInternships: { [key: number]: boolean } = {};
   departmentList: string[] = [];
+  selectedDepartment: string = 'ALL';
+
   constructor(private internshipService: InternshipService, private notifier: NotificationService) { }
 
   ngOnInit(): void {
@@ -42,13 +44,17 @@ export class StudentsHomeComponent implements OnInit {
   }
 
   filterInternships(event: any) {
-    const department = event.target.value.toUpperCase();
-    if (department === 'ALL') {
+    this.selectedDepartment = event.target.value;
+
+    if (this.selectedDepartment === 'ALL') {
       this.filteredInternships = this.internships;
     } else {
-      this.filteredInternships = this.internships.filter(internship => internship.department.toUpperCase() === department);
+      this.filteredInternships = this.internships.filter(
+        internship => internship.department.toUpperCase() === this.selectedDepartment.toUpperCase()
+      );
     }
   }
+
 
   applyInternship(internship: any) {
 
@@ -83,7 +89,7 @@ export class StudentsHomeComponent implements OnInit {
     this.internshipService.getallDepartments().subscribe({
       next: (response) => {
         this.departmentList = response;
-        
+
       }
 
     })

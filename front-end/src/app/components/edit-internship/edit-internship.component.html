@@ -15,7 +15,7 @@
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody *ngIf="internships && internships.length > 0; else noInternships">
           <tr *ngFor="let internship of internships">
             <!-- Editable Fields -->
             <td>
@@ -63,6 +63,20 @@
             </td>
           </tr>
         </tbody>
+        <ng-template #noInternships>
+          <tbody>
+            <tr>
+              <td colspan="9" class="text-center p-4">
+                <div class="text-muted">
+                  <h5>No internships available</h5>
+                  <p class="mb-0">Please add a new internship or check back later.</p>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </ng-template>
+        
       </table>
      
 </body>
+<app-footer></app-footer>

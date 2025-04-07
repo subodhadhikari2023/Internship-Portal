@@ -174,7 +174,6 @@ public class InstructorController {
      */
     @PostMapping("create-project")
     public ResponseEntity<?> createProject(@RequestPart("project") ProjectWrapper project, @RequestPart("file") MultipartFile file) {
-
         ProjectWrapper savedProject = projectService.saveProject(project, file);
         return new ResponseEntity<>(new Response<>(savedProject), HttpStatus.CREATED);
     }
@@ -188,7 +187,6 @@ public class InstructorController {
      */
     @PostMapping("change-project-status/{projectId}")
     public ResponseEntity<?> changeProjectStatus(@PathVariable Long projectId, @RequestBody String status) {
-        log.info("Change project status initiated");
         return new ResponseEntity<>(new Response<>(projectService.changeProjectStatus(projectId, status)), HttpStatus.OK);
     }
 
