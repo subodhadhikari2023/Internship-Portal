@@ -16,6 +16,72 @@ export class UpdateAdminComponent implements OnInit {
   profilePictureSafeUrl: any;
   previewImage: string | ArrayBuffer | null = null;
 
+
+
+
+  showPasswordInputs: boolean = false;
+  passwordVerified: boolean = false;
+
+  oldPassword: string = '';
+  newPassword: string = '';
+  passwordError: string = '';
+  newPasswordError: string = '';
+
+
+  togglePasswordUpdate() {
+    this.showPasswordInputs = true;
+  }
+  
+  verifyOldPassword() {
+    if (!this.oldPassword) {
+      this.passwordError = "Old password is required.";
+      return;
+    }
+  
+    this.userService.validatePassword(this.oldPassword).subscribe({
+      next: (res) => {
+        if (res === true) {
+          this.passwordVerified = true;
+          this.passwordError = '';
+        } else {
+          this.passwordError = "Old password is incorrect.";
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.passwordError = "Something went wrong. Try again.";
+      }
+    });
+  }
+  
+  updatePassword() {
+    if (!this.newPassword || this.newPassword.length < 6) {
+      this.newPasswordError = "Password must be at least 6 characters.";
+      return;
+    }
+  
+    this.userService.updatePassword(this.newPassword).subscribe({
+      next: () => {
+        this.resetPasswordFields();
+      },
+      error: (err) => {
+        console.error(err);
+        this.newPasswordError = "Failed to update password.";
+      }
+    });
+  }
+  
+  resetPasswordFields() {
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.passwordError = '';
+    this.newPasswordError = '';
+    this.passwordVerified = false;
+    this.showPasswordInputs = false;
+  }
+  
+
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {

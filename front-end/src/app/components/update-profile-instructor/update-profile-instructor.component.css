@@ -114,3 +114,60 @@ input {
   background-color: var(--complementary-color);
   transform: scale(1.05);
 }
+/* Password Update Section */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-section > div {
+  background-color: #f9f9f9;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-section label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.form-section input[type="password"] {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.form-section input[type="password"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+.form-section button {
+  align-self: flex-start;
+  padding: 6px 14px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.form-section button:hover {
+  background-color: #0056b3;
+}
+
+.error-msg {
+  color: #e53935;
+  font-size: 13px;
+  margin-top: -6px;
+}
+

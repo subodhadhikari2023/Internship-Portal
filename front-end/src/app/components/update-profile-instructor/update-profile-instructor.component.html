@@ -2,7 +2,7 @@
     <nav><app-navbar></app-navbar></nav>
     <main>
         <main class="update-profile-container">
-            <h2 style="text-align: center;" >Update Profile</h2>
+            <h2 style="text-align: center;">Update Profile</h2>
 
             <!-- Profile Picture Section -->
             <div class="profile-picture-container">
@@ -13,7 +13,7 @@
                 <button class="upload-btn" *ngIf="isEditing" (click)="fileInput.click()">
                     Select New Picture
                 </button>
-                <button class="upload-btn"  *ngIf="isEditing && selectedProfilePicture" (click)="uploadProfilePicture()">
+                <button class="upload-btn" *ngIf="isEditing && selectedProfilePicture" (click)="uploadProfilePicture()">
                     Upload Profile Picture
                 </button>
             </div>
@@ -36,6 +36,28 @@
                     <label for="phoneNumber">Phone Number</label>
                     <input id="phoneNumber" type="text" [(ngModel)]="instructorData.phoneNumber" name="phoneNumber"
                         [readonly]="!isEditing" />
+                </div>
+                <!-- Password Update Section -->
+                <div class="form-section">
+                    <button *ngIf="!showPasswordInputs" (click)="togglePasswordUpdate()">Update Password</button>
+
+                    <!-- Step 1: Enter old password -->
+                    <div *ngIf="showPasswordInputs && !passwordVerified">
+                        <label for="oldPassword">Old Password</label>
+                        <input type="password" id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword"
+                            placeholder="Enter old password" />
+                        <p *ngIf="passwordError" class="error-msg">{{ passwordError }}</p>
+                        <button (click)="verifyOldPassword()">Verify</button>
+                    </div>
+
+                    <!-- Step 2: Enter new password -->
+                    <div *ngIf="passwordVerified">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword"
+                            placeholder="Enter new password" />
+                        <p *ngIf="newPasswordError" class="error-msg">{{ newPasswordError }}</p>
+                        <button (click)="updatePassword()">Update</button>
+                    </div>
                 </div>
 
                 <div class="form-section">

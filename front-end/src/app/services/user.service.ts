@@ -7,6 +7,24 @@ const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
   providedIn: 'root'
 })
 export class UserService {
+
+
+  updatePassword(newPassword: string) {
+    const request = {
+      entity: newPassword
+    }
+    return this.http.post<any>(`${BASE_URL}common/reset-password`, request).pipe(
+      map(res => res.entity)
+    )
+  }
+  validatePassword(oldPassword: string) {
+    const request = {
+      entity: oldPassword
+    }
+    return this.http.post<any>(`${BASE_URL}common/validate-password`, request).pipe(
+      map(res => res.entity)
+    )
+  }
   fetchAdminDetails() {
     return this.http.get<any>(`${BASE_URL}administrator/fetch-profile-details`).pipe(
       map(res => res.entity)

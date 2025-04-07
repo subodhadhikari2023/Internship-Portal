@@ -178,4 +178,6 @@ public interface UserService {
     AdminWrapper updateAdmin(UserDetails userDetails, AdminWrapper adminWrapper);
 
     InstructorWrapper updateInstructorByAdmin(InstructorWrapper instructor);
+
+    boolean validatePassword(String email, String entity);
 }

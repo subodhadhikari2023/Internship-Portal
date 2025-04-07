@@ -12,7 +12,15 @@ export class UpdateProfileStudentComponent implements OnInit {
 
   studentData: any = {};
   isEditing: boolean = false;
-  profilePictureSafeUrl: any; 
+  profilePictureSafeUrl: any;
+  showPasswordInputs: boolean = false;
+  passwordVerified: boolean = false;
+
+  oldPassword: string = '';
+  newPassword: string = '';
+
+  passwordError: string = '';
+  newPasswordError: string = '';
 
   constructor(private userService: UserService) { }
 
@@ -48,10 +56,10 @@ export class UpdateProfileStudentComponent implements OnInit {
     if (typeof (this.studentData.skills) == 'string') {
       this.studentData.skills = this.studentData.skills.split(",");
     }
-   console.log(this.studentData);
-   
+    console.log(this.studentData);
 
-    
+
+
     this.userService.updateStudentProfile(this.studentData).subscribe({
       next: (res) => {
         this.isEditing = false;
@@ -144,5 +152,61 @@ export class UpdateProfileStudentComponent implements OnInit {
       }
     });
 
+  }
+
+  togglePasswordUpdate() {
+    this.showPasswordInputs = true;
+    this.passwordVerified = false;
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.passwordError = '';
+    this.newPasswordError = '';
+  }
+
+  verifyOldPassword(): void {
+    if (!this.oldPassword) {
+      this.passwordError = "Old password is required!";
+      return;
+    }
+
+    this.userService.validatePassword(this.oldPassword).subscribe({
+      next: (res: any) => {
+        if (res === true) {
+          this.passwordVerified = true;
+          this.passwordError = '';
+        } else {
+          this.passwordError = "Old password is incorrect!";
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.passwordError = "Error verifying password!";
+      }
+    });
+  }
+
+  updatePassword(): void {
+    if (!this.newPassword || this.newPassword.length < 6) {
+      this.newPasswordError = "Password must be at least 6 characters long!";
+      return;
+    }
+
+    this.userService.updatePassword(this.newPassword).subscribe({
+      next: () => {
+        this.resetPasswordFields();
+      },
+      error: (err) => {
+        console.error(err);
+        this.newPasswordError = "Error updating password!";
+      }
+    });
+  }
+  resetPasswordFields(): void {
+    this.showPasswordInputs = false;
+    this.passwordVerified = false;
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.passwordError = '';
+    this.newPasswordError = '';
   }
 }

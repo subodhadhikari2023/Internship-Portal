@@ -30,6 +30,29 @@
                     <label for="userEmail">Email</label>
                     <input id="userEmail" type="email" [(ngModel)]="adminData.email" name="userEmail" readonly />
                 </div>
+                <!-- Password Update Section -->
+                <div class="form-section">
+                    <button *ngIf="!showPasswordInputs" (click)="togglePasswordUpdate()">Update Password</button>
+
+                    <!-- Step 1: Enter old password -->
+                    <div *ngIf="showPasswordInputs && !passwordVerified">
+                        <label for="oldPassword">Old Password</label>
+                        <input type="password" id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword"
+                            placeholder="Enter old password" />
+                        <p *ngIf="passwordError" class="error-msg">{{ passwordError }}</p>
+                        <button (click)="verifyOldPassword()">Verify</button>
+                    </div>
+
+                    <!-- Step 2: Enter new password -->
+                    <div *ngIf="passwordVerified">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword"
+                            placeholder="Enter new password" />
+                        <p *ngIf="newPasswordError" class="error-msg">{{ newPasswordError }}</p>
+                        <button (click)="updatePassword()">Update</button>
+                    </div>
+                </div>
+
 
                 <div class="form-section">
                     <label for="phoneNumber">Phone Number</label>

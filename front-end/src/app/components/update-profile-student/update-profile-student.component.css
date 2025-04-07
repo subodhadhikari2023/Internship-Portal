@@ -131,3 +131,42 @@ input:focus, select:focus {
         gap: 20px;
     }
 }
+.form-section {
+    margin-bottom: 20px;
+  }
+  
+  .form-section label {
+    font-weight: 500;
+    display: block;
+    margin-bottom: 6px;
+  }
+  
+  .form-section input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .form-section button {
+    background-color: #4caf50;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 6px;
+  }
+  
+  .form-section button:hover {
+    background-color: #45a049;
+  }
+  
+  .error-msg {
+    color: red;
+    font-size: 0.9em;
+    margin-top: -6px;
+    margin-bottom: 10px;
+  }
+  
