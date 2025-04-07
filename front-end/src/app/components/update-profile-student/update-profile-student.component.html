@@ -44,6 +44,30 @@
                     <input id="phoneNumber" type="text" [(ngModel)]="studentData.phoneNumber" name="phoneNumber"
                         [readonly]="!isEditing" />
                 </div>
+                <!-- Password Update Section -->
+                <h3>Update Password</h3>
+                <div class="form-section">
+                    <button *ngIf="!showPasswordInputs" (click)="togglePasswordUpdate()">Update Password</button>
+
+                    <!-- Step 1: Old Password -->
+                    <div *ngIf="showPasswordInputs && !passwordVerified">
+                        <label for="oldPassword">Old Password</label>
+                        <input type="password" id="oldPassword" [(ngModel)]="oldPassword" name="oldPassword"
+                            placeholder="Enter old password" />
+                        <p *ngIf="passwordError" class="error-msg">{{ passwordError }}</p>
+                        <button (click)="verifyOldPassword()">Verify</button>
+                    </div>
+
+                    <!-- Step 2: New Password -->
+                    <div *ngIf="passwordVerified">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" [(ngModel)]="newPassword" name="newPassword"
+                            placeholder="Enter new password" />
+                        <p *ngIf="newPasswordError" class="error-msg">{{ newPasswordError }}</p>
+                        <button (click)="updatePassword()">Update</button>
+                    </div>
+                </div>
+
 
                 <!-- Secondary Education -->
                 <h3>Secondary Education</h3>
@@ -200,7 +224,7 @@
                         [readonly]="!isEditing" />
                 </div>
 
-                
+
                 <h3>Upload Resume</h3>
                 <div>
                     <label for="resume">Resume</label>

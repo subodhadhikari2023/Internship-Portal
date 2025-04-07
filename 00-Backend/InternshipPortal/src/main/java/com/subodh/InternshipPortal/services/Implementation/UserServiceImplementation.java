@@ -295,7 +295,7 @@ public class UserServiceImplementation implements UserService {
         user.setUserName(instructor.getUserName());
         user.setUserEmail(instructor.getUserEmail());
         user.setUserPhoneNumber(instructor.getPhoneNumber());
-        user.setUserPassword(passwordEncoder.encode(instructor.getUserEmail()+"@123"));
+        user.setUserPassword(passwordEncoder.encode(instructor.getUserEmail() + "@123"));
         user.addRole("ROLE_INSTRUCTOR");
         DepartmentDetails department = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElseThrow(() -> new RuntimeException("Please select a valid department"));
         user.setDepartment(department);
@@ -336,7 +336,6 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserWrapper resetPasswordUserFoundByEmail(String email, String password) {
         Users users = userRepository.findByUserEmail(email);
-        log.info("Reset Password User Found: {}", users.getUserEmail());
         users.setUserPassword(passwordEncoder.encode(password));
         return new UserWrapper(userRepository.save(users));
     }
@@ -366,6 +365,12 @@ public class UserServiceImplementation implements UserService {
         updateIfNotNull(departmentDetails, dbInstructor::setDepartment);
 
         return new InstructorWrapper(userRepository.save(dbInstructor));
+    }
+
+    @Override
+    public boolean validatePassword(String email, String entity) {
+        Users user = userRepository.findByUserEmail(email);
+        return passwordEncoder.matches(entity, user.getUserPassword());
     }
 
 

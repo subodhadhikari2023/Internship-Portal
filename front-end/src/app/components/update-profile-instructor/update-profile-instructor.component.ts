@@ -16,6 +16,15 @@ export class UpdateProfileInstructorComponent implements OnInit {
   profilePictureSafeUrl: any;
   previewImage: string | ArrayBuffer | null = null;
 
+  // Password update logic
+  showPasswordInputs: boolean = false;
+  passwordVerified: boolean = false;
+  oldPassword: string = '';
+  newPassword: string = '';
+  passwordError: string = '';
+  newPasswordError: string = '';
+
+
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -84,12 +93,12 @@ export class UpdateProfileInstructorComponent implements OnInit {
       console.warn("No file selected!");
       return;
     }
-   
+
     this.userService.uploadInstructorProfilePicture(this.selectedProfilePicture).subscribe({
       next: (response) => {
         console.log("Upload successful:", response);
         this.isEditing = false;
-        this.selectedProfilePicture=null;
+        this.selectedProfilePicture = null;
         this.fetchInstructorDetails();
       },
       error: (error) => {
@@ -97,4 +106,61 @@ export class UpdateProfileInstructorComponent implements OnInit {
       }
     });
   }
+  togglePasswordUpdate(): void {
+    this.showPasswordInputs = true;
+    this.passwordVerified = false;
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.passwordError = '';
+    this.newPasswordError = '';
+  }
+
+  verifyOldPassword(): void {
+    if (!this.oldPassword) {
+      this.passwordError = "Old password is required!";
+      return;
+    }
+
+    this.userService.validatePassword(this.oldPassword).subscribe({
+      next: (res: any) => {
+        if (res === true) {
+          this.passwordVerified = true;
+          this.passwordError = '';
+        } else {
+          this.passwordError = "Old password is incorrect!";
+        }
+      },
+      error: (err) => {
+        console.error(err);
+        this.passwordError = "Error verifying password!";
+      }
+    });
+  }
+
+  updatePassword(): void {
+    if (!this.newPassword || this.newPassword.length < 6) {
+      this.newPasswordError = "Password must be at least 6 characters long!";
+      return;
+    }
+
+    this.userService.updatePassword(this.newPassword).subscribe({
+      next: () => {
+        this.resetPasswordFields();
+      },
+      error: (err) => {
+        console.error(err);
+        this.newPasswordError = "Error updating password!";
+      }
+    });
+  }
+
+  resetPasswordFields(): void {
+    this.showPasswordInputs = false;
+    this.passwordVerified = false;
+    this.oldPassword = '';
+    this.newPassword = '';
+    this.passwordError = '';
+    this.newPasswordError = '';
+  }
+
 }
