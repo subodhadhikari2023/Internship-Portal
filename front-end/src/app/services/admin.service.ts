@@ -18,7 +18,7 @@ export class AdminService {
 
   createNewDepartment(departmentName: String) {
     const request = {
-      entity:departmentName
+      entity: departmentName
     }
     return this.http.post<any>(`${BASE_URL}department`, request).pipe(
       map(res => res.entity)
@@ -42,5 +42,11 @@ export class AdminService {
   }
   createInstructor(instructor: any) {
     return this.http.post<any>(`${BASE_URL}instructors`, instructor).pipe(map(res => res.entity));
+  }
+
+  updateInstructor(request: any) {
+    return this.http.put<any>(`${BASE_URL}instructors`, request).pipe(
+      map(res => res.entity)
+    )
   }
 }

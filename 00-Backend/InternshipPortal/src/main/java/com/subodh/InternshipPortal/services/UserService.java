@@ -176,4 +176,6 @@ public interface UserService {
     AdminWrapper updateAdminProfilePicture(UserDetails userDetails, MultipartFile file);
 
     AdminWrapper updateAdmin(UserDetails userDetails, AdminWrapper adminWrapper);
+
+    InstructorWrapper updateInstructorByAdmin(InstructorWrapper instructor);
 }

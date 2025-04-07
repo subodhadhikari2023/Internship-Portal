@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { AdminService } from 'src/app/services/admin.service';
 
 @Component({
@@ -7,6 +8,41 @@ import { AdminService } from 'src/app/services/admin.service';
   styleUrls: ['./admin-home.component.css']
 })
 export class AdminHomeComponent implements OnInit {
+  saveInstructor(_t39: number) {
+    const updatedInstructor = this.instructors[_t39];
+    this.adminService.updateInstructor(updatedInstructor).subscribe({
+      next:(res)=>{
+        this.instructors[_t39].editMode = false;
+        
+      },error:(err)=>{
+        console.error(err);
+        
+      }
+    })
+    
+  }
+
+
+  constructor(private adminService: AdminService) { }
+
+  ngOnInit(): void {
+    this.loadAllData();
+  }
+
+
+
+  cancelEdit(index: number) {
+    this.instructors[index] = { ...this.instructors[index].backup, editMode: false };
+    delete this.instructors[index].backup;
+  }
+
+
+
+  editInstructor(index: number) {
+    // Enable edit mode and store backup
+    this.instructors[index].editMode = true;
+    this.instructors[index].backup = { ...this.instructors[index] };
+  }
 
   departments: string[] = [];
   users: any[] = [];
@@ -21,11 +57,7 @@ export class AdminHomeComponent implements OnInit {
     department: '',
   };
 
-  constructor(private adminService: AdminService) { }
 
-  ngOnInit(): void {
-    this.loadAllData();
-  }
 
   // Load all data from API
   loadAllData(): void {
@@ -56,14 +88,21 @@ export class AdminHomeComponent implements OnInit {
   }
 
   // Add new instructor
-  addInstructor(): void {
-    if (!this.validateInstructorForm()) return; // Prevent invalid data submission
-
+  addInstructor(form: NgForm): void {
+    if (!this.validateInstructorForm()) return;
+  
     this.adminService.createInstructor(this.newInstructor).subscribe(() => {
-      this.newInstructor = { userEmail: '', userName: '', phoneNumber: '', department: '' }; // Reset form
+      this.newInstructor = {
+        userEmail: '',
+        userName: '',
+        phoneNumber: '',
+        department: '',
+      };
+      form.resetForm(); // This resets both values AND validation states!
       this.loadAllData();
     });
   }
+  
 
   // Validate instructor form before submission
   validateInstructorForm(): boolean {
@@ -94,4 +133,5 @@ export class AdminHomeComponent implements OnInit {
 
     return true;
   }
+  
 }

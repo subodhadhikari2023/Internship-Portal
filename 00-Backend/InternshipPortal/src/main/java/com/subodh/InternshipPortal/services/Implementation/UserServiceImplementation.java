@@ -4,7 +4,7 @@ package com.subodh.InternshipPortal.services.Implementation;
 import com.subodh.InternshipPortal.exceptions.UserCreationException;
 import com.subodh.InternshipPortal.modals.*;
 import com.subodh.InternshipPortal.repositories.DepartmentRepository;
-import com.subodh.InternshipPortal.repositories.RolesRepository;
+import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.repositories.UsersRepository;
 
@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -51,7 +49,7 @@ public class UserServiceImplementation implements UserService {
     private final RegistrationService registrationService;
     private final UsersRepository usersRepository;
     private final DepartmentRepository departmentRepository;
-    private final RolesRepository rolesRepository;
+    private final MailService mailService;
 
     @Value("${file.storage.path}")
     private String rootFolderPath;
@@ -67,10 +65,9 @@ public class UserServiceImplementation implements UserService {
      * @param registrationService  the registration service
      * @param usersRepository      the users repository
      * @param departmentRepository the department repository
-     * @param rolesRepository      the roles repository
      */
     @Autowired
-    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository, RolesRepository rolesRepository) {
+    public UserServiceImplementation(UsersRepository userRepository, AuthenticationManager auth, PasswordEncoder passwordEncoder, JwtUtils jwtUtils, RegistrationService registrationService, UsersRepository usersRepository, DepartmentRepository departmentRepository, MailService mailService) {
         this.userRepository = userRepository;
         this.auth = auth;
         this.passwordEncoder = passwordEncoder;
@@ -78,7 +75,7 @@ public class UserServiceImplementation implements UserService {
         this.registrationService = registrationService;
         this.usersRepository = usersRepository;
         this.departmentRepository = departmentRepository;
-        this.rolesRepository = rolesRepository;
+        this.mailService = mailService;
     }
 
     @Override
@@ -298,10 +295,11 @@ public class UserServiceImplementation implements UserService {
         user.setUserName(instructor.getUserName());
         user.setUserEmail(instructor.getUserEmail());
         user.setUserPhoneNumber(instructor.getPhoneNumber());
-        user.setUserPassword(passwordEncoder.encode("Test@123"));
+        user.setUserPassword(passwordEncoder.encode(instructor.getUserEmail()+"@123"));
         user.addRole("ROLE_INSTRUCTOR");
         DepartmentDetails department = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElseThrow(() -> new RuntimeException("Please select a valid department"));
         user.setDepartment(department);
+        mailService.sendInstructorCreationMail(user);
         try {
             return new InstructorWrapper(usersRepository.save(user));
         } catch (DataIntegrityViolationException e) {
@@ -338,7 +336,7 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserWrapper resetPasswordUserFoundByEmail(String email, String password) {
         Users users = userRepository.findByUserEmail(email);
-        log.info("Reset Password User Found: {}",users.getUserEmail());
+        log.info("Reset Password User Found: {}", users.getUserEmail());
         users.setUserPassword(passwordEncoder.encode(password));
         return new UserWrapper(userRepository.save(users));
     }
@@ -350,10 +348,24 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public AdminWrapper updateAdmin(UserDetails userDetails, AdminWrapper adminWrapper) {
-        Users instructor = userRepository.findByUserEmail(userDetails.getUsername());
-        updateIfNotNull(adminWrapper.getUserName(), instructor::setUserName);
-        updateIfNotNull(adminWrapper.getPhoneNumber(), instructor::setUserPhoneNumber);
-        return new AdminWrapper(userRepository.save(instructor));
+        Users admin = userRepository.findByUserEmail(userDetails.getUsername());
+        updateIfNotNull(adminWrapper.getUserName(), admin::setUserName);
+        updateIfNotNull(adminWrapper.getPhoneNumber(), admin::setUserPhoneNumber);
+        return new AdminWrapper(userRepository.save(admin));
+    }
+
+    @Override
+    public InstructorWrapper updateInstructorByAdmin(InstructorWrapper instructor) {
+        Users dbInstructor = usersRepository.findByUserEmail(instructor.getUserEmail());
+
+        updateIfNotNull(instructor.getUserName(), dbInstructor::setUserName);
+        updateIfNotNull(instructor.getPhoneNumber(), dbInstructor::setUserPhoneNumber);
+        DepartmentDetails departmentDetails = departmentRepository.findByDepartmentName(instructor.getDepartment()).orElse(null);
+
+        assert departmentDetails != null;
+        updateIfNotNull(departmentDetails, dbInstructor::setDepartment);
+
+        return new InstructorWrapper(userRepository.save(dbInstructor));
     }
 
 

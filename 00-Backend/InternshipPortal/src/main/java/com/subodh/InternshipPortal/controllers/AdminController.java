@@ -122,6 +122,14 @@ public class AdminController {
     public ResponseEntity<?> getAllStudents() {
         return new ResponseEntity<>(new Response<>(userService.findAllStudents()), HttpStatus.OK);
     }
+
+
+    @PutMapping("instructors")
+    public ResponseEntity<?> updateInstructor(@RequestBody InstructorWrapper instructor) {
+        return new ResponseEntity<>(new Response<>(userService.updateInstructorByAdmin(instructor)),HttpStatus.OK);
+    }
+
+
 }
 
 
