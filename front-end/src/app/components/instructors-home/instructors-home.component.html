@@ -67,14 +67,22 @@
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="recentInternships && recentInternships.length > 0; else noInternships">
                             <tr *ngFor="let internship of recentInternships">
-                              <td>{{ internship.internshipName }}</td>
-                              <td>{{ internship.status }}</td>
-                              <td>{{ internship.startDate }}</td>
-                              <td>{{ internshipDuration(internship.startDate, internship.endDate) }}</td>
+                                <td>{{ internship.internshipName }}</td>
+                                <td>{{ internship.status }}</td>
+                                <td>{{ internship.startDate }}</td>
+                                <td>{{ internshipDuration(internship.startDate, internship.endDate) }}</td>
                             </tr>
-                          </tbody>
+                        </tbody>
+                        <ng-template #noInternships>
+                            <tbody>
+                                <tr>
+                                    <td colspan="4" class="text-center">No internships to show.</td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                        
                           
                     </table>
                 </div>
@@ -95,13 +103,21 @@
 
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="recentApplications && recentApplications.length > 0; else noApplications">
                             <tr *ngFor="let applications of recentApplications">
                                 <td>{{ applications.applicantName }}</td>
                                 <td>{{ applications.internshipTitle }}</td>
                                 <td>{{ applications.status }}</td>
-                              </tr>
+                            </tr>
                         </tbody>
+                        <ng-template #noApplications>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3" class="text-center">No applications to show.</td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                        
                     </table>
                 </div>
             </div>
@@ -112,3 +128,4 @@
 
 
 </body>
+<app-footer></app-footer>

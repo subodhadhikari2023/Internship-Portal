@@ -8,7 +8,6 @@ import com.subodh.InternshipPortal.services.MailService;
 import com.subodh.InternshipPortal.services.OTPService;
 import com.subodh.InternshipPortal.services.RegistrationService;
 import com.subodh.InternshipPortal.services.UserService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,7 +21,7 @@ import java.nio.file.Files;
 /**
  * The type Public controller.
  */
-@Slf4j
+
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/public")
@@ -105,7 +104,7 @@ public class PublicController {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody Users user) {
 
-        String verify = null;
+        String verify;
         try {
             verify = userService.verifyUserCredentials(user);
             return new ResponseEntity<>(new LoginResponse(verify), HttpStatus.OK);
@@ -137,7 +136,6 @@ public class PublicController {
     @GetMapping("download")
     public ResponseEntity<Resource> downloadFile(String filePath) {
         assert filePath != null;
-        log.info("Downloading file: {}", filePath);
         try {
             String absolutePath = rootFolderPath + filePath.replace("/storage/Internship-Portal", "");
 
@@ -160,7 +158,6 @@ public class PublicController {
                 headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
                 headers.setContentDisposition(ContentDisposition.attachment().filename(file.getName()).build());
             }
-            log.info(resource.getFilename());
 
             return ResponseEntity.ok().headers(headers).body(resource);
         } catch (Exception e) {
@@ -199,7 +196,6 @@ public class PublicController {
      */
     @PostMapping("validate-otp")
     public ResponseEntity<?> resetPassword(@RequestBody OneTimePassword oneTimePassword) {
-        log.info("OTP: {}", oneTimePassword.getOneTimePassword());
         return otpService.verifyOTP(oneTimePassword.getUserEmail(), oneTimePassword.getOneTimePassword()) ? new ResponseEntity<>(new Response<>("OTP verified successfully"), HttpStatus.OK) : new ResponseEntity<>(new Response<>("Invalid OTP"), HttpStatus.UNAUTHORIZED);
     }
 

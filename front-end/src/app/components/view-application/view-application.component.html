@@ -1,42 +1,51 @@
 <body>
-    <nav>
-      <app-student-nav></app-student-nav>
-    </nav>
-  
-    <!-- Filter Section -->
-    <section class="filter-section">
-      <div class="filter-container">
-        <label for="statusFilter">Filter by Status:</label>
-        <select id="statusFilter" (change)="filterApplications($event)">
-          <option value="ALL">All</option>
-          <option value="SUBMITTED">Submitted</option>
-          <option value="REJECTED">Rejected</option>
-          <option value="ACCEPTED">Accepted</option>
-        </select>
+  <nav>
+    <app-student-nav></app-student-nav>
+  </nav>
+
+  <!-- Filter Section -->
+  <section class="filter-section">
+    <div class="filter-container">
+      <label for="statusFilter">Filter by Status:</label>
+      <select id="statusFilter" (change)="filterApplications($event)">
+        <option value="ALL">All</option>
+        <option value="SUBMITTED">Submitted</option>
+        <option value="REJECTED">Rejected</option>
+        <option value="ACCEPTED">Accepted</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Applications List -->
+  <main class="applications-container">
+    <ng-container *ngIf="filteredApplications.length > 0; else noApplications">
+      <article class="application-card" *ngFor="let application of filteredApplications">
+        <h3><strong>Internship:</strong> {{ application.internshipTitle }}</h3>
+        <p><strong>Contact Person:</strong> {{ application.contactPerson }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span [ngClass]="{
+            'submitted': application.status === 'SUBMITTED',
+            'accepted': application.status === 'ACCEPTED',
+            'rejected': application.status === 'REJECTED'
+          }">
+            {{ application.status }}
+          </span>
+        </p>
+      </article>
+    </ng-container>
+
+    <!-- Fallback Message -->
+    <ng-template #noApplications>
+      <div class="no-data-wrapper">
+        <h2 *ngIf="applications.length === 0" class="headline">No internship applications found.</h2>
+        <h2 *ngIf="applications.length > 0" class="headline">
+          No applications with status
+          <span class="highlighted">{{ selectedStatus }}</span>
+        </h2>
+        <p class="subtext">Try selecting a different status or apply to an internship!</p>
       </div>
-    </section>
-  
-    <!-- Applications List -->
-    <main class="applications-container">
-      <ng-container *ngFor="let application of filteredApplications">
-        <article class="application-card">
-          <h3><strong>Internship:</strong> {{ application.internshipTitle }}</h3>
-          <p><strong>Contact Person:</strong> {{ application.contactPerson }}</p>
-          <p>
-            <strong>Status:</strong> 
-            <span [ngClass]="{
-              'submitted': application.status === 'SUBMITTED',
-              'accepted': application.status === 'ACCEPTED',
-              'rejected': application.status === 'REJECTED'
-            }">
-              {{ application.status }}
-            </span>
-          </p>
-          <!-- <button class="btn-primary" (click)="viewApplicationDetails(application)"> -->
-            <!-- View Details -->
-          <!-- </button> -->
-        </article>
-      </ng-container>
-    </main>
-  </body>
-  
+    </ng-template>
+  </main>
+</body>
+<app-student-footer></app-student-footer>

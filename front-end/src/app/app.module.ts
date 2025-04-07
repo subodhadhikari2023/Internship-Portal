@@ -34,6 +34,7 @@ import { AdminHomeComponent } from './components/admin-home/admin-home.component
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 import { UpdateAdminComponent } from './components/update-admin/update-admin.component';
+import { StudentFooterComponent } from './components/student-footer/student-footer.component';
 
 
 
@@ -69,6 +70,7 @@ import { UpdateAdminComponent } from './components/update-admin/update-admin.com
     ForgetPasswordComponent,
     AdminNavbarComponent,
     UpdateAdminComponent,
+    StudentFooterComponent,
     
   ],
   imports: [

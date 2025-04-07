@@ -17,32 +17,44 @@
   </section>
 
   <main class="internships-container">
-    <ng-container *ngFor="let internship of filteredInternships">
-      <article class="internship-card" *ngIf="internship.status.toUpperCase() === 'ACTIVE'">
-        <h3><strong>Role:</strong> {{ internship.internshipName }}</h3>
-        <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
-        <p><strong>End Date:</strong> {{ internship.endDate }}</p>
-        <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
-        <p><strong>Description:</strong> {{ internship.description }}</p>
-        <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
-        <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
-        <p><strong>Department:</strong> {{ internship.department }}</p>
-        <p>
-          <strong>Status:</strong>
-          <span [class.active]="internship.status === 'ACTIVE'">
-            {{ internship.status }}
-          </span>
-        </p>
-        <button *ngIf="!appliedInternships[internship.internshipId]" class="btn-primary button"
-          (click)="applyInternship(internship)">
-          Apply
-        </button>
-        <button *ngIf="appliedInternships[internship.internshipId]" class="btn-secondary button" disabled>
-          Already Applied
-        </button>
-
-      </article>
+    <ng-container *ngIf="filteredInternships.length > 0; else noInternships">
+      <ng-container *ngFor="let internship of filteredInternships">
+        <article class="internship-card">
+          <h3><strong>Role:</strong> {{ internship.internshipName }}</h3>
+          <p><strong>Start Date:</strong> {{ internship.startDate }}</p>
+          <p><strong>End Date:</strong> {{ internship.endDate }}</p>
+          <p><strong>Created By:</strong> {{ internship.contactPerson }}</p>
+          <p><strong>Description:</strong> {{ internship.description }}</p>
+          <p><strong>Required Skills:</strong> {{ internship.requiredSkills }}</p>
+          <p><strong>Work Mode:</strong> {{ internship.workMode }}</p>
+          <p><strong>Department:</strong> {{ internship.department }}</p>
+          <p>
+            <strong>Status:</strong>
+            <span class="active">{{ internship.status }}</span>
+          </p>
+          <button *ngIf="!appliedInternships[internship.internshipId]" class="btn-primary button"
+            (click)="applyInternship(internship)">
+            Apply
+          </button>
+          <button *ngIf="appliedInternships[internship.internshipId]" class="btn-secondary button" disabled>
+            Already Applied
+          </button>
+        </article>
+      </ng-container>
     </ng-container>
+    
+    <ng-template #noInternships>
+      <div class="no-data-wrapper">
+        <h2 *ngIf="internships.length === 0" class="headline">No internships are currently available.</h2>
+        <h2 *ngIf="internships.length > 0" class="headline">
+          No internships available for
+          <span class="highlighted">{{ selectedDepartment }}</span>
+        </h2>
+        <p class="subtext">Please check back later or try selecting another department.</p>
+      </div>
+    </ng-template>
+    
+    
     <section class="popup">
       <app-popup></app-popup>
     </section>
@@ -50,3 +62,4 @@
 
 
 </body>
+<app-student-footer></app-student-footer>

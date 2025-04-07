@@ -2,6 +2,9 @@ package com.subodh.InternshipPortal.services;
 
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
+import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
+
+import java.time.LocalDate;
 
 /**
  * The interface Mail service.
@@ -36,4 +39,8 @@ public interface MailService {
      * @param oneTimePassword the one time password
      */
     void sendPasswordResetMail(String userEmail, String oneTimePassword);
+
+    void sendProjectAllocationMail(String userName, String projectName, LocalDate submissionDate);
+
+    void sendProjectStatusChangeMail(String userEmail, String projectName, StudentInternshipStatus status, LocalDate now);
 }
