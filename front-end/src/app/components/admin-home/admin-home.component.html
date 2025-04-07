@@ -29,45 +29,48 @@
       <section class="card">
         <h3>Instructors</h3>
         <ul>
-          <li *ngFor="let instructor of instructors">
-            {{ instructor.userName }} - {{ instructor.department }}
+          <li *ngFor="let instructor of instructors; let i = index">
+            <div class="instructor-display">
+              <span>{{ instructor.userName }} - {{ instructor.department }}</span>
+              <button (click)="editInstructor(i)">Edit</button>
+            </div>
+
+
+            <div *ngIf="instructor.editMode" class="edit-container">
+              <input [(ngModel)]="instructor.userName" placeholder="Name" />
+              <input [ngModel]="instructor.userEmail" placeholder="Email" disabled />
+              <input [(ngModel)]="instructor.phoneNumber" placeholder="Phone (10 digits)" pattern="^[0-9]{10}$" />
+
+              <select [(ngModel)]="instructor.department">
+                <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+              </select>
+
+              <div class="edit-actions">
+                <button (click)="saveInstructor(i)">💾 Save</button>
+                <button (click)="cancelEdit(i)">✖ Cancel</button>
+              </div>
+            </div>
+
           </li>
+
         </ul>
 
         <!-- Add Instructor Form -->
         <form #instructorForm="ngForm">
           <div class="input-container">
-            <input 
-              [(ngModel)]="newInstructor.userEmail" 
-              name="email"
-              #emailInput="ngModel"
-              required
-              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
-              placeholder="Email"
-            />
+            <input [(ngModel)]="newInstructor.userEmail" name="email" #emailInput="ngModel" required
+              pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" placeholder="Email" />
             <p *ngIf="emailInput.invalid && emailInput.touched" class="error-msg">
               Valid email is required.
             </p>
 
-            <input 
-              [(ngModel)]="newInstructor.userName" 
-              name="name"
-              #nameInput="ngModel"
-              required 
-              placeholder="Name"
-            />
+            <input [(ngModel)]="newInstructor.userName" name="name" #nameInput="ngModel" required placeholder="Name" />
             <p *ngIf="nameInput.invalid && nameInput.touched" class="error-msg">
               Name is required.
             </p>
 
-            <input 
-              [(ngModel)]="newInstructor.phoneNumber" 
-              name="phone"
-              #phoneInput="ngModel"
-              required 
-              pattern="^[0-9]{10}$"
-              placeholder="Phone (10 digits)"
-            />
+            <input [(ngModel)]="newInstructor.phoneNumber" name="phone" #phoneInput="ngModel" required
+              pattern="^[0-9]{10}$" placeholder="Phone (10 digits)" />
             <p *ngIf="phoneInput.invalid && phoneInput.touched" class="error-msg">
               Phone number must be exactly 10 digits.
             </p>
@@ -81,9 +84,10 @@
               Please select a department.
             </p>
 
-            <button (click)="addInstructor()" [disabled]="instructorForm.invalid">
+            <button (click)="addInstructor(instructorForm)" [disabled]="instructorForm.invalid">
               Add Instructor
             </button>
+            
           </div>
         </form>
       </section>

@@ -3,6 +3,7 @@ package com.subodh.InternshipPortal.services;
 
 import com.subodh.InternshipPortal.enums.StudentApplicationStatus;
 import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
+import com.subodh.InternshipPortal.modals.Users;
 
 import java.time.LocalDate;
 
@@ -43,4 +44,6 @@ public interface MailService {
     void sendProjectAllocationMail(String userName, String projectName, LocalDate submissionDate);
 
     void sendProjectStatusChangeMail(String userEmail, String projectName, StudentInternshipStatus status, LocalDate now);
+
+    void sendInstructorCreationMail(Users user);
 }

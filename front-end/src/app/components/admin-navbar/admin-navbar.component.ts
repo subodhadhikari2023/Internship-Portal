@@ -17,7 +17,6 @@ export class AdminNavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchAdminDetails().subscribe({
       next: (res) => {
-        console.log(res);
         
         this.adminData = res;
         if (res.profilePictureFilePath) {
