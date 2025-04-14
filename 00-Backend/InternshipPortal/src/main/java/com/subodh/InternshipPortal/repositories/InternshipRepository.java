@@ -40,4 +40,6 @@ public interface InternshipRepository extends JpaRepository<Internship, Long> {
     List<Internship> findAllByStatusAndCreatedBy(InternshipStatus status, Users createdBy);
 
     List<Internship> findTop5ByCreatedByOrderByStartDateDesc(Users createdBy);
+
+    List<Internship> findAllByStatus(InternshipStatus status);
 }
