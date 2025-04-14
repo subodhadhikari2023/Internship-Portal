@@ -95,7 +95,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         dbProject.setProjectDescriptionFilePath(relativePath);
         studentInternship.getProjects().add(dbProject);
-        mailService.sendProjectAllocationMail(studentInternship.getStudent().getUserName(),dbProject.getProjectName(),dbProject.getSubmissionDate());
+        mailService.sendProjectAllocationMail(studentInternship.getStudent().getUserEmail(),dbProject.getProjectName(),dbProject.getSubmissionDate());
         internshipStudentRepository.save(studentInternship);
 
         return new ProjectWrapper(dbProject.getProjectName(), dbProject.getProjectDescription(), studentInternship.getStudent().getUserEmail(), dbProject.getSubmissionDate(), dbProject.getProjectId(), dbProject.getProjectDescriptionFilePath(), dbProject.getProjectFile(), String.valueOf(dbProject.getStatus()));
