@@ -22,7 +22,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -95,6 +94,15 @@ public class CertificateServiceImpl implements CertificateService {
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public CertificateWrapper validateCertificate(String certificateId) {
+        Certificate certificate = certificateRepository.findById(certificateId).orElse(null);
+        if (certificate == null) {
+            return null;
+        }
+        return new CertificateWrapper(certificate);
     }
 
 

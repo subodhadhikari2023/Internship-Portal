@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 /**
  * The type Project service.
@@ -197,6 +198,13 @@ public class ProjectServiceImpl implements ProjectService {
                 dbProject.getProjectFile(),
                 String.valueOf(Objects.requireNonNull(projectRepository.findById(projectId).orElse(null)).getStatus())
         );
+    }
+
+    @Override
+    public List<ProjectWrapper> findAll() {
+        List<Project> projectList = projectRepository.findAll();
+        return projectList.stream().map(ProjectWrapper::new).collect(Collectors.toList());
+
     }
 
 }

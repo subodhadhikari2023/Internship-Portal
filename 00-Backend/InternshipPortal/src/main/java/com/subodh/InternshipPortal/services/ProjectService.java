@@ -3,6 +3,7 @@ package com.subodh.InternshipPortal.services;
 import com.subodh.InternshipPortal.wrapper.ProjectWrapper;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -46,4 +47,6 @@ public interface ProjectService {
      * @return the project wrapper
      */
     ProjectWrapper changeProjectStatus(Long projectId, String status);
+
+    List<ProjectWrapper> findAll();
 }

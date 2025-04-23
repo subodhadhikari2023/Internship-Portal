@@ -14,4 +14,6 @@ public interface CertificateService {
      * @return the certificate wrapper
      */
     CertificateWrapper createCertificate(Long request);
+
+    CertificateWrapper validateCertificate(String certificateId);
 }

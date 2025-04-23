@@ -2,12 +2,9 @@ package com.subodh.InternshipPortal.controllers;
 
 
 import com.subodh.InternshipPortal.exceptions.InvalidJWTTokenException;
+import com.subodh.InternshipPortal.services.*;
 import com.subodh.InternshipPortal.wrapper.*;
 import com.subodh.InternshipPortal.modals.*;
-import com.subodh.InternshipPortal.services.MailService;
-import com.subodh.InternshipPortal.services.OTPService;
-import com.subodh.InternshipPortal.services.RegistrationService;
-import com.subodh.InternshipPortal.services.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -34,6 +31,8 @@ public class PublicController {
     private final OTPService otpService;
     private final MailService mailService;
     private final RegistrationService registrationService;
+    private final CertificateService certificateService;
+    private final ProjectService projectService;
     @Value("${file.storage.path}")
     private String rootFolderPath;
 
@@ -46,11 +45,13 @@ public class PublicController {
      * @param mailService         the mail service
      * @param registrationService the registration service
      */
-    public PublicController(UserService userService, OTPService otpService, MailService mailService, RegistrationService registrationService) {
+    public PublicController(UserService userService, OTPService otpService, MailService mailService, RegistrationService registrationService, CertificateService certificateService, CertificateService certificateService1, ProjectService projectService) {
         this.userService = userService;
         this.otpService = otpService;
         this.mailService = mailService;
         this.registrationService = registrationService;
+        this.certificateService = certificateService1;
+        this.projectService = projectService;
     }
 
 
@@ -216,6 +217,21 @@ public class PublicController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 
+    }
+
+    @GetMapping("validate-certificate")
+    public ResponseEntity<?> validateCertificate(@RequestParam String certificateId) {
+        CertificateWrapper validated = certificateService.validateCertificate(certificateId);
+        if (validated != null) {
+
+            return new ResponseEntity<>(new Response<>(validated), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("get-all-projects")
+    public ResponseEntity<?> getAllProjects() {
+        return new ResponseEntity<>(new Response<>(projectService.findAll()),HttpStatus.OK);
     }
 
 }

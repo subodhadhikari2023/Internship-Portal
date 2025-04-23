@@ -65,6 +65,21 @@ public class CertificateWrapper {
         this.verifyingURL = urlPrefix + certificate.getCertificateId();
 
 
+    }
+
+    public CertificateWrapper(
+            Certificate certificate
+    ) {
+        this.certificateId = certificate.getCertificateId();
+        this.certificateFilePath = certificate.getCertificateFilePath();
+        this.internshipName = certificate.getInternshipStudents().getInternship().getInternshipName();
+        this.startDate = certificate.getInternshipStudents().getInternship().getStartDate();
+        this.completionDate = certificate.getInternshipStudents().getInternship().getEndDate();
+        this.studentName = certificate.getInternshipStudents().getStudent().getUserName();
+        this.internshipDepartment = certificate.getInternshipStudents().getInternship().getDepartment().getDepartmentName();
+        this.instructorName = certificate.getInternshipStudents().getInternship().getCreatedBy().getUserName();
+        this.issuedDate = certificate.getIssueDate();
+
 
     }
 

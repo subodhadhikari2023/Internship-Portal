@@ -1,5 +1,6 @@
 package com.subodh.InternshipPortal.wrapper;
 
+import com.subodh.InternshipPortal.modals.Project;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -60,4 +61,10 @@ public class ProjectWrapper {
     }
 
 
+    public ProjectWrapper(Project project) {
+        this.projectId = project.getProjectId();
+        this.projectName = project.getProjectName();
+        this.projectDescription = project.getProjectDescription();
+        this.projectDescriptionFile=project.getProjectDescriptionFilePath();
+    }
 }
