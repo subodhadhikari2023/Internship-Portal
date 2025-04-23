@@ -1,6 +1,10 @@
 package com.subodh.InternshipPortal.services.Implementation;
 
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -18,6 +22,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -251,11 +258,34 @@ public class CertificateServiceImpl implements CertificateService {
             directorLabel.setAlignment(Element.ALIGN_RIGHT);
             directorLabel.setIndentationRight(150);
             document.add(directorLabel);
+            Image qrCodeImage = generateQRCodeImage(certificateWrapper.getVerifyingURL());
+            document.add(qrCodeImage);
 
             document.close();
         } catch (DocumentException | IOException e) {
             throw new RuntimeException("Error generating PDF certificate", e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
+    private static Image generateQRCodeImage(String url) throws Exception {
+        int width = 150;
+        int height = 150;
+        BitMatrix matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
+
+        BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(matrix);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bufferedImage, "png", baos);
+        baos.flush();
+
+        Image qrImage = Image.getInstance(baos.toByteArray());
+        baos.close();
+
+        qrImage.setAbsolutePosition(720, 100); // bottom-right corner — tweak as needed
+        qrImage.scaleToFit(100, 100); // size it down
+        return qrImage;
+    }
+
 
 }

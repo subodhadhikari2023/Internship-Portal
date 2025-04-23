@@ -22,10 +22,13 @@ export class ViewInternshipStudentComponent implements OnInit {
   viewSelectedInternships() {
     this.internshipService.getSelectedInternshipsForStudents().subscribe({
       next: (response) => {
+        
         this.internships = response.map((internship: any) => {
           // Check if the certificateFilePath exists and is not an empty string
-          if (!internship.certificateFilePath || internship.certificateFilePath.trim() === '') {
+          
+          if (!internship.certificateFilePath || internship.certificateFilePath.trim() === "") {
             // Only claim the certificate if all projects are completed
+
             const allProjectsCompleted = internship.projects?.length > 0 &&
               internship.projects.every((project: any) => project.projectStatus === 'COMPLETED');
 
