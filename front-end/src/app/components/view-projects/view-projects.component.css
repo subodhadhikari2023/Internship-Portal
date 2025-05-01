@@ -1,0 +1,126 @@
+:root {
+    --primary-color: #029407;
+    --secondary-color: #027D94;
+    --accent-color: #409402;
+    --dark-accent: #016B05;
+    --light-accent: #38B24A;
+  
+    --font-color: #222222;
+    --font-light: #555555;
+    --heading-color: #e0e0e0;
+  
+    --background-color: #ffffff;
+    --card-background: #f9f9f9;
+    --border-color: #dcdcdc;
+    --hover-background: #f1f1f1;
+  }
+  
+  * {
+    box-sizing: border-box;
+    position: relative;
+
+  }
+  
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: "Roboto", sans-serif;
+    background-color: var(--background-color);
+   
+  }
+  main{
+    min-height: 100vh;
+    height: fit-content;
+  }
+  .header {
+    background-color: #140057;
+    color: white;
+    padding: 1rem 0;
+  }
+  
+  .navbar {
+    background-color: #140057;
+  }
+  
+  .nav-link {
+    color: white !important;
+    font-weight: 600;
+  }
+  
+  .navbar-toggler-icon {
+    filter: invert(1);
+  }
+  
+  .portal-title {
+    font-size: 1.75rem;
+    margin-top: 0.5rem;
+  }
+  
+  .img-responsive {
+    height: 90px;
+    width: auto;
+  }
+  
+  .search-section input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    display: block;
+  }
+  
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 1rem;
+  }
+  
+  .project-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .project-title {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .project-description {
+    color: var(--font-light);
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .project-meta {
+    color: var(--font-color);
+    font-size: 0.85rem;
+  }
+  
+  .footer {
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .img-responsive {
+      height: 60px;
+    }
+  
+    .portal-title {
+      font-size: 1.25rem;
+    }
+  }
+  

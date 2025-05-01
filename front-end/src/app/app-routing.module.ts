@@ -24,6 +24,8 @@ import { UpdateProfileInstructorComponent } from './components/update-profile-in
 import { AdminHomeComponent } from './components/admin-home/admin-home.component';
 import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
 import { UpdateAdminComponent } from './components/update-admin/update-admin.component';
+import { ViewProjectsComponent } from './components/view-projects/view-projects.component';
+import { CertificateValidationComponent } from './components/certificate-validation/certificate-validation.component';
 
 
 
@@ -48,10 +50,13 @@ const routes: Routes = [
   { path: 'instructor/view-internship-students', component: ViewEnrolledStudentsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/project-details/:id', component: ProjectDetailsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
   { path: 'instructor/student-details/:id', component: ViewStudentDetailsForInstructorComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+  { path: 'instructor/projects', component: ViewProjectsComponent, canActivate: [AuthGuard], data: { role: 'ROLE_INSTRUCTOR' } },
+
   { path: 'register', component: RegistrationComponent },
   { path: 'verifyOTP', component: OtpComponent },
   { path: 'verify', component: VerifyComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'validate-certificate', component: CertificateValidationComponent },
   
 ];
 

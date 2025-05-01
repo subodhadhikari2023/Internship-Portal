@@ -3,7 +3,7 @@ package com.subodh.InternshipPortal.modals;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.subodh.InternshipPortal.enums.StudentInternshipStatus;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 import org.hibernate.annotations.Mutability;
 
 import java.time.LocalDate;
@@ -11,7 +11,11 @@ import java.time.LocalDate;
 /**
  * The type Project.
  */
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+
 @Entity
 public class Project {
 
@@ -44,6 +48,9 @@ public class Project {
     @JsonBackReference
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private Users user;
+    @ManyToOne
+    @JoinColumn(name = "student_internship_id")
+    private InternshipStudents internshipStudents;
 
 
 }

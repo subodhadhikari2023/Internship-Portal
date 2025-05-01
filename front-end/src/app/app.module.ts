@@ -35,6 +35,8 @@ import { ForgetPasswordComponent } from './components/forget-password/forget-pas
 import { AdminNavbarComponent } from './components/admin-navbar/admin-navbar.component';
 import { UpdateAdminComponent } from './components/update-admin/update-admin.component';
 import { StudentFooterComponent } from './components/student-footer/student-footer.component';
+import { ViewProjectsComponent } from './components/view-projects/view-projects.component';
+import { CertificateValidationComponent } from './components/certificate-validation/certificate-validation.component';
 
 
 
@@ -71,6 +73,8 @@ import { StudentFooterComponent } from './components/student-footer/student-foot
     AdminNavbarComponent,
     UpdateAdminComponent,
     StudentFooterComponent,
+    ViewProjectsComponent,
+    CertificateValidationComponent,
     
   ],
   imports: [

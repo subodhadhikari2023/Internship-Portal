@@ -23,7 +23,7 @@ public class ProjectWrapper {
     private String projectDescriptionFile;
     private String projectFile;
     private String projectStatus;
-//    private transient MultipartFile projectDescriptionFile;
+    private String department;
 
     /**
      * Instantiates a new Project wrapper.
@@ -54,7 +54,6 @@ public class ProjectWrapper {
         this.submissionDate = submissionDate;
         this.projectFile = projectFile;
         this.projectDescriptionFile = projectDescriptionFile;
-//        this.projectDescriptionFile = "/api/v1/instructors/download?filePath=" + URLEncoder.encode(projectDescriptionFile, StandardCharsets.UTF_8);
         this.projectStatus = projectStatus;
 
 
@@ -65,6 +64,16 @@ public class ProjectWrapper {
         this.projectId = project.getProjectId();
         this.projectName = project.getProjectName();
         this.projectDescription = project.getProjectDescription();
-        this.projectDescriptionFile=project.getProjectDescriptionFilePath();
+        this.projectDescriptionFile = project.getProjectDescriptionFilePath();
+        this.projectFile = project.getProjectFile();
+        this.studentEmail=project.getUser().getUserEmail();
+        if (project.getInternshipStudents() != null && project.getInternshipStudents().getInternship() != null) {
+            this.internshipName = project.getInternshipStudents().getInternship().getInternshipName();
+        } else {
+            this.internshipName = null;
+        }
+         this.department=project.getInternshipStudents().getInternship().getDepartment().getDepartmentName();
+
+
     }
 }

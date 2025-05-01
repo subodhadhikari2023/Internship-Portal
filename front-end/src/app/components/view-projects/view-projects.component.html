@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<main class="main-container container py-4">
+
+  
+   
+    <section class="search-section mb-4">
+      <input
+        type="text"
+        [(ngModel)]="searchText"
+        (input)="filterProjects()"
+        class="form-control"
+        placeholder="Search by title, department or student name..."
+      />
+    </section>
+  
+    <section class="projects-grid">
+      <article *ngFor="let project of filteredProjects" class="project-card">
+        <h3 class="project-title">{{ project.projectName }}</h3>
+        <p class="project-description">{{ project.projectDescription }}</p>
+        <div class="project-meta">
+          <span><strong>Internship Name:</strong> {{ project.internshipName }}</span><br>
+          
+          <span><strong>Department:</strong> {{ project.department }}</span>
+        </div>
+        
+        <span><strong>By:</strong> {{ project.studentEmail }}</span>
+        <button (click)="downloadFile(project.projectDescriptionFile, project.projectName + '-description.pdf')">
+          Download Description
+        </button>
+        
+        <button (click)="downloadFile(project.projectFile, project.projectName + '-project.zip')">
+          Download Project File
+        </button>
+        
+      </article>
+    </section>
+  </main>
+  
+<footer>
+  <app-footer></app-footer>
+</footer>

@@ -1,0 +1,22 @@
+<div *ngIf="result; else errorBlock" class="certificate-validation">
+  <div class="card">
+    <h2>✅ Certificate Successfully Validated</h2>
+
+    <div class="details">
+      <p><strong>Student Name:</strong> {{ result.studentName }}</p>
+      <p><strong>Internship Title:</strong> {{ result.internshipName }}</p>
+      <p><strong>Department:</strong> {{ result.internshipDepartment }}</p>
+      <p><strong>Instructor:</strong> {{ result.instructorName }}</p>
+      <p><strong>Internship Duration:</strong> {{ result.startDate }} to {{ result.completionDate }}</p>
+      <p><strong>Issued On:</strong> {{ result.issuedDate }}</p>
+    </div>
+
+    
+  </div>
+</div>
+
+<ng-template #errorBlock>
+  <div class="error-message">
+    <h2 style="color: red;">❌ {{ error }}</h2>
+  </div>
+</ng-template>

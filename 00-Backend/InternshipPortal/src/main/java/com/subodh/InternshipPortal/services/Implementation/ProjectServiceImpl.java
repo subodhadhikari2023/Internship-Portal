@@ -73,6 +73,7 @@ public class ProjectServiceImpl implements ProjectService {
         dbProject.setSubmissionDate(project.getSubmissionDate());
         dbProject.setStatus(StudentInternshipStatus.IN_PROGRESS);
         dbProject.setUser(studentInternship.getStudent());
+        dbProject.setInternshipStudents(studentInternship);
 
         String FILE_PATH = createFolder(rootFolderPath, studentInternship.getInternship().getDepartment().getDepartmentName(), studentInternship.getInternship().getInternshipName(), studentInternship.getStudent().getUserEmail()).join();
 
