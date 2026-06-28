@@ -1,0 +1,14 @@
+# Environment / secrets
+.env
+*.env
+
+# Maven build output
+target/
+
+# IDE
+.idea/
+*.iml
+.mvn/timing.properties
+
+# OS
+.DS_Store

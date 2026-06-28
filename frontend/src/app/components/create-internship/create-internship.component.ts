@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { InternshipCreationRequest } from 'src/app/modals/internship-creation-request';
+import { InternshipCreationRequest } from 'src/app/models/internship-creation-request';
 import { InternshipService } from 'src/app/services/internship.service';
 import { NotificationService } from 'src/app/services/notification.service';
 
