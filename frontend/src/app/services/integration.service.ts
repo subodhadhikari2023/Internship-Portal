@@ -3,7 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { LoginRequest } from '../models/login-request';
 import { Observable } from 'rxjs';
 import { LoginResponse } from '../models/login-response';
-const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/public/";
+import { environment } from 'src/environments/environment';
+
+const BASE_URL = `${environment.apiBaseUrl}/public/`;
 @Injectable({
   providedIn: 'root'
 })

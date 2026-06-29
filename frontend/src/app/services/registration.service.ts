@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RegistrationRequest } from '../models/registration-request';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Observable } from 'rxjs';
 export class RegistrationService {
 
   private registeredEmail: string = '';
-  private baseUrl = 'http://localhost:8080/internship-portal/api/v1/public';
+  private baseUrl = `${environment.apiBaseUrl}/public`;
 
   constructor(private http: HttpClient) { }
 
