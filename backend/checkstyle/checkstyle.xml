@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!--
+  Checkstyle configuration for the Internship Portal backend.
+  Enforces that all public classes, interfaces, methods, and fields
+  carry a Javadoc comment. Run with:
+      ./mvnw checkstyle:check
+-->
+<module name="Checker">
+
+    <property name="severity" value="warning"/>
+    <property name="fileExtensions" value="java"/>
+
+    <!-- Skip generated sources -->
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="module\-info\.java$"/>
+    </module>
+
+    <module name="TreeWalker">
+
+        <!-- ── Javadoc on types ──────────────────────────────────────────── -->
+        <module name="MissingJavadocType">
+            <property name="scope" value="public"/>
+            <property name="tokens" value="CLASS_DEF, INTERFACE_DEF, ENUM_DEF, ANNOTATION_DEF, RECORD_DEF"/>
+        </module>
+
+        <!-- ── Javadoc on methods ────────────────────────────────────────── -->
+        <module name="MissingJavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingParamTags" value="false"/>
+            <property name="allowMissingReturnTag" value="false"/>
+            <!-- Allow simple overrides that inherit doc from the interface/superclass -->
+            <property name="allowedAnnotations" value="Override, Test, BeforeEach, AfterEach, BeforeAll, AfterAll"/>
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
+        </module>
+
+        <!-- ── Javadoc content quality ───────────────────────────────────── -->
+        <module name="JavadocMethod">
+            <property name="scope" value="public"/>
+            <property name="allowMissingParamTags" value="false"/>
+            <property name="allowMissingReturnTag" value="false"/>
+            <property name="tokens" value="METHOD_DEF, CTOR_DEF, ANNOTATION_FIELD_DEF, COMPACT_CTOR_DEF"/>
+        </module>
+
+        <module name="JavadocType">
+            <property name="scope" value="public"/>
+        </module>
+
+        <!-- ── Javadoc on public variables ──────────────────────────────── -->
+        <module name="JavadocVariable">
+            <property name="scope" value="public"/>
+        </module>
+
+    </module>
+</module>

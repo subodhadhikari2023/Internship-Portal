@@ -22,15 +22,35 @@ public class CommonController {
 
     private final UserService userService;
 
+    /**
+     * Instantiates a new Common controller.
+     *
+     * @param userService the user service
+     */
     public CommonController(UserService userService) {
         this.userService = userService;
     }
 
+    /**
+     * Validates whether the supplied plain-text password matches the authenticated user's stored password.
+     *
+     * @param userDetails the currently authenticated user
+     * @param apiRequest  the plain-text password to validate
+     * @return 200 OK with {@code true} if the password matches, {@code false} otherwise
+     */
     @PostMapping("validate-password")
     public ResponseEntity<?> validatePassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody APIRequest<String> apiRequest) {
         return new ResponseEntity<>(new Response<>(userService.validatePassword(userDetails.getUsername(), apiRequest.getEntity())), HttpStatus.OK);
     }
 
+    /**
+     * Resets the authenticated user's password to the value supplied in the request body.
+     *
+     * @param userDetails the currently authenticated user
+     * @param password    the new plain-text password wrapped in an {@link APIRequest}
+     * @return 202 ACCEPTED with the updated {@link com.subodh.InternshipPortal.wrapper.UserWrapper},
+     *         or 406 NOT ACCEPTABLE if the user cannot be found
+     */
     @PostMapping("reset-password")
     public ResponseEntity<?> resetPassword(@AuthenticationPrincipal UserDetails userDetails, @RequestBody APIRequest<String> password) {
         UserWrapper userWrapper = userService.resetPasswordUserFoundByEmail(userDetails.getUsername(), password.getEntity());

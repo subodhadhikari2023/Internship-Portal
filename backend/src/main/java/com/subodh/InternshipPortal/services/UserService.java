@@ -173,11 +173,38 @@ public interface UserService {
      */
     UserWrapper resetPasswordUserFoundByEmail(String email, String password);
 
+    /**
+     * Updates the admin's profile picture from the supplied multipart file.
+     *
+     * @param userDetails the currently authenticated admin
+     * @param file        the new profile picture
+     * @return the updated {@link AdminWrapper}
+     */
     AdminWrapper updateAdminProfilePicture(UserDetails userDetails, MultipartFile file);
 
+    /**
+     * Updates the admin's mutable profile fields (name, phone number).
+     *
+     * @param userDetails  the currently authenticated admin
+     * @param adminWrapper the fields to update
+     * @return the updated {@link AdminWrapper}
+     */
     AdminWrapper updateAdmin(UserDetails userDetails, AdminWrapper adminWrapper);
 
+    /**
+     * Updates an instructor's details as initiated by an admin (name, phone, department).
+     *
+     * @param instructor the updated instructor fields
+     * @return the updated {@link InstructorWrapper}
+     */
     InstructorWrapper updateInstructorByAdmin(InstructorWrapper instructor);
 
+    /**
+     * Checks whether the given plain-text password matches the stored encoded password for the user.
+     *
+     * @param email  the user's email address
+     * @param entity the plain-text password to verify
+     * @return {@code true} if the passwords match; {@code false} otherwise
+     */
     boolean validatePassword(String email, String entity);
 }

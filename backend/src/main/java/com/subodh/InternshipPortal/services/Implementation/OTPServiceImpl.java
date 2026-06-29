@@ -17,6 +17,20 @@ import java.util.Random;
 
 /**
  * The type Otp service.
+ *
+ * <p>TODO (Redis migration): Replace database-backed OTP storage with Redis for better
+ * performance and automatic TTL-based expiry. Migration steps:
+ * <ul>
+ *   <li>Add {@code spring-boot-starter-data-redis} to pom.xml and configure
+ *       {@code spring.data.redis.host/port} via env vars.</li>
+ *   <li>Inject {@code StringRedisTemplate} and store OTPs with key pattern
+ *       {@code otp:<userEmail>} and a 5-minute TTL using
+ *       {@code opsForValue().set(key, otp, 5, TimeUnit.MINUTES)}.</li>
+ *   <li>Replace {@code otpRepository.findByUserEmail} with {@code redisTemplate.opsForValue().get(key)}
+ *       and remove the manual expiry check — Redis TTL handles it automatically.</li>
+ *   <li>Remove {@link OTPRepository}, {@code OneTimePassword} JPA entity, and the
+ *       {@code deleteAllByUserEmail} cleanup call.</li>
+ * </ul>
  */
 @Service
 public class OTPServiceImpl implements OTPService {
