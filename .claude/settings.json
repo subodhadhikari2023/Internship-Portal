@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=\"${CLAUDE_TOOL_INPUT_FILE_PATH:-}\"; if [[ \"$FILE\" == *.java ]] && [[ \"$FILE\" == */src/main/* ]]; then /home/bitsunisage/projects/Internship-Portal/backend/scripts/check-javadoc.sh \"$FILE\"; fi'"
+          }
+        ]
+      }
+    ]
+  }
+}
