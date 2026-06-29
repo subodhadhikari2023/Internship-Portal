@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { UpdateAdminComponent } from './update-admin.component';
 
 describe('UpdateAdminComponent', () => {
@@ -8,7 +10,9 @@ describe('UpdateAdminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UpdateAdminComponent ]
+      declarations: [UpdateAdminComponent],
+      imports: [HttpClientTestingModule, ReactiveFormsModule, FormsModule],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents();
 
