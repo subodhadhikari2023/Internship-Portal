@@ -50,6 +50,19 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
 
+    /**
+     * Intercepts every incoming HTTP request, extracts the JWT from the {@code Authorization} header,
+     * validates it, and populates the {@link SecurityContextHolder} with the authenticated principal.
+     *
+     * <p>Expired or malformed tokens are handled by writing a JSON error response and short-circuiting
+     * the filter chain.
+     *
+     * @param request     the incoming HTTP request
+     * @param response    the HTTP response
+     * @param filterChain the remaining filter chain
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, ExpiredJwtException {
         try {
@@ -79,6 +92,15 @@ public class JwtFilter extends OncePerRequestFilter {
     }
 
 
+    /**
+     * Writes a JSON error response with the given message and HTTP status, then terminates the
+     * filter chain so no further processing occurs.
+     *
+     * @param response the HTTP response to write to
+     * @param message  the human-readable error message
+     * @param status   the HTTP status code to set
+     * @throws IOException if writing to the response fails
+     */
     private void handleException(HttpServletResponse response, String message, HttpStatus status) throws IOException {
         Response<String> errorResponse = new Response<>(message, status);
 

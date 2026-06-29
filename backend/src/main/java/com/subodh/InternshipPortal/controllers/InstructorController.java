@@ -92,6 +92,12 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(internships.size()), HttpStatus.OK);
     }
 
+    /**
+     * Returns the total number of applications received across all internships created by the authenticated instructor.
+     *
+     * @param userDetails the currently authenticated instructor
+     * @return 200 OK with the application count, or 204 NO CONTENT when none exist
+     */
     @GetMapping("total-applications-of-internships-created")
     public ResponseEntity<?> getTotalApplicationsOfInternshipCreated(@AuthenticationPrincipal UserDetails userDetails) {
         List<StudentApplication> totalApplications = internshipService.findAllApplicationsbyCreatedBy(userDetails.getUsername());
@@ -251,22 +257,44 @@ public class InstructorController {
         return new ResponseEntity<>(new Response<>(certificate), HttpStatus.OK);
     }
 
+    /**
+     * Returns the total count of pending (unreviewed) applications for the instructor's internships.
+     *
+     * @return 200 OK with the pending application count
+     */
     @GetMapping("pending-applications")
     public ResponseEntity<?> getAllPendingApplications() {
         List<ApplicationWrapper> applicationWrapperList = applicationService.findAllofUser();
         return new ResponseEntity<>(new Response<>(applicationWrapperList.size()), HttpStatus.OK);
     }
 
+    /**
+     * Returns the count of ACTIVE internships created by the authenticated instructor.
+     *
+     * @return 200 OK with the active internship count
+     */
     @GetMapping("active-internships")
     public ResponseEntity<?> getAllActiveInternships() {
         return new ResponseEntity<>(new Response<>(internshipService.findAllByInstructor_ACTIVE().size()), HttpStatus.OK);
     }
 
+    /**
+     * Returns the five most recently started internships created by the authenticated instructor.
+     *
+     * @param userDetails the currently authenticated instructor
+     * @return 200 OK with up to 5 {@link InternshipWrapper} objects ordered by start date descending
+     */
     @GetMapping("recent-internships")
     public ResponseEntity<?> getAllRecentInternships(@AuthenticationPrincipal UserDetails userDetails) {
         return new ResponseEntity<>(new Response<>(internshipService.findRecentFiveInternships(userDetails.getUsername())), HttpStatus.OK);
     }
 
+    /**
+     * Returns the five most recent applications submitted to the instructor's internships.
+     *
+     * @param userDetails the currently authenticated instructor
+     * @return 200 OK with up to 5 {@link ApplicationWrapper} objects
+     */
     @GetMapping("recent-applications")
     public ResponseEntity<?> getAllRecentApplications(@AuthenticationPrincipal UserDetails userDetails) {
         return new ResponseEntity<>(new Response<>(applicationService.getAllRecentApplications(userDetails.getUsername())), HttpStatus.OK);

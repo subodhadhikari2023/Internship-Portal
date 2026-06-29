@@ -38,8 +38,10 @@ public class AdminController {
 
 
     /**
-     * @param userDetails
-     * @return
+     * Returns the authenticated admin's profile details.
+     *
+     * @param userDetails the currently authenticated admin, injected by Spring Security
+     * @return 200 OK with an {@link AdminWrapper} containing the admin's profile
      */
     @GetMapping("fetch-profile-details")
     public ResponseEntity<?> fetchProfileDetails(@AuthenticationPrincipal UserDetails userDetails) {
@@ -48,10 +50,25 @@ public class AdminController {
     }
 
 
+    /**
+     * Updates the admin's profile picture.
+     *
+     * @param userDetails the currently authenticated admin
+     * @param file        the new profile picture file (multipart)
+     * @return 201 CREATED with the updated admin profile
+     */
     @PostMapping("update-profile-picture")
     public ResponseEntity<?> updateProfilePicture(@AuthenticationPrincipal UserDetails userDetails, @RequestPart MultipartFile file) {
         return new ResponseEntity<>(userService.updateAdminProfilePicture(userDetails,file),HttpStatus.CREATED);
     }
+
+    /**
+     * Updates the admin's profile information (name, phone number).
+     *
+     * @param userDetails  the currently authenticated admin
+     * @param adminWrapper the updated profile fields
+     * @return 200 OK with the updated {@link AdminWrapper}
+     */
     @PutMapping("update-profile")
     public ResponseEntity<?> updateProfile(@AuthenticationPrincipal UserDetails userDetails,@RequestBody AdminWrapper adminWrapper){
         return new ResponseEntity<>(new Response<>(userService.updateAdmin(userDetails,adminWrapper)),HttpStatus.OK);
@@ -124,6 +141,12 @@ public class AdminController {
     }
 
 
+    /**
+     * Updates an instructor's details (name, phone, department) by the admin.
+     *
+     * @param instructor the updated instructor fields
+     * @return 200 OK with the updated {@link InstructorWrapper}
+     */
     @PutMapping("instructors")
     public ResponseEntity<?> updateInstructor(@RequestBody InstructorWrapper instructor) {
         return new ResponseEntity<>(new Response<>(userService.updateInstructorByAdmin(instructor)),HttpStatus.OK);
