@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { map, Observable } from 'rxjs';
-const BASE_URL = "http://127.0.0.1:8080/internship-portal/api/v1/";
+import { environment } from 'src/environments/environment';
+
+const BASE_URL = `${environment.apiBaseUrl}/`;
 
 @Injectable({
   providedIn: 'root'

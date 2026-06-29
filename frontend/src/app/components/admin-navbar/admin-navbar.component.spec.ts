@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AdminNavbarComponent } from './admin-navbar.component';
 
 describe('AdminNavbarComponent', () => {
@@ -8,7 +9,8 @@ describe('AdminNavbarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminNavbarComponent ]
+      declarations: [AdminNavbarComponent],
+      imports: [HttpClientTestingModule, RouterTestingModule],
     })
     .compileComponents();
 
