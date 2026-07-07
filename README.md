@@ -49,16 +49,28 @@ The **Internship Portal** is a web-based platform developed to digitize the inte
 - Generate and issue completion certificates.
 - Provide real-time updates to students.
 
-## 🚀 Tech Stack
+## Tech Stack
 
-| Technology  | Description |
-|-------------|------------|
-| **Frontend** | Angular 14.0.7 |
-| **Backend** | Spring Boot 6 |
-| **Database** | MySQL 8.0.33 |
-| **Version Control** | Git, GitHub |
-| **Hosting** | To be determined |
-| **Tools Used** | IntelliJ IDEA, Visual Studio Code, JetBrains DataGrip |
+![Angular](https://img.shields.io/badge/Angular_14-DD0031?style=for-the-badge&logo=angular&logoColor=white) ![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white) ![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+
+- Angular 14
+- TypeScript
+- Spring Boot
+- Spring Security
+- JWT
+- Hibernate/JPA
+- MySQL
+- Spring MVC
+- REST API
+- Docker
+- Docker Compose
+- Maven
+- IntelliJ IDEA
+- VS Code
+- Git
+- HTML/CSS
+- React
+- PostgreSQL
 
 ## 🔍 Problem Statement
 
