@@ -4,6 +4,10 @@
 [![Issues][issues-shield]][issues-url]
 [![GNU License][license-shield]][license-url]
 -----------------------------------------------
+## Highlight
+
+Production system delivered for the Department of IT, Government of Sikkim.
+
 ## 🔥 Contributors
 
 <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
