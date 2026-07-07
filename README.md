@@ -10,23 +10,11 @@ Production system delivered for the Department of IT, Government of Sikkim.
 
 ## 🔥 Contributors
 
-<div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
+**Subodh Adhikari**
 
-  <div style="text-align: center; flex: 1; min-width: 150px; max-width: 45%;">
-    <h3>Subodh Adhikari</h3>
-    <img src="https://media.licdn.com/dms/image/v2/D4E03AQG4_OpoK6RwQg/profile-displayphoto-shrink_200_200/B4EZS1qopiGwAY-/0/1738214640885?e=1744243200&v=beta&t=2AYuxq2rIyZvePxtAgUCabLaioUYAPHMaIOlCsjpSRE" alt="Subodh" style="width: 150px; height: 150px;">
-    <br>
-    <a href="https://www.linkedin.com/in/subodh-adhikari-4b811a296/">
-      <img src="https://img.shields.io/badge/LinkedIn-blue?style=flat-square&logo=linkedin" alt="LinkedIn Subodh" />
-    </a>
-    <a href="mailto:subodhadhikari2023@outlook.com">
-      <img src="https://img.shields.io/badge/Outlook-blue?style=flat-square&logo=microsoft-outlook" alt="Outlook Subodh" />
-    </a>
-    <a href="https://github.com/subodhadhikari2023/">
-      <img src="https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github" alt="GitHub Link" />
-    </a>
-  </div>
-</div>
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/subodh-adhikari-4b811a296/)
+[![Outlook](https://img.shields.io/badge/Outlook-blue?style=flat-square&logo=microsoft-outlook)](mailto:subodhadhikari2023@outlook.com)
+[![GitHub](https://img.shields.io/badge/GitHub-black?style=flat-square&logo=github)](https://github.com/subodhadhikari2023/)
 
 ---
 
@@ -143,7 +131,7 @@ The **Internship Portal** addresses these issues by:
 
 5. **Access the Application**
    - **Frontend:** `http://localhost:4200`
-   - **Backend API:** `http://localhost:8080`
+   - **Backend API:** `http://localhost:8080/internship-portal/api/v1`
 
 
 
