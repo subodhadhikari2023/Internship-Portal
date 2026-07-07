@@ -135,6 +135,12 @@ The **Internship Portal** addresses these issues by:
 
 
 
+## Screenshots
+
+![Admin Dashboard](docs/screenshots/admin/admin-dashboard.png)
+![Student Dashboard](docs/screenshots/student/dashboard-student.png)
+![Instructor Dashboard](docs/screenshots/instructor/dashboard-instructor.png)
+
 ## 📜 License
 
 Distributed under the **MIT License**. See LICENSE for more information.
